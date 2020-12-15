@@ -1,0 +1,48 @@
+.code {
+    border-radius: 3px;
+    background: rgba(#ccc, 0.24);
+    padding: 10px;
+    font-size: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+.row.columns [class^="col"] {
+    background: #ccc;
+    min-height: 50px;
+}
+
+.description.action {
+    border-radius: 3px;
+    background: white;
+    padding: 15px;
+    font-size: 14px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    color: #555555;
+    b {
+        color: #000;
+    }
+}
+.type-verb {
+    float: right;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0 0 5px 0;
+    padding: 4px 5px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.post {
+    background-color: #4070ec;
+}
+
+.get {
+    background-color: green;
+}
+
+.delete {
+    background-color: #ed0039;
+}

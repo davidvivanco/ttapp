@@ -1,0 +1,60 @@
+@media (orientation: landscape) and (max-width:1024px) {
+    .custom-login-wrapper{
+        margin-top: 14%;
+    }
+    .login-page {
+        height: 100%;
+    }
+  }
+
+.register-text {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+.register-text-google {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.access-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    strong{
+        font-size: 13px;
+    }
+}
+
+.button-logo {
+    width: 30px;
+    height: 30px;
+    padding-top: 2px;
+}
+.fb-logo{
+    padding-right: 5px;
+}
+.google-logo{
+    height: 26px;
+    width: 26px;
+    padding-top: 4px;
+}
+.register-buttons {
+    text-align: center;
+    display: flex;
+    max-width: 260px;
+    justify-content: center;
+    div {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.recovery-link {
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+}
+

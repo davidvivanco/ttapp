@@ -1,0 +1,35 @@
+.code {
+    border-radius: 3px;
+    background: rgba(#ccc, 0.24);
+    padding: 10px;
+    font-size: 12px;
+    box-sizing: border-box;
+    border:1px solid #ccc;
+}
+
+.row.columns [class^="col"] {
+    background: #ccc;
+    min-height: 50px;
+}
+
+.description.action {
+    border-radius: 3px;
+    background: white;
+    padding: 15px;
+    font-size: 14px;
+    box-sizing: border-box;
+    border:1px solid #ccc;
+    color: #555555;
+    b {color: #000;}
+}
+
+.mat-card .mat-card-header .pull-right {
+    right: 24px;
+    position: absolute;
+    top: 7px;
+}
+
+.mat-expansion-panel-content ul, ol {
+    margin-bottom:15px !important;
+    li {margin-bottom: 7px !important;}
+}

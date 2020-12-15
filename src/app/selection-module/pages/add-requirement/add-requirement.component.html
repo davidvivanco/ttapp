@@ -1,0 +1,40 @@
+<app-breadcrumb *ngIf="!edit" breadcrumbs="Talentoo,{{ 'selectionAdmin.assessments.title' | translate }},{{ 'selectionAdmin.assessments.add' | translate }}">
+</app-breadcrumb>
+<app-breadcrumb *ngIf="edit" breadcrumbs="Talentoo,{{ 'genericMessages.edit' | translate }},{{ 'genericMessages.edit' | translate }}">
+</app-breadcrumb>
+
+<div class="row hide-mobile">
+    <div class="col-12">
+        <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="goBack()">
+      <mat-icon class="mr-sm">arrow_back</mat-icon>{{ 'genericMessages.return' | translate }}
+    </button>
+    <button [disabled]="!showAddRequirementButton" mat-flat-button class="btn-primary btn-sm mr-m"
+      (click)="addRequirementCriteria()">
+      <mat-icon class="mr-sm">add</mat-icon>{{'genericMessages.forms.newApproach' | translate }}
+    </button>
+    <button [disabled]="!showAddRequirementButton" mat-stroked-button class="btn-stroked-primary btn-sm mr-m"
+      (click)="addOtherCriterionModal()">
+      <mat-icon class="mr-sm">add</mat-icon>{{'selectionAdmin.assessments.otherCriteria' | translate }}
+    </button>
+    </div>
+</div>
+<div class="row show-mobile">
+    <div class="col-12">
+        <button class="btn-primary btn-sm" mat-button [matMenuTriggerFor]="resp">
+      <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+    </button>
+        <mat-menu #resp="matMenu">
+            <button mat-menu-item class="btn-stroked-primary btn-sm" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>{{ 'genericMessages.return' | translate }}
+      </button>
+            <button [disabled]="!showAddRequirementButton" mat-menu-item class="btn-stroked-primary btn-sm" (click)="addRequirementCriteria()">
+        <mat-icon>add</mat-icon>{{ 'genericMessages.forms.newApproach' | translate }}
+      </button>
+      <button mat-menu-item class="btn-stroked-primary btn-sm">
+        <mat-icon>add</mat-icon>{{'selectionAdmin.assessments.otherCriteria' | translate }}
+      </button>
+        </mat-menu>
+    </div>
+</div>
+
+<app-requirement *ngIf="requirement" [requirement]="requirement" [setRequirement]="setRequirement" [edit]="edit" (thereIsChanges)="setRequirementHasChanges($event)" (onRequirementCreated)="updateUrl($event)" (requirementUpdated)="requirementUpdated($event)"></app-requirement>

@@ -1,0 +1,4 @@
+<div class="pl-m pr-m">
+    <mat-slider *ngIf="sliderOptions" #slider thumbLabel (pointerup)="sliderOnChange(slider)" (slideend)="sliderOnChange(slider)" [displayWith]=" formatLabel" [min]="sliderOptions.min" color="primary" [max]="sliderOptions.max" [step]="sliderOptions.step"
+        [value]="sliderOptions.value"></mat-slider>
+</div>

@@ -1,0 +1,33 @@
+.offer {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: gray solid 1px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-color:rgba(0, 0, 0, 0.12) !important;
+    span, mat-chip {
+      margin-left: 10px;
+    }
+    .container-offers {
+        padding: 15px;
+    }
+    .flexGrow {
+      flex-grow: 1;
+    }
+    .button-action {
+        width: 25px !important;
+    }
+}
+
+.radio-visibility { 
+    margin-top: 17px; 
+    display: block; 
+}
+
+.mat-dialog-title {
+    margin-left: 12px;
+}

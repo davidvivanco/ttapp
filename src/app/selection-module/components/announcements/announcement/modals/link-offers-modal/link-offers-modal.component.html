@@ -1,0 +1,3 @@
+<app-checkbox-table *ngIf="offers" (onCancel)="cancel()" (onClose)="close(null,true)" (onSubmit)="submit($event)"
+    [elements]="offers" [multiple]="true" [title]="title" [displayedColumns]="displayedColumns" [modal]="'addOffer'">
+</app-checkbox-table>

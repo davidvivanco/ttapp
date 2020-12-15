@@ -1,0 +1,145 @@
+<app-breadcrumb breadcrumbs="Talentoo,Guía de estilo,UX Componente básico"></app-breadcrumb>
+
+<div class="row">
+
+    <div class="col-12">
+        <button mat-flat-button class="btn-primary btn-sm mr-m p-1">
+      <mat-icon class="mr-sm">arrow_back</mat-icon>Volver
+    </button>
+
+        <button mat-stroked-button class="btn-stroked-primary btn-sm mr-m">
+      <mat-icon class="mr-sm">publish</mat-icon>
+      <span *ngIf="!publishState">{{'genericMessages.publish' | translate}}</span>
+      <span *ngIf="publishState">{{'genericMessages.publishedF' | translate}}</span>
+    </button>
+
+        <div class="fake-mat-chip-sm">
+            <span>Estado</span>
+        </div>
+
+        <span class="mr-m"></span>
+
+        <label class="gray header-switch">Switch activar o desactivar </label>
+        <mat-slide-toggle></mat-slide-toggle>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>speaker_notes</mat-icon>
+                </mat-card-title>
+                <p>Card dark header title</p>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <p class="description">
+                    Card content
+                </p>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-6 left">
+
+    </div>
+    <div class="col-6 right">
+        <button mat-button class="">
+          {{'genericMessages.cancel' | translate}}
+      </button>
+        <span class="mr-m"></span>
+        <button mat-flat-button class="btn-primary">
+          {{'genericMessages.save' | translate}}
+      </button>
+    </div>
+
+</div>
+
+<app-breadcrumb breadcrumbs="Talentoo,Guía de estilo,UX Componente básico, Varias acciones secundarias"></app-breadcrumb>
+
+<div class="row">
+
+    <div class="col-12">
+        <button mat-flat-button class="btn-primary btn-sm mr-m p-1">
+      <mat-icon class="mr-sm">arrow_back</mat-icon>Volver
+    </button>
+
+        <button mat-stroked-button class="btn-stroked-primary btn-sm mr-m">
+      <mat-icon class="mr-sm">publish</mat-icon>
+      <span *ngIf="!publishState">{{'genericMessages.publish' | translate}}</span>
+      <span *ngIf="publishState">{{'genericMessages.publishedF' | translate}}</span>
+    </button>
+
+        <button mat-stroked-button class="btn-stroked-primary btn-sm mr-m">
+      <mat-icon class="mr-sm">publish</mat-icon>
+      <span>Acción secundaria</span>
+    </button>
+
+        <button mat-stroked-button class="btn-stroked-primary btn-sm mr-m" disabled="true">
+      <mat-icon class="mr-sm">publish</mat-icon>
+      <span>Acción secundaria</span>
+    </button>
+
+        <div class="fake-mat-chip-sm">
+            <span>Estado</span>
+        </div>
+
+        <span class="mr-m"></span>
+
+        <label class="gray header-switch">Switch activar o desactivar </label>
+        <mat-slide-toggle></mat-slide-toggle>
+
+    </div>
+</div>
+
+<app-breadcrumb breadcrumbs="Talentoo,Guía de estilo,UX Componente básico, Botones footer disabled"></app-breadcrumb>
+
+<div class="row">
+
+    <div class="col-6 left">
+
+    </div>
+    <div class="col-6 right">
+        <button mat-button class="" disabled="true">
+          {{'genericMessages.cancel' | translate}}
+      </button>
+        <span class="mr-m"></span>
+        <button mat-flat-button class="btn-primary" disabled="true">
+          {{'genericMessages.save' | translate}}
+      </button>
+    </div>
+
+</div>
+
+<app-breadcrumb breadcrumbs="Talentoo,Guía de estilo,UX Componente básico, Card con buscador de servidor"></app-breadcrumb>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>speaker_notes</mat-icon>
+                </mat-card-title>
+                <p>Card dark header title</p>
+                <button mat-flat-button title="{{'genericMessages.makeSearch' | translate}}" matTooltip="{{'genericMessages.makeSearch' | translate}}" matTooltipPosition="below" class="pull-right btn-primary with-icon no-bg">
+          <mat-icon aria-label="Search button">search</mat-icon>
+          {{'genericMessages.search' | translate}}
+        </button>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <p class="description">
+                    Card content
+                </p>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>

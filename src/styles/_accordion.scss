@@ -1,0 +1,111 @@
+.mat-accordion {
+
+	overflow: hidden;
+
+	.mat-expansion-panel-header {
+		border-bottom-right-radius: 0px;
+		border-bottom-left-radius: 0px;
+	}
+
+	&.dark-header {
+
+		.mat-expansion-panel-header {
+
+			border-top-right-radius: 2px;
+			border-top-left-radius: 2px;
+
+			.mat-expansion-panel-header-title {color: $white;}
+			.mat-expansion-panel-header-description {color: $white;}
+			.mat-expansion-indicator::after {color: $white;}
+
+			&:hover, &:focus {
+				.mat-expansion-panel-header-title {color: $white !important;}
+				.mat-expansion-panel-header-description {color: $white !important;}
+				.mat-expansion-indicator::after {color: $white !important;}
+			}
+
+		}
+
+	}
+
+	.sub-header {
+
+		background-color: rgba(51, 63, 72, 0.07);
+		margin: 20px 0 10px;
+		padding:10px;
+		margin-bottom:0;
+
+		.sub-header-title {
+			width: 100%;
+			font-weight: bold;
+			display: inline-block;
+		}
+
+		&.with-menu {
+
+			padding-right: 0;
+
+			.sub-header-title {
+				width: calc(100% - 40px);
+			}
+
+			button.mat-icon-button {
+
+			}
+
+		}
+
+		ul.items-list {
+			margin:0;
+		}
+
+	}
+
+	.mat-expansion-panel {
+
+		.mat-expansion-panel-header {
+
+			.mat-content {
+				box-sizing: border-box;
+				padding-right: 18px;
+			}
+
+			.mat-expansion-panel-header-title {
+
+				&.with-button {
+
+					span {
+
+						position:relative;
+						margin-top:6px;
+						margin-right:2px;
+
+					}
+
+					button {
+						margin-top:3px;
+					}
+
+				}
+
+			}
+
+		}
+
+		.mat-expansion-panel-content {
+			.content-item {
+				p {
+					color: $gray;
+				}
+			}
+		}
+
+		.mat-expansion-panel-body {
+			.expansion-panel-content {
+				color: $gray;
+			}
+		}
+
+	}
+
+}

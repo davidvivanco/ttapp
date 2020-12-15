@@ -1,0 +1,82 @@
+.org-container .chart-container {
+
+	.container-node  {
+
+		.node-title {
+			text-decoration: none !important;
+		}
+
+		.fake-link {
+
+			font-size: 10px;
+
+			&.with-icon {
+				.mat-icon, .material-icons {
+					width: 18px;
+					height: 18px;
+					font-size: 18px;
+					margin-right: 5px;
+					top: 6px;
+					position: relative;
+				}
+			}
+		}
+
+		li.fake-link {
+
+			&.with-icon {
+				.mat-icon, .material-icons {
+					top: 0px;
+				}
+			}
+		}
+
+	}
+
+}
+
+.flex-wrapper {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	.column {
+		display: flex;
+		flex-direction: column;
+		// flex-basis: 100%; quitado por warning en sonarQube. (No se usa la clase flex-wrapper)
+		flex: 1;
+		margin: 0 !important;
+		span {
+			padding-top: 9px;
+    		box-sizing: border-box;
+		}
+	}
+	:first-child {flex: 0 0 23px;}
+	:nth-child(2) {flex: 0 0 calc(100% - 23px);}
+}
+
+span.user-view-details {
+	&:hover {
+		color: $blue;
+		cursor: pointer;
+	}
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    margin-bottom: -10px;
+    line-height: 12px;
+    font-size: 12px !important;
+}
+
+.item-name p[name=people] span, div[name=peopleSameFunction] span {
+	line-height: 12px;
+	font-size: 12px !important;
+	font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
+
+/*1024*/
+@media only screen and (max-width: $breakpoint-xlarge) {
+
+
+}

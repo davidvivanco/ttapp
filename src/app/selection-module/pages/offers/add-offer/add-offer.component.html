@@ -1,0 +1,155 @@
+<app-breadcrumb *ngIf="fromEdit === false"
+  breadcrumbs="Talentoo,{{ 'selectionAdmin.announcements.form.addOffer' | translate }}"></app-breadcrumb>
+<app-breadcrumb *ngIf="fromEdit === true"
+  breadcrumbs="Talentoo,{{ 'selectionAdmin.announcements.form.editOffer' | translate }}"></app-breadcrumb>
+<div class="row hide-mobile" *ngIf="showView">
+  <div class="col-12">
+
+    <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="goBack()">
+      <mat-icon class="mr-sm">arrow_back</mat-icon>{{'genericMessages.return' | translate}}
+    </button>
+
+    <button
+      [disabled]="!offerCanBePublished || (!offer || offer?.state === 'published') || hasExpired || !hasPubPriVacan"
+      mat-stroked-button class="btn-stroked-primary btn-sm mr-m " (click)="changeStateOffer('published')">
+      <mat-icon>publish</mat-icon>
+      <span *ngIf="!offer || offer?.state !== 'published'">{{'genericMessages.publish' | translate}}</span>
+      <span *ngIf="offer?.state === 'published'">{{'genericMessages.publishedF' | translate}}</span>
+    </button>
+    <button [disabled]="!offer || offer?.state !== 'published'" mat-stroked-button
+      class="btn-stroked-primary btn-sm mr-m" (click)="changeStateOffer('cancelled')">
+      <mat-icon>cancel</mat-icon>
+      <span *ngIf="offer?.state !== 'cancelled'">{{'genericMessages.revoke' | translate}}</span>
+      <span *ngIf="offer?.state === 'cancelled'">{{'genericMessages.revoked' | translate}}</span>
+    </button>
+    <button *ngIf="offer?.vacancies > 0 && (offer?.visibility === 'mobility' || offer?.visibility === 'job') "
+      mat-stroked-button class="btn-stroked-primary btn-sm mr-m" (click)="communicateCandidates(offer)">
+      <mat-icon>people</mat-icon>
+      <span>{{'selectionAdmin.offers.list.menu.communicateCandidates' | translate}}</span>
+    </button>
+
+    
+    <!-- <div *ngIf="(!offerCanBePublished || !offerIsvalid) && idOffer && offer?.state !== 'published' && !hasExpired" -->
+    <div *ngIf="(!offerCanBePublished || !offerIsvalid || !hasPubPriVacan || hasExpired) && idOffer && offer?.state !== 'published'"
+      class="fake-mat-chip-sm warning">
+      <span *ngIf="!isSaved"> {{'genericMessages.unsavedChanges' | translate}}</span>
+      <span *ngIf="isSaved && (!offerIsvalid || !hasPubPriVacan)"> {{'genericMessages.uncompleted' | translate}}</span>
+      <span *ngIf="isSaved && hasExpired && hasPubPriVacan && offerCanBePublished"> {{'genericMessages.expired' | translate}}</span>
+    </div>
+
+
+    <div *ngIf="offer?.state === 'published' && hasPubPriVacan && !hasExpired" class="fake-mat-chip-sm success">
+      <span> {{'genericMessages.valid' | translate}}</span>
+    </div>
+    <div *ngIf="offer?.state === 'published' && (!hasPubPriVacan || hasExpired)" class="fake-mat-chip-sm warning">
+      <span> {{'genericMessages.uncompleted' | translate}}</span>
+    </div>
+    <div *ngIf="offer?.state !== 'published' && offerIsvalid && offerCanBePublished && !hasExpired && hasPubPriVacan && isSaved"
+      class="fake-mat-chip-sm">
+      <span>{{'genericMessages.canBePublished' | translate}}</span>
+    </div>
+    <!-- Avisar de los fallos cuando esté la oferta publicada -->
+    <div class="mt-m" *ngIf="offer?.state === 'published' && (hasExpired || !hasPubPriVacan)">
+      <div class="mb-sm" *ngIf="hasExpired">
+        <small>
+          {{'selectionAdmin.offers.error.expiredSavePublished' | translate}}
+        </small>
+      </div>
+      <div *ngIf="!hasPubPriVacan">
+        <small>
+          {{'selectionAdmin.offers.error.vacanciesSavePublished' | translate}}
+        </small>
+      </div>
+    </div>
+    <!-- Avisar de los fallos cuando esté la oferta no publicada -->
+    <div class="mt-m" *ngIf="offer?.state !== 'published' && (hasExpired || !hasPubPriVacan)">
+      <div class="mb-sm" *ngIf="hasExpired">
+        <small>
+          {{'selectionAdmin.offers.error.expiredSaveNotPublished' | translate}}
+        </small>
+      </div>
+      <div *ngIf="!hasPubPriVacan">
+        <small>
+          {{'selectionAdmin.offers.error.vacanciesSaveNotPublished' | translate}}
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row show-mobile" *ngIf="showView">
+  <div class="col-12">
+    <button class="btn-primary btn-sm mr-m" mat-button [matMenuTriggerFor]="resp">
+      <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+    </button>
+    <mat-menu #resp="matMenu">
+      <button mat-menu-item class="btn-stroked-primary btn-sm" (click)="goBack()">
+        <mat-icon class="mr-sm">arrow_back</mat-icon>{{'genericMessages.return' | translate}}
+      </button>
+
+      <button [disabled]="!offerCanBePublished || (!offer || offer?.state === 'published') || hasExpired" mat-menu-item
+        class="btn-stroked-primary btn-sm" (click)="changeStateOffer('published')">
+        <mat-icon>publish</mat-icon>
+        <span *ngIf="!offer || offer?.state !== 'published'">{{'genericMessages.publish' | translate}}</span>
+        <span *ngIf="offer?.state === 'published'">{{'genericMessages.publishedF' | translate}}</span>
+      </button>
+
+      <button [disabled]="!offer || offer?.state !== 'published'" mat-menu-item class="btn-stroked-primary btn-sm"
+        (click)="changeStateOffer('cancelled')">
+        <mat-icon>cancel</mat-icon>
+        <span *ngIf="offer?.state !== 'cancelled'">{{'genericMessages.revoke' | translate}}</span>
+        <span *ngIf="offer?.state === 'cancelled'">{{'genericMessages.revoked' | translate}}</span>
+      </button>
+
+    </mat-menu>
+
+
+    <div *ngIf="(!offerCanBePublished || !offerIsvalid || !hasPubPriVacan || hasExpired) && idOffer && offer?.state !== 'published'"
+      class="fake-mat-chip-sm warning">
+      <span *ngIf="!isSaved"> {{'genericMessages.unsavedChanges' | translate}}</span>
+      <span *ngIf="isSaved && (!offerIsvalid || !hasPubPriVacan)"> {{'genericMessages.uncompleted' | translate}}</span>
+      <span *ngIf="isSaved && hasExpired && hasPubPriVacan && offerCanBePublished"> {{'genericMessages.expired' | translate}}</span>
+    </div>
+
+    <div *ngIf="offer?.state === 'published' && hasPubPriVacan && !hasExpired" class="fake-mat-chip-sm success">
+      <span> {{'genericMessages.valid' | translate}}</span>
+    </div>
+    <div *ngIf="offer?.state === 'published' && (!hasPubPriVacan || hasExpired)" class="fake-mat-chip-sm warning">
+      <span> {{'genericMessages.uncompleted' | translate}}</span>
+    </div>
+    <div *ngIf="offer?.state !== 'published' && offerIsvalid && offerCanBePublished && !hasExpired && hasPubPriVacan"
+      class="fake-mat-chip-sm">
+      <span>{{'genericMessages.canBePublished' | translate}}</span>
+    </div>
+    <div class="mt-m" *ngIf="offer?.state === 'published' && (hasExpired || !hasPubPriVacan)">
+      <div class="mb-sm" *ngIf="hasExpired">
+        <small>
+          {{'selectionAdmin.offers.error.expiredSavePublished' | translate}}
+        </small>
+      </div>
+      <div *ngIf="!hasPubPriVacan">
+        <small>
+          {{'selectionAdmin.offers.error.vacanciesSavePublished' | translate}}
+        </small>
+      </div>
+    </div>
+    <div class="mt-m" *ngIf="offer?.state !== 'published' && (hasExpired || !hasPubPriVacan)">
+      <div class="mb-sm" *ngIf="hasExpired">
+        <small>
+          {{'selectionAdmin.offers.error.expiredSaveNotPublished' | translate}}
+        </small>
+      </div>
+      <div *ngIf="!hasPubPriVacan">
+        <small>
+          {{'selectionAdmin.offers.error.vacanciesSaveNotPublished' | translate}}
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-offer [stateOffer]="offerState" (onOfferCanBePublished)="showPublishButton($event)" [getOffer]="offer"
+  (onNewOfferCreated)="setOffer($event)" (onOfferIsValid)="setOffer($event)" (emitOffer)="setOffer($event)"
+  (hasChanges)="setOfferHasChanges($event)" (hasExpired)="offerHasExpired($event)"
+  (hasPublicPrivateVacancies)="checkPubPriVacancies($event)" (isSaved)="checkSaved($event)"></app-offer>

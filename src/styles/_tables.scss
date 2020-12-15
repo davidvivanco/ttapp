@@ -1,0 +1,163 @@
+.mat-table {
+	width: 100%;
+	//min-width: 768px;
+
+	tr {
+		&.isNew {
+			background-color: rgba($light, 0.72);
+		}
+	}
+
+	&.users-table {
+
+		.mat-badge-content {
+			background: $green;
+			left: -4px !important;
+			top: 11px;
+			width: 11px;
+			height: 11px;
+			border: 1px solid #fff;
+		}
+
+		tr {
+
+		}
+
+		td {
+			padding: 15px 0;
+		}
+
+		.td-avatar {
+			width: 24px;
+			padding-left: 0;
+			padding-right: 6px;
+			vertical-align: top;
+		}
+
+		.td-user-info {
+
+			p {
+				margin-top: 0;
+				margin-bottom: 7px;
+
+				&:nth-child(2) {
+					margin-bottom: 2px;
+				}
+			}
+
+			.title {
+				font-weight: bold;
+			}
+
+			a {
+
+				color: lighten($gray,18%);
+
+				&:hover {
+					color: $blue;
+				}
+
+			}
+
+			.mat-icon {
+				font-size: 18px;
+				position: relative;
+				top: 3px;
+				width: 18px;
+				height: 18px;
+				color: lighten($gray,18%);
+			}
+
+		}
+
+	}
+
+	td.mat-cell {
+
+		button.no-stroked {
+			color: $gray !important;
+		}
+
+	}
+
+	td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+		padding-left:0px !important;
+		padding-right: 4px !important;
+	}
+
+	td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+		// padding-left:4px !important;
+		padding-right: 4px !important;
+	}
+}
+
+.search-results-table {
+	thead {
+		display: none;
+	}
+}
+// ToDo se aplica el primer selector este se quita?
+// .mat-table {
+
+// 	&.process-table {
+
+// 		.item-process {
+
+// 			.title {
+// 				font-weight: bold;
+// 				margin-bottom: 0px;
+// 				margin-top: 12px;
+// 				color: $dark;
+// 				font-size: 15px;
+// 			}
+
+// 			.description {
+// 				margin-top: 3px;
+// 				color: $dark;
+// 				margin-bottom: 10px;
+// 				font-size: 12px;
+
+// 				.mat-icon {
+// 					font-size: 15px;
+// 					height: 14px;
+// 					width: 14px;
+// 					position: relative;
+// 				}
+
+// 				.date {
+// 					width: calc(100% - 210px);
+// 					display: inline-block;
+
+// 					.mat-icon {
+// 						top: 3px;
+// 						color: $l-gray;
+// 					}
+// 				}
+
+// 				.status {
+// 					text-align: center;
+// 					width: 105px;
+// 					display: inline-block;
+// 				}
+
+// 				.action {
+// 					text-align: right;
+// 					width: 105px;
+// 					display: inline-block;
+
+// 					.mat-icon {
+// 						top: -2px;
+// 					}
+// 				}
+
+// 			}
+
+// 		}
+
+// 		td.mat-cell:last-of-type {
+// 			vertical-align: top;
+// 		}
+
+// 	}
+
+// }

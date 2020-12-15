@@ -1,0 +1,306 @@
+button {
+
+	.mat-icon {
+
+		width: 18px;
+		height: 18px;
+		font-size:18px;
+		position:relative;
+		top: -2px;
+
+	}
+
+}
+
+.btn-sm {
+
+	.mat-icon {
+
+		font-size: 15px;
+		width: 18px;
+		height: 18px;
+		position: relative;
+		top: 0px;
+
+	}
+
+}
+
+.mat-fab {
+	border-radius: 50% !important;
+	.mat-icon {
+		width: 24px;
+		height: 24px;
+		font-size: 24px;
+	}
+	&.mat-fab-stroked {
+		border: 0px solid;
+		background: white !important;
+		&.btn-primary {
+			border-color: $primary;
+			.mat-icon, span {color: $primary}
+		}
+		&.btn-secondary {
+			border-color: $secondary;
+			.mat-icon, span {color: $secondary}
+		}
+	}
+}
+
+.mat-primary, .mat-primary.mat-flat-button, .mat-flat-button, .fake-button, .btn-stroked-primary {
+
+	border: 0 !important;
+	outline: none !important;
+
+	&.w-100 {
+		width: 100%;
+	}
+
+	&.with-icon {
+		.mat-icon {
+			width: 20px !important;
+			height: 20px !important;
+			font-size: 18px !important;
+			top: 0px !important;
+		}
+	}
+
+	&.btn-primary {
+		// Colors defined en custom-company.css
+    	.mat-icon {color: $white !important;}
+	}
+
+	&.btn-secondary {
+		// Colors defined en custom-company.css
+		&.no-stroked {
+			border: 1px solid transparent !important;
+		}
+	}
+
+	&.btn-green {
+		background: $green;
+		color: $white;
+	}
+
+	&.btn-orange {
+		background: $orange;
+		color: $white;
+	}
+
+	&.btn-blue {
+		background: $blue;
+		color: $white;
+	}
+
+	&.btn-l-blue {
+		background: lighten($blue,10%);
+		color: $white;
+	}
+
+	&.btn-gray {
+		background: $l-gray;
+		color: $gray;
+	}
+
+	&.btn-red {
+		background: $red;
+		color: $white;
+	}
+
+	&.no-bg {
+		background: none !important;
+	}
+
+	&:disabled {
+		background: rgba($black, 0.24) !important;
+		color: $gray !important;
+		border: 1px solid transparent !important;
+		.mat-icon {color: $gray !important;}
+	}
+
+	&.no-padding {
+		padding: 0;
+	}
+
+}
+
+a.fake-button {
+	/*
+	min-width: 88px;
+    line-height: 36px;
+    padding: 16px;
+	border-radius: 2px;
+	font-size:14px;
+	*/
+	box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+
+	&.btn-sm {
+		font-size: .8em;
+		line-height: 24px !important;
+		padding: 0 7px !important;
+	}
+}
+
+.list-button {
+
+	width: auto !important;
+	height: auto !important;
+
+	&.view-more {
+		span {
+			position: relative;
+    		top: -1px;
+		}
+	}
+
+}
+
+button:disabled, button[disabled], .mat-button[disabled], .mat-flat-button[disabled], .mat-stroked-button[disabled] {
+
+	background: $l-gray;
+	color: $dark;
+
+	&.btn-requested {
+		background: $green;
+		color: $white;
+	}
+
+}
+
+.mat-button[disabled], .mat-button[disabled][disabled] {
+	background: none;
+}
+
+.mat-icon-button[disabled][disabled] {
+	background: none !important;
+}
+
+.btn-sm {
+	font-size: .8em;
+	line-height: 24px !important;
+	padding: 0 7px !important;
+	span {
+		top: 1px;
+		position: relative;
+	}
+}
+
+.mat-fab, .mat-mini-fab {
+
+	&.kill-drop-shadow {
+		box-shadow: none !important;
+	}
+
+}
+
+.mat-stroked-button {
+	border: 1px solid $blue !important;
+	color: $blue !important;
+}
+
+.fake-button {
+
+	box-shadow: none !important;
+
+	.mat-icon {
+		vertical-align: middle;
+	}
+
+	&.btn-sm {
+		font-size: .8em;
+		padding: 0 5px !important;
+	}
+
+	&.stroked-button {
+		border: 1px solid $blue;
+		box-sizing: border-box;
+	}
+
+}
+
+.mat-icon {
+
+	&.attach-icon {
+		transform:rotate(-45deg);
+	}
+
+}
+
+button, .fake-button {
+
+	border-radius: 2px !important;
+
+	&.no-style {
+		border:0 !important;
+	}
+
+	&.btn-sm {
+		&.no-style {
+			.mat-icon {
+				top: 0px;
+			}
+		}
+	}
+
+}
+
+.logout-btn {
+
+	height: 30px !important;
+	width: 30px !important;
+	top:-3px;
+	vertical-align: middle !important;
+	border-radius: 50% !important;
+
+	.mat-button-wrapper {
+
+		text-align: center !important;
+		padding: 0 !important;
+		line-height: 0 !important;
+
+		.mat-icon {
+			font-size: 18px !important;
+			position: relative;
+			top: -3px;
+			color: #fff;
+		}
+
+	}
+
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+
+.mat-menu-content {
+	.mat-menu-item[disabled]{
+		background: none !important;
+		opacity: 0.6;
+	}
+}
+
+.btn-caps{
+	text-transform: uppercase;
+}

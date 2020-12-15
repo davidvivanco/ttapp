@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title id="aria">{{ 'selectionAdmin.requirements.list' | translate }}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div *ngIf="searchResultsView" class="mb-m">
+                    <div class="clearfix mt-sm"></div>
+                    <a [routerLink]="['/roles']" class="fake-button btn-sm btn-stroked-primary">
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                        {{ 'genericMessages.backtoAllF' | translate }}
+                    </a>
+                </div>
+                <div class="loading-table" *ngIf="dataSource?.loading$ | async">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <mat-form-field *ngIf="dataSource?.total !== 0">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput [formControl]="globalFilter" [placeholder]="'genericMessages.filterTable' | translate" />
+                </mat-form-field>
+                <div *ngIf="dataSource?.total === 0">
+                    <p class="description no-items">
+                        <mat-icon>error_outline</mat-icon>
+                        {{ 'genericMessages.noResults' | translate }}
+                    </p>
+                </div>
+                <table matSort aria-describedby="aria" mat-table [dataSource]="dataSource" [ngClass]="{'d-none': dataSource?.total === 0}">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>{{'genericMessages.scales' | translate}}</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="mt-m mb-m">
+                                <strong>{{element.title}}</strong><br/>
+                                <small><strong>{{'genericMessages.desc' | translate}}:
+                                </strong>
+                                {{element.description ? (element.description) : ('genericMessages.noData' | translate )}}
+                                - </small>
+                                <small><strong>{{'selectionAdmin.scales.isUsed' | translate}}:
+                                </strong>
+                                {{element.assignedToOffer ? ( 'genericMessages.yes' | translate ) : ('genericMessages.no' | translate )}}
+                                </small>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element;let i = index;" class="text-right">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button *ngIf="permissions.actualizar_competences" mat-menu-item (click)="editElement(element)">
+                                    <mat-icon>tune</mat-icon>
+                                    <span>{{ 'genericMessages.edit' | translate }}</span>
+                                </button>
+                                <button *ngIf="permissions.eliminar_competences" mat-menu-item (click)="delete(element,i)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>{{ 'genericMessages.delete' | translate }}</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+                </table>
+                <mat-paginator [ngClass]="{'d-none': dataSource?.total === 0}" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [length]="dataSource?.total" showFirstLastButtons>
+
+                </mat-paginator>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

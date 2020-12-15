@@ -1,0 +1,7 @@
+<div class="row">
+  <div class="col-12 breadcrumb primary-color pt-m" *ngIf="data">
+    <span *ngFor="let item of data; let i = index">
+      <span class="gray">{{item}}</span><mat-icon class="maticonBreadcrumb" *ngIf="data.length>i+1">keyboard_arrow_right</mat-icon>
+    </span>
+  </div>
+</div>

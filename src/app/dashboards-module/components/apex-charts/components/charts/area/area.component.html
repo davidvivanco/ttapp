@@ -1,0 +1,18 @@
+<div class="chart">
+
+  <div id="chart">
+    <div class="row container">
+      <app-select *ngIf="chart.select" [filter]="chart.select" (onFilterChange)="filterChange($event,chart,i,j)">
+      </app-select>
+
+      <app-slider [sliderOptions]="chart.slider.sliderOptions" *ngIf="chart.slider"
+        (sliderChange)="sliderChange($event)"></app-slider>
+
+      <apx-chart *ngIf="showChart" #chartComponent [grid]="chartOptions.grid" [noData]="chartOptions.noData"
+        [yaxis]="chartOptions.yaxis" [stroke]="chartOptions.stroke" [title]="chartOptions.title"
+        [series]="chartOptions.series" [chart]="chartOptions.chart" [responsive]="chartOptions.responsive"
+        [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions" [xaxis]="chartOptions.xaxis"
+        [stroke]="chartOptions.stroke" [fill]="chartOptions.fill" [title]="chartOptions.title"
+        [tooltip]="chartOptions.tooltip" [legend]="chartOptions.legend"></apx-chart>
+    </div>
+  </div>

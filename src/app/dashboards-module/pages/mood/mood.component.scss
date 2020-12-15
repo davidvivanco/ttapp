@@ -1,0 +1,142 @@
+.info-icon-m{
+    transform: scale(3);
+    margin-right: 15px;
+}
+
+.info-icon-s{
+    transform: scale(2);
+    margin-right: 15px;
+}
+
+mat-expansion-panel-header{
+    padding: 0 50px;
+    
+}
+
+.personal-data{
+    display: flex;
+    align-items: center;
+    
+}
+
+.indicator-title{
+    font-size: 16px!important;
+    color: white;
+}
+
+.card-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+}
+
+.chart-container{
+    position: absolute;
+    right:  3px;
+    top: 5px;
+}
+
+.no-mp{
+padding: 0;
+margin: 0;
+padding-bottom: 5px;
+}
+
+.card-indicator-container {
+    width: 100%;
+    margin: 0!important;
+    padding: 0!important;
+    margin-top: 20px!important;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.card-indicator-container-mobile-one-column {
+    width: 100%;
+    margin: 0!important;
+    padding: 0!important;
+    margin-top: 20px!important;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    mat-card{
+        div{
+            mat-icon{
+                font-size: 18px;
+
+            }
+        
+            .info{
+                margin-left: 5px;
+            }
+        }
+    }
+}
+
+.card-indicator-container-mobile {
+    width: 100%;
+    margin: 0!important;
+    padding: 0!important;
+    margin-top: 20px!important;
+    display: grid;
+    grid-template-columns: auto auto ;
+    mat-card{
+        div{
+            mat-icon{
+                font-size: 18px;
+
+            }
+        
+            .info{
+                margin-left: 5px;
+            }
+        }
+    }
+}
+
+.indicator{
+    flex: 0 0 40%;
+    margin: 6px;
+    background-color: lightgray;
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: flex-start;
+    div {
+        flex: 100%;
+        display: flex;
+        align-items: center;
+          .info{
+            color: white;
+            margin-left: 12px;
+            transform: scale(1.5);
+            }
+   
+    }
+}
+
+.chart{
+     padding: 50px!important;
+}
+
+.state-container-s{
+    height: 170px;
+}
+
+.state-container-m{
+    height: 200px;
+}
+
+.state-container-l{
+    height: 220px;
+}
+
+.state-container-xl{
+    height: 250px;
+}
+
+

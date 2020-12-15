@@ -1,0 +1,27 @@
+.hide {
+    display: none;
+}
+
+.cv-items {
+
+    margin: 0;
+    padding: 0;
+
+    span {
+        font-size: 12px;
+        span.label {
+            margin-right: 5px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.28);
+        }
+    }
+
+    &:first-child span {
+        font-size: 14px;
+        font-weight: bold;
+        span.label {
+            display: none;
+        }
+    }
+
+}

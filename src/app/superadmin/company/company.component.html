@@ -1,0 +1,237 @@
+<app-breadcrumb breadcrumbs="Talentoo,Admin,{{ 'company.title' | translate }}"></app-breadcrumb>
+<div [formGroup]="formGroup">
+    <div formGroupName="company">
+        <div class="row">
+            <div class="col-12">
+                <mat-card class="card-dark-header about-me">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <mat-icon style="margin-right: 2px;">list</mat-icon>
+                            {{'company.basicInformation.title' | translate}}
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="f-bold">{{'company.basicInformation.companyName' | translate}}</label>
+                            </div>
+                            <div class="col-6">
+                                <mat-form-field>
+                                    <input matInput [value]="company.company.publicName" disabled [placeholder]="placeholder.companyName" formControlName="publicName" />
+                                    <mat-hint>{{'company.basicInformation.hint.notEditable' | translate}}</mat-hint>
+                                </mat-form-field>
+
+                            </div>
+
+                            <div formGroupName="companyInfo">
+                                <div formGroupName="mainInfo">
+                                    <div class="col-6 mt-margin">
+                                        <label class="f-bold">{{'company.basicInformation.companyUrl' | translate}}</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <mat-form-field>
+                                            <input matInput [value]="company.company.companyInfo.mainInfo.url" disabled [placeholder]="placeholder.companyUrl" formControlName="url" />
+                                            <mat-hint>{{'company.basicInformation.hint.notEditable' | translate}}</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-6 mt-margin">
+                                        <label class="f-bold">{{'company.basicInformation.companyPhone' | translate}}</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <mat-form-field>
+                                            <input matInput [value]="company.company.companyInfo.mainInfo.phone" [placeholder]="placeholder.companyPhone" formControlName="phone" />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <mat-card class="card-dark-header about-me">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <mat-icon style="margin-right: 2px;">gavel</mat-icon>
+                            {{'company.legalInformation.title' | translate}}
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                        <div formGroupName="companyInfo">
+                            <div class="row" formGroupName="legalInfo">
+                                <div class="col-6">
+                                    <label class="f-bold">{{'company.legalInformation.socialName' | translate}}</label>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field>
+                                        <input matInput [value]="company.company.companyInfo.legalInfo.businessName" [placeholder]="placeholder.social" formControlName="businessName" />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-6">
+                                    <label class="f-bold">{{'company.legalInformation.cif' | translate}}</label>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field>
+                                        <input matInput [value]="company.company.companyInfo.legalInfo.cif" [placeholder]="placeholder.cif" formControlName="cif" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <mat-card class="card-dark-header about-me">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <mat-icon style="margin-right: 2px;">home</mat-icon>
+                            {{'company.address.title' | translate}}
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div formGroupName="companyInfo">
+                            <div formGroupName="addressInfo">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="f-bold">{{'company.address.descriptionField' | translate}}</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div formGroupName="main">
+                                            <mat-form-field>
+                                                <textarea matInput
+                                                    [placeholder]="'company.address.placeholderMainAdress' | translate"
+                                                    [value]="company.company.companyInfo.addressInfo.main.street"
+                                                    formControlName="street" (change)="onChanges()"></textarea>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <mat-form-field>
+                                            <textarea matInput
+                                                [placeholder]="'company.address.placeholderSecondAdress' | translate"
+                                                [value]="company.company.companyInfo.addressInfo.optional"
+                                                formControlName="optional" (change)="onChanges()"></textarea>
+                                        </mat-form-field>
+
+                                        <div formGroupName="main">
+                                            <mat-form-field class="mt-margin">
+                                                <input matInput [placeholder]="'company.address.placeholderCity' | translate" [value]="company.company.companyInfo.addressInfo.main.city" formControlName="city" />
+                                            </mat-form-field>
+
+                                            <mat-form-field class="mt-margin">
+                                                <input matInput [placeholder]="'company.address.placeholderPostalCode' | translate" [value]="company.company.companyInfo.addressInfo.main.zipcode" formControlName="zipcode" />
+                                            </mat-form-field>
+
+                                            <mat-form-field class="mt-margin">
+                                                <input matInput [placeholder]="'company.address.placeholderProvince' | translate" [value]="company.company.companyInfo.addressInfo.main.province" formControlName="province" />
+                                            </mat-form-field>
+                                            <mat-form-field class="mt-margin">
+                                                <input matInput [placeholder]="'company.address.placeholderCountry' | translate" [value]="company.company.companyInfo.addressInfo.main.country" formControlName="country" />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <mat-card class="card-dark-header about-me">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <mat-icon style="margin-right: 2px;">vpn_key</mat-icon>
+                            {{'company.plan.title' | translate}}
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-icon class="mat-icon-sm with-text" style="margin-right: 7px;">work_outline
+                                </mat-icon>
+                                <label>
+                                    <span class="f-bold">{{'company.plan.plan' | translate}} </span> <span
+                                        class="type-plan gray">{{company.company.companyInfo.subscriptions.type}}</span>
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <mat-icon class="mat-icon-sm with-text" style="margin-right: 7px;">payment</mat-icon>
+                                <label>
+                                    <span class="f-bold">{{'company.plan.billing' | translate}} </span> <span
+                                        class="type-plan gray">{{company.company.companyInfo.subscriptions.billing === 'yearly' ? ('company.plan.yearly' | translate) :'company.plan.monthly' | translate}}</span>
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <mat-icon class="mat-icon-sm with-text" style="margin-right: 7px;">group</mat-icon>
+                                <label>
+                                    <span class="f-bold">{{'company.plan.numUsers' | translate}} </span> <span
+                                        class="type-plan gray">{{company.company.companyInfo.subscriptions.totalUsers}}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <mat-icon class="mat-icon-sm with-text" style="margin-right: 7px;">view_module
+                                </mat-icon>
+                                <label class="f-bold">
+                                    {{'company.plan.modules' | translate}}
+                                </label>
+                            </div>
+                            <div class="col-6 modulesPlan" *ngFor="let mod of modules"
+                                [ngClass]="{'moduleDesactivated' : (!mod.basic && company.company.companyInfo.subscriptions.type === 'basic')}">
+                                <div class="icon">
+                                    <mat-icon
+                                        *ngIf="!mod.basic && company.company.companyInfo.subscriptions.type === 'basic'"
+                                        class="red">close</mat-icon>
+                                    <mat-icon
+                                        *ngIf="!(!mod.basic && company.company.companyInfo.subscriptions.type === 'basic')"
+                                        class="green">check</mat-icon>
+                                </div>
+                                <div class="info">
+                                    <p style="margin: 0;" class="f-bold">
+                                        {{('modules.' + mod.name + '.' + company.company.companyInfo.subscriptions.type + '.name') | translate}}
+                                    </p>
+                                    <small
+                                        style="margin-top: 2px;">{{('modules.' + mod.name + '.' + company.company.companyInfo.subscriptions.type + '.description') | translate}}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+                    <div class="clearfix"></div>
+                    <mat-card-actions class="right">
+                        <button mat-stroked-button class="btn-stroked-primary"
+                            (click)="openCompanyModal()">{{'company.upgradeButton' | translate}}</button>
+                    </mat-card-actions>
+                    <div class="clearfix"></div>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 left">
+                <button mat-button (click)="openUnsubscribeCompanyModal()" class="red">
+                    <mat-icon>close</mat-icon> {{'company.deleteAccount' | translate}}
+                </button>
+            </div>
+            <div class="col-6 right">
+                <button mat-flat-button class="btn-primary"
+                    (click)="saveConf()">{{'genericMessages.save' | translate}}</button>
+            </div>
+        </div>
+
+    </div>
+</div>

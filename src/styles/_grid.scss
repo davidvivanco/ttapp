@@ -1,0 +1,201 @@
+// BASIC GRID SYSTEM
+// FROM -> https://simplegrid.io/
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
+
+.center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.justify {
+	text-align: justify;
+}
+
+.hidden-sm {
+	display: none;
+}
+
+// grid
+
+$width: 96%;
+$gutter: 4%;
+// $breakpoint-small: 33.75em; // 540px
+$breakpoint-small: 40em; // 640px
+// $breakpoint-med: 45em; // 720px
+// $breakpoint-med: 48em; // 768px
+$breakpoint-med: 768px;
+$breakpoint-large: 60em; // 960px
+$breakpoint-xlarge: 64em; // 1024px
+
+.container {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+
+	@media only screen and (min-width: $breakpoint-small) {
+		width: 100%;
+	}
+
+	@media only screen and (min-width: $breakpoint-large) {
+		width: 100%;
+		max-width: 60rem;
+	}
+
+	&.fluid {
+    max-width: none;
+    .row {
+      margin-left: auto;
+      margin-right: auto;
+    }
+	}
+}
+
+.row {
+	position: relative;
+  width: 100%;
+  max-width: 1080px;
+}
+
+.row [class^="col"] {
+	float: left;
+	// margin: 0.5rem 2%;
+	margin: 2%;
+  min-height: 0.125rem;
+}
+
+.row::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.org-chart-container, .iframe-container {
+	max-width: none !important;
+	.row {
+		max-width: none !important;
+		// max-width: 600px !important;
+	}
+	.iframe-wrapper {
+		width: 96%;
+		margin-left: 1%;
+		iframe {
+			height: calc(100vh - 220px) !important;
+		}
+	}
+}
+
+.container.fluid {
+	.row.iframe-wrapper, .row.fullWidth-wrapper {
+		width: 96%;
+		margin-left: 1%;
+		max-width: none;
+		iframe {
+			height: calc(100vh - 220px) !important;
+		}
+	}
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+	width: $width;
+}
+
+.col-1-sm { width:($width / 12) - ($gutter * 11 / 12); }
+.col-2-sm { width: ($width / 6) - ($gutter * 10 / 12); }
+.col-3-sm { width: ($width / 4) - ($gutter * 9 / 12); }
+.col-4-sm { width: ($width / 3) - ($gutter * 8 / 12); }
+.col-5-sm { width: ($width / (12 / 5)) - ($gutter * 7 / 12); }
+.col-6-sm { width: ($width / 2) - ($gutter * 6 / 12); }
+.col-7-sm { width: ($width / (12 / 7)) - ($gutter * 5 / 12); }
+.col-8-sm { width: ($width / (12 / 8)) - ($gutter * 4 / 12); }
+.col-9-sm { width: ($width / (12 / 9)) - ($gutter * 3 / 12); }
+.col-10-sm { width: ($width / (12 / 10)) - ($gutter * 2 / 12); }
+.col-11-sm { width: ($width / (12 / 11)) - ($gutter * 1 / 12); }
+.col-12-sm { width: $width; }
+
+// COLs XS
+@media only screen and (max-width: $breakpoint-small) {
+	.col-6-xs {
+		width: $width !important;
+	}
+}
+
+@media only screen and (min-width: $breakpoint-med) {
+
+	.col-1 { width:($width / 12) - ($gutter * 11 / 12); }
+	.col-2 { width: ($width / 6) - ($gutter * 10 / 12); }
+	.col-3 { width: ($width / 4) - ($gutter * 9 / 12); }
+	.col-4 { width: ($width / 3) - ($gutter * 8 / 12); }
+	.col-5 { width: ($width / (12 / 5)) - ($gutter * 7 / 12); }
+	.col-6 { width: ($width / 2) - ($gutter * 6 / 12); }
+	.col-7 { width: ($width / (12 / 7)) - ($gutter * 5 / 12); }
+	.col-8 { width: ($width / (12 / 8)) - ($gutter * 4 / 12); }
+	.col-9 { width: ($width / (12 / 9)) - ($gutter * 3 / 12); }
+	.col-10 { width: ($width / (12 / 10)) - ($gutter * 2 / 12); }
+	.col-11 { width: ($width / (12 / 11)) - ($gutter * 1 / 12); }
+	.col-12 { width: $width; }
+
+	.hidden-sm {
+		display: block;
+	}
+
+	ul.items-list {
+
+		li.item-listed {
+
+			$width: 100%;
+			$gutter: 0%;
+
+			.row {
+
+				width: 100%;
+
+				.item-content {
+					box-sizing: border-box;
+				}
+
+				.col-1 { width:($width / 12) - ($gutter * 11 / 12); }
+				.col-2 { width: ($width / 6) - ($gutter * 10 / 12); }
+				.col-3 { width: ($width / 4) - ($gutter * 9 / 12); }
+				.col-4 { width: ($width / 3) - ($gutter * 8 / 12); }
+				.col-5 { width: ($width / (12 / 5)) - ($gutter * 7 / 12); }
+				.col-6 { width: ($width / 2) - ($gutter * 6 / 12); }
+				.col-7 { width: ($width / (12 / 7)) - ($gutter * 5 / 12); }
+				.col-8 { width: ($width / (12 / 8)) - ($gutter * 4 / 12); }
+				.col-9 { width: ($width / (12 / 9)) - ($gutter * 3 / 12); }
+				.col-10 { width: ($width / (12 / 10)) - ($gutter * 2 / 12); }
+				.col-11 { width: ($width / (12 / 11)) - ($gutter * 1 / 12); }
+				.col-12 { width: $width; margin:2% 0;}
+
+			}
+
+		}
+
+	}
+}
+
+.clearfix {
+	clear: both;
+	width: 100%;
+	height: 1px;
+	margin-bottom: -1px;
+	display: inline-block;
+}

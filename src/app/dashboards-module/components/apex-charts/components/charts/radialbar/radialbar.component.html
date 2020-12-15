@@ -1,0 +1,9 @@
+<div class="chart" *ngIf="series">
+
+  <app-toggle-merge (onToggle)="updateOptions($event)" [row]="row" *ngIf="row?.toggle"></app-toggle-merge>
+  <mat-card class="mt-m">
+    <apx-chart #chartComponent color="primary" [noData]="chartOptions.noData" [series]="chartOptions.series"
+      [chart]="chartOptions.chart" [plotOptions]="chartOptions.plotOptions" [title]="chartOptions.title"
+      [labels]="chartOptions.labels" [fill]="chartOptions.fill"></apx-chart>
+  </mat-card>
+</div>

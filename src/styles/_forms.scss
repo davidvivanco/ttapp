@@ -1,0 +1,167 @@
+.mat-form-field {
+    width: 100%;
+}
+
+.mat-form-field.mat-focused {
+
+    .mat-form-field-ripple {
+        background-color: $gray !important;
+    }
+
+}
+
+.mat-form-field-invalid, .mat-form-field-invalid.mat-focused {
+    .mat-form-field-ripple {
+        background-color: $red !important;
+    }
+}
+
+.mat-checkbox-indeterminate, .mat-checkbox-checked  {
+    &.gray {
+        .mat-checkbox-background{
+            background: $l-gray !important;
+        }
+    }
+}
+
+.mat-checkbox.sm-checkbox {
+
+        font-size: .8em;
+
+        .mat-checkbox-inner-container {
+            height: 14px;
+            width: 14px;
+            margin-right: 5px;
+        }
+
+}
+
+// DISABLED INPUTS
+.mat-input-element:disabled {
+	color: #333F48 !important;
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline, .mat-form-field-underline {
+	background-image: none;
+	background-color: rgba(0,0,0,0.12) !important;
+}
+
+.dateView {
+	width: 48% !important;
+	margin-right: 2%;
+	.mat-icon {
+		width: 1em !important;
+		font-size: 1em;
+		color: $gray;
+		position: relative;
+		top: 3px;
+	}
+}
+
+.search-input {
+
+    .mat-form-field {
+
+        font-size: 14px;
+        width: calc(100% - 98px);
+        margin-right: 10px;
+
+        .mat-form-field-prefix, .mat-form-field-suffix {
+
+            .with-icon {
+
+                .mat-icon {
+                    font-size: 1.5em;
+                    margin-right: 5px;
+                    position: relative;
+                    top: 5px;
+                    color: $l-gray !important;
+                }
+
+            }
+
+        }
+
+    }
+
+    .mat-flat-button {
+        position: relative;
+        top: -4px;
+    }
+}
+
+textarea.mat-input-element {
+	line-height: 20px;
+	font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+textarea.comment {
+    background: lighten($light,1%);
+    border-radius: 3px;
+    padding:15px !important;
+    display: block;
+    white-space: initial !important;
+    text-overflow: initial;
+    font-size: .9em;
+	line-height: 1.4em;
+	font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+textarea.cv-textarea {
+	font-size:12px !important;
+}
+
+// FIREFOX STYLES
+@-moz-document url-prefix() {
+	// TEXTAREAS LINE BREAKS
+	textarea.comment,
+	textarea.comment-m,
+	.items-list .item-listed textarea.comment-m,
+	.votes-list .item-listed textarea.comment-m,
+	.notifications-list .item-listed textarea.comment-m,
+	.recognition-users-list .item-listed textarea.comment-m,
+	.processes-list .item-listed textarea.comment-m,
+	.notifications-list .notification textarea.comment-m {
+	  white-space: pre !important;
+	}
+}
+
+.mat-select .mat-form-field-should-float {
+	.mat-form-field-label, mat-form-field-required-marker {
+		display: none !important;
+	}
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.app-error-message {
+    position: relative;
+    top: -14px;
+}
+
+.daterange {
+    
+}
+
+.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
+    background-color: $l-gray !important;
+}
+
+.mat-calendar-body-selected {
+    background: $secondary;
+}
+
+.mat-select-value-text .mat-icon {
+    font-size: 15px;
+    height: 15px !important;
+    width: 15px !important;
+    position: relative;
+    float: left;
+    margin-right: 5px;
+}
+
+.mat-checkbox-label {
+    white-space: normal;
+}

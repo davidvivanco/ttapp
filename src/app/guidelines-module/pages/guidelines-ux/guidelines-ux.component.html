@@ -1,0 +1,132 @@
+<div class="row">
+  <app-breadcrumb breadcrumbs="Talentoo,Guía de estilo,UX"></app-breadcrumb>
+  <div class="col-12">
+    <a class="fake-button btn-stroked-primary btn-sm" [routerLink]="'.'" [fragment]="'modularizar'">Enlace para Ir a
+      "modularizar"</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>delete</mat-icon> Borrar elementos / Dar de baja
+    </h3>
+    <div class="description action">
+      Cada vez que se haga click en borrar o dar de baja se lanzará la modal de confirmación correspondiente. Explicando
+      al usuario las consecuencias de la acción (en el caso de borrar no se puede deshacer).
+      <div class="clearfix"></div>
+      <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="deleteItem()">
+        <mat-icon>delete</mat-icon> Borrar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>notifications</mat-icon> Notificaciones / Toast
+    </h3>
+    <p class="description action">
+      Algunas acciones generan notificaciones o toasts en la aplicación.
+    </p>
+    <div class="description action">
+      <strong>Notificaciones</strong><br><br>
+      Las notificaciones se producen cuando un usuario recibe una acción/comunicación bien desde el back o desde otro
+      usuario. Como por ejemplo cuando un admin actualice el cv de un usuario.<br>
+      En el icono de la campana del header aparecerá el aviso de nueva notificación, al clikar en el icono verá una
+      breve descripción de la notificación y un botón para verla. Si además el usuario está conectado en la aplicación
+      visualizará también un toast indicándole lo sucedido.
+      <div class="clearfix"></div>
+      <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="notification()">
+        Test
+      </button>
+      <button mat-icon-button class="primary-color notifications-bell" title="Notificaciones">
+        <mat-icon [matBadgeHidden]="!showNotifBadge" matBadge="1" matBadgeColor="warn">
+          notifications
+        </mat-icon>
+      </button>
+    </div>
+    <div class="clearfix"></div>
+    <div class="description action">
+      <strong>Toasts</strong><br><br>
+      Los toasts se disparán cuando el usuario ha realizado alguna acción sobre la aplicación y recibe una respuesta de
+      back (éxito, error, etc...). Por ejemplo, cuando actualiza sus datos personales o edita una ficha de puesto.
+      <div class="clearfix"></div>
+      <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="successToast()">
+        Éxito
+      </button>
+      <button mat-flat-button class="btn-secondary btn-sm mr-m" (click)="errorToast()">
+        Error
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>access_time</mat-icon> Loaders
+    </h3>
+    <div class="description action">
+      Para cargas de datos en las que el back puede tardar en dar respuesta utilizaremos el spinner / loader para
+      indicar la espera. En caso de no recibir datos se añadirá un texto explicándolo.<br>
+      <br><strong>Ejemplo:</strong> Resultados de búsqueda o tablas.
+      <div class="clearfix"></div>
+      <mat-spinner class="center"></mat-spinner>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>fingerprint</mat-icon> Permisos y roles
+    </h3>
+    <div class="description action">
+      Que un usuario pueda o no realizar alguna acción, o tener acceso a según que partes de esta, dependerá siempre de
+      los permisos y rol que el usuario tenga.<br>
+      <br><strong>Ejemplo:</strong> Un usuario sin permiso para editar fichas de puesto no debería tener esa opción en el menú de
+      admin aunque tenga el rol de admin.
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>settings</mat-icon>Configuración por empresa
+    </h3>
+    <div class="description action">
+      No todas las instancias de Talentoo disponen de las mismas opciones o módulos. Siempre hay que desarrollar
+      teniendo esto en cuenta para que al desplegar cada instancia se adapte al cliente que tenga por configuración.
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>speaker_notes</mat-icon> Traducciones o textos por instancia
+    </h3>
+    <div class="description action">
+      Al crear nuevos componentes o módulos deberemos tener en cuenta incluir los textos en los idiomas correspondientes
+      (json de traducciones en back).<br>
+      Si una instancia tuviera textos particulares se incluirían en los archivos de traducciones de dicha empresa.
+    </div>
+  </div>
+</div>
+
+<div class="row" id="modularizar">
+  <div class="col-12">
+    <h3>
+      <mat-icon>view_module</mat-icon> Modularizar la aplicación
+    </h3>
+    <div class="description action">
+      Para evitar cargar toda la aplicación completa en todos los clientes tenemos que modularizar la misma y utilizar
+      lazy loading. Así por configuración sabremos que módulos cargará o no el cliente.<br>
+      <br><strong>Ejemplo:</strong> Fichajes, guía de estilos o CV.
+    </div>
+  </div>
+</div>

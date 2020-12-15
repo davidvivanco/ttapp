@@ -1,0 +1,8 @@
+<mat-form-field *ngIf="filter" floatLabel="never">
+  <mat-label>{{filter.options[0].label}}</mat-label>
+  <mat-select (selectionChange)="filterChange($event)">
+    <mat-option *ngFor="let o of filter.options" [value]="o.value">
+      {{o.label}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

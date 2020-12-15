@@ -1,0 +1,46 @@
+.component {
+    display: inline-flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 0 10px 10px;
+    background-color: white;
+    .radio-field, .checkbox-field, .decision-tree-field {
+        display: flex;
+        flex-direction: column;
+    }
+    .decision-tree-field {
+        mat-hint {
+            padding-top: 10px;
+        }
+    }
+    .result-block {
+        display: flex;
+        align-items: center;
+        .clear-button {
+            padding: 25px 20px 0 20px;
+        }
+        .result-icon {
+            padding: 20px 30px 0 20px;
+        }
+        .result-input {
+            width: 90px;
+        }
+    }
+    h4 {
+        margin-block-end: 0;
+        margin-block-start: 0;
+    }
+    .date-range {
+        mat-form-field {
+            width: auto;
+        }
+        .date-range-components {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .actually-field {
+            margin-top: 10px;
+        }
+    }
+}

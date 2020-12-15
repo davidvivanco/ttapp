@@ -1,0 +1,154 @@
+<div class="close-dialog"><button mat-flat-button class="text-right" (click)="close()"><em
+            class="material-icons">close</em></button></div>
+<h1 mat-dialog-title>
+    {{isNew ? ('genericMessages.add' | translate) : 'genericMessages.edit' |translate}}
+</h1>
+<div [formGroup]="formGroup">
+    <div class="row" *ngIf="data.type === 'row'">
+        <div class="col-12">
+            <mat-form-field>
+                <input matInput placeholder="{{'surveysAdmin.form.modal.placeholders.rowTitle' | translate}}"
+                    formControlName="name">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+                <mat-error *ngIf="formGroup.controls.name.invalid">
+                    {{'genericMessages.required' | translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="data.type === 'col'">
+        <div class="col-12">
+            <mat-form-field>
+                <input matInput placeholder="{{'surveysAdmin.form.modal.placeholders.colTitle' | translate}}"
+                    formControlName="name">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+                <mat-error *ngIf="formGroup.controls.name.invalid">
+                    {{'genericMessages.required' | translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="data.type === 'col'">
+        <div class="col-6">
+            <mat-form-field>
+                <input matInput placeholder="{{'surveysAdmin.form.modal.placeholders.urlGraph' | translate}}"
+                    formControlName="mongoChartUrl">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+                <mat-error *ngIf="formGroup.controls.name.invalid">
+                    {{'genericMessages.required' | translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field>
+                <mat-label>{{'surveysAdmin.form.modal.placeholders.size' | translate}}</mat-label>
+                <mat-select formControlName="size" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let s of sizes" [value]="s">
+                        {{s}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.controls.size.invalid">
+                    {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+                <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <mat-card class="card-dark-header mt-l" *ngIf="isAvailablePositionsLoaded | async">
+            <mat-card-header>
+                <mat-card-title>{{'surveysAdmin.form.modal.filters' | translate}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row mt-l mb-m">
+                    <div class="col-12">
+                        <div class="clearfix mt-l"></div>
+                        <p class="f-bold kv-m">· {{'cardPositionAdmin.modal.addOtherFemale' | translate}}</p>
+                    </div>
+                    <div class="col-10">
+                        <mat-form-field floatLabel="never">
+                            <mat-select #positionSelect
+                                [placeholder]="'cardPositionAdmin.modal.placeholders.aviablePositions' | translate">
+                                <ng-container *ngFor="let p of availablePositions">
+                                    <mat-option *ngIf="p.hide === false || p.hide === undefined || p.hide === null"
+                                        value="{{p._id}}">
+                                        {{p.name}}
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button
+                            (click)="saveNewChip(positionSelect.value, 'positions', 'array', [positionSelect], availablePositions)"
+                            [disabled]="!positionSelect.value">
+                            <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                        </button>
+                    </div>
+                    <div class="col-12 mb-sm" *ngIf="card['positions'].length">
+                        <p class="f-bold">· {{'cardPositionAdmin.modal.positionsAdded' | translate}}</p>
+                        <mat-chip-list #chipList class="tags-list">
+                            <mat-chip *ngFor="let position of card['positions']; let i = index" [selectable]="true"
+                                [removable]="true"
+                                (removed)="deleteMatChip(position, 'positions', 'array', availablePositions)">
+                                {{position.name}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </mat-card-content>
+            <div class="clearfix mt-sm"></div>
+        </mat-card>
+
+    </div>
+
+    <div class="row mt-l mb-m" *ngIf="data.type === 'col' && dashboardFilters">
+        <div class="col-12">
+            <div class="clearfix mt-l"></div>
+            <p class="f-bold kv-m">· {{'surveysAdmin.form.titleDashboardFilters' | translate}}</p>
+        </div>
+        <div class="col-10">
+            <mat-form-field floatLabel="never">
+                <mat-select #dashboardFiltersSelect
+                    [placeholder]="'surveysAdmin.form.defaultDashboardFiltersSelect' | translate">
+                    <ng-container *ngFor="let df of dashboardFilters">
+                        <mat-option *ngIf="df.type === 'editable'" value="{{df.id}}">
+                            {{df.name}}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+            <small>{{'surveysAdmin.form.modal.filtersInfo' | translate}}</small>
+        </div>
+        <div class="col-2">
+            <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button
+                (click)="saveNewChip(dashboardFiltersSelect.value, [dashboardFiltersSelect])"
+                [disabled]="dashboardFiltersSelect && !dashboardFiltersSelect.value">
+                <mat-icon>add</mat-icon> {{'surveysAdmin.form.addDashboardFilters' | translate}}
+            </button>
+        </div>
+
+        <div class="col-12 mb-sm" *ngIf="dashboardFiltersSelected.length">
+            <p class="f-bold">· {{'surveysAdmin.form.dashboardFiltersAdded' | translate}}</p>
+            <mat-chip-list #chipList class="tags-list">
+                <mat-chip *ngFor="let dfs of dashboardFiltersSelected; let i = index" [selectable]="true"
+                    [removable]="true" (removed)="deleteMatChip(dfs.id)">
+                    {{dfs.name}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">{{'genericMessages.cancel' | translate}}</button>
+    <button mat-flat-button class="btn-primary" [disabled]="formGroup && formGroup.touched && formGroup?.invalid"
+        (click)="submit()" cdkFocusInitial>{{'genericMessages.save' | translate}}</button>
+</div>

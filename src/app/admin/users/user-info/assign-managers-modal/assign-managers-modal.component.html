@@ -1,0 +1,76 @@
+<div class="close-dialog">
+    <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color">{{'userInfo.managers.modal.title' | translate}}</h1>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-12">
+            <mat-card class="card-dark-header">
+                <mat-card-header>
+                    <mat-card-title id="aria">{{'usersAdmin.usersList' | translate}}</mat-card-title>
+
+                    <button title="Realizar búsqueda" mat-flat-button (click)="openSearchEmployeeModal()" matTooltip="{{'genericMessages.makeSearch' | translate}}" matTooltipPosition="below" class="pull-right btn-primary with-icon no-bg">
+            <mat-icon>search</mat-icon>
+            {{'genericMessages.search' | translate}}
+          </button>
+
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="loading-table" *ngIf="dataSource.loading$ | async">
+                        <mat-spinner></mat-spinner>
+                    </div>
+
+                    <table matSort aria-describedby="aria" mat-table [dataSource]="dataSource">
+                        <ng-container matColumnDef="photo" sticky>
+                            <th mat-header-cell scope="col" *matHeaderCellDef>{{'usersAdmin.avatar' | translate}}</th>
+                            <td mat-cell *matCellDef="let element" class="text-left">
+                                <div class="avatar-sm">
+                                    <app-avatar [user]="element"></app-avatar>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="personalData.name">
+                            <th mat-header-cell scope="col" *matHeaderCellDef mat-sort-header>{{'genericMessages.name' | translate}}</th>
+                            <td mat-cell *matCellDef="let element"><strong>{{element.personalData.name}}</strong></td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="personalData.lastName">
+                            <th mat-header-cell scope="col" *matHeaderCellDef mat-sort-header>{{'genericMessages.lastName' | translate}}</th>
+                            <td mat-cell *matCellDef="let element"> {{element.personalData.lastName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="assign">
+                            <th mat-header-cell scope="col" *matHeaderCellDef>{{'userInfo.managers.modal.assign' | translate}}</th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-checkbox [value]="element" (change)="toggleAssign($event)" [checked]="userManagers[element._id]" *ngIf="element.id !== data.userId"></mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                    </table>
+
+                    <div *ngIf="dataSource.totalEmployees === 0">
+                        <p class="description no-items">
+                            <mat-icon>error_outline</mat-icon>
+                            {{'genericMessages.noResultsSimple' | translate}}
+                        </p>
+                    </div>
+                    <div *ngIf="search !== null || dataSource.totalEmployees === 0">
+                        <div class="clearfix mt-sm"></div>
+                        <a (click)="backToAll()" class="fake-button btn-sm btn-stroked-primary">
+                            <mat-icon>keyboard_arrow_left</mat-icon> {{'genericMessages.backToAllM' | translate}}
+                        </a>
+                    </div>
+
+                    <mat-paginator [pageSize]="5" [length]="dataSource.totalEmployees" showFirstLastButtons></mat-paginator>
+                </mat-card-content>
+                <div class="clearfix"></div>
+                <mat-card-actions class="right">
+                    <button mat-button class="mr-sm" (click)="close()">{{'genericMessages.close' | translate}}</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</mat-dialog-content>

@@ -1,0 +1,21 @@
+<div class="row pt-m">
+  <div class="col-12 breadcrumb" >
+    <strong>Talentoo</strong>
+    <ng-container *ngFor="let title of breadcrumb">
+      &gt; <strong class="gray">{{title}}</strong>
+    </ng-container>
+  </div>
+  <div *ngIf="addButton">
+    <button  (click)="onClickAdd()" mat-flat-button class="btn-primary btn-sm">
+      <mat-icon class="mr-sm">add_circle_outline</mat-icon>{{addButton}}
+    </button>
+  </div>
+  <div class="col-12">
+    <div fxLayout="row" fxLayoutAlign="center" *ngIf="loading else elseBlock">
+      <mat-spinner></mat-spinner>
+    </div>
+    <ng-template #elseBlock>
+      <ng-content></ng-content>
+    </ng-template>
+  </div>
+</div>

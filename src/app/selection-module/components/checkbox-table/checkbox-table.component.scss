@@ -1,0 +1,45 @@
+.description-center {
+    display: flex;
+    align-self: center;
+}
+
+.tags-list-table {
+    margin-top: 15px;
+    display: inherit;
+
+    &.competence {
+        .mat-chip.mat-standard-chip {
+            background: #1166aa;
+            color: #fff;
+        }
+    }
+
+    &.knowledge {
+        .mat-chip.mat-standard-chip {
+            background: #f57c00;
+            color: #fff;
+        }
+    }
+
+    .mat-chip.mat-standard-chip {
+        .mat-chip-remove {
+            color: #fff;
+            opacity: 1;
+        }
+    }
+
+    .mat-chip-list-wrapper .mat-standard-chip,
+    .mat-chip-list-wrapper input.mat-input-element {
+        padding: 14px 12px !important;
+    }
+}
+
+@media only screen and (max-width: 508px){
+    td {
+        padding-top: 10px !important;
+        div {
+            margin: 8px 0;
+        }
+    }
+
+}

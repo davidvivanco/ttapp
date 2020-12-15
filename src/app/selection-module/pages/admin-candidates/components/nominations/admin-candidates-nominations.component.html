@@ -1,0 +1,102 @@
+<div class="row">
+    <app-buttons [component]="'candidatures'" (onCandidatures)="goToCandidatures()" (onCurriculum)="goToCurriculum()" (onPersonalData)="goToPersonalData()" (onBack)=goBack()></app-buttons>
+    <app-employee-label *ngIf="employeeFromAdmin" [user]="employeeFromAdmin"></app-employee-label>
+
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>speaker_notes</mat-icon>
+                </mat-card-title>
+                <p id="aria">{{'genericMessages.candidatures' | translate}}</p>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <div *ngIf="searchResultsView" class="mb-m">
+                    <div class="clearfix mt-sm"></div>
+                    <a [routerLink]="['/roles']" class="fake-button btn-sm btn-stroked-primary">
+                        <mat-icon>keyboard_arrow_left</mat-icon>{{'genericMessages.back' | translate}}
+                    </a>
+                </div>
+                <div class="loading-table" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <mat-form-field>
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput placeholder="Filtrar elementos">
+                </mat-form-field>
+                <div *ngIf="dataSource.filteredData && dataSource.filteredData.length === 0 && !loading">
+                    <p class="description no-items">
+                        <mat-icon>error_outline</mat-icon>
+                        {{'genericMessages.noElements' | translate}}
+                    </p>
+                </div>
+                <table matSort mat-table aria-describedby="aria" [dataSource]="dataSource" *ngIf="dataSource.data !== null && dataSource.filteredData.length !== 0">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>Ofertas</th>
+                        <td mat-cell *matCellDef="let element">
+                            <strong>{{element.offer.title}}</strong><br>
+                            <small><strong>{{'genericMessages.position' | translate}}: </strong>
+                {{element.offer.position ? element.offer.position : ('genericMessages.noData' | translate )}} - </small>
+                            <small><strong>{{'genericMessages.publication' | translate}}: </strong>
+                {{element.offer.startsAt ? (element.offer.startsAt | date:'dd/MM/yy') : ('genericMessages.noData' | translate )}} - </small>
+                            <small><strong>{{'genericMessages.expiration' | translate}}: </strong>
+                {{element.offer.finishAt ? (element.offer.finishAt | date:'dd/MM/yy') : ('genericMessages.noData' | translate )}} - </small>
+                            <small><strong>{{'genericMessages.vacancies' | translate}}: </strong>
+                {{element.offer.vacancies ? element.offer.vacancies : ('genericMessages.noData' | translate )}}</small>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>Estado</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div [ngSwitch]="element.offer.state">
+                                <div *ngSwitchCase="'incomplete'" class="fake-mat-chip-sm warning">
+                                    {{'genericMessages.uncompleted' | translate}}
+                                </div>
+
+                                <div *ngSwitchCase="'closed'" class="fake-mat-chip-sm">
+                                    {{'genericMessages.closed' | translate}}
+                                </div>
+
+                                <div *ngSwitchCase="'cancelled'" class="fake-mat-chip-sm">
+                                    {{'genericMessages.canceled' | translate}}
+                                </div>
+
+                                <div *ngSwitchCase="'extended'" class="fake-mat-chip-sm">
+                                    {{'genericMessages.extended' | translate}}
+                                </div>
+
+                                <div *ngSwitchCase="'published'" class="fake-mat-chip-sm success">
+                                    {{'genericMessages.valid' | translate}}
+                                </div>
+                            </div>
+
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="text-right">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="checkCandidature(element)">
+                  <mat-icon>visibility</mat-icon>
+                  <span>Baremar</span>
+                </button>
+                                <button mat-menu-item (click)="stateCandidature(element)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Estado candidatura</span>
+                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                </table>
+                <mat-paginator [pageSize]="pageSize" [length]="total" showFirstLastButtons></mat-paginator>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>

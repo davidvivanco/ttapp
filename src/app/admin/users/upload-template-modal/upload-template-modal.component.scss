@@ -1,0 +1,9 @@
+.loading-section, .drop-section, .my-drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.my-drop-zone { border: dotted 3px lightgray; height: 100px; flex-direction: column;}
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+
+

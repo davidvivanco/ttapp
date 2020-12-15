@@ -1,0 +1,150 @@
+<app-breadcrumb breadcrumbs="Talentoo,{{ 'usersAdmin.title' | translate }}"></app-breadcrumb>
+<div class="row hide-mobile">
+    <div class="col-12" *ngIf="environment.services.massiveUserLoader">
+        <button mat-flat-button (click)="openAddSingleUser()" *ngIf="permissions.upsert_masivo_employees" class="btn-primary btn-sm mr-m">
+            <mat-icon class="mr-sm">add_circle_outline</mat-icon>
+            <div class="hide-md">{{'usersAdmin.addUser' | translate}}</div>
+        </button>
+        <button mat-stroked-button (click)="downloadExcelTemplate()" *ngIf="permissions.upsert_masivo_employees" class="btn-stroked-primary btn-sm mr-m">
+            <mat-icon class="mr-sm">cloud_download</mat-icon>
+            <div class="hide-md">{{'usersAdmin.downloadTemplate' | translate}}</div>
+        </button>
+        <button mat-stroked-button (click)="uploadExcelTemplate()" *ngIf="permissions.upsert_masivo_employees" class="btn-stroked-primary btn-sm mr-m">
+            <mat-icon class="mr-sm">cloud_upload</mat-icon>
+            <div class="hide-md">{{'usersAdmin.loadUsers' | translate}}</div>
+        </button>
+    </div>
+</div>
+<div class="row show-mobile">
+    <div class="col-12">
+        <button class="btn-primary btn-sm" mat-button [matMenuTriggerFor]="resp">
+            <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+        </button>
+        <mat-menu #resp="matMenu">
+            <button mat-menu-item (click)="openAddSingleUser()" *ngIf="permissions.upsert_masivo_employees"
+                class="btn-stroked-primary btn-sm">
+                <mat-icon class="mr-sm">add_circle_outline</mat-icon>
+                <div class="hide-md">{{'usersAdmin.addUser' | translate}}</div>
+            </button>
+            <button mat-menu-item (click)="downloadExcelTemplate()" *ngIf="permissions.upsert_masivo_employees"
+                class="btn-stroked-primary btn-sm">
+                <mat-icon class="mr-sm">cloud_download</mat-icon>
+                <div class="hide-md">{{'usersAdmin.downloadTemplate' | translate}}</div>
+            </button>
+            <button mat-menu-item (click)="uploadExcelTemplate()" *ngIf="permissions.upsert_masivo_employees"
+                class="btn-stroked-primary btn-sm">
+                <mat-icon class="mr-sm">cloud_upload</mat-icon>
+                <div class="hide-md">{{'usersAdmin.loadUsers' | translate}}</div>
+            </button>
+        </mat-menu>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title id="aria">{{'usersAdmin.usersList' | translate}}</mat-card-title>
+
+                <button title="Realizar búsqueda" mat-flat-button (click)="openSearchEmployeeModal()" [matTooltip]="'genericMessages.makeSearch' | translate" matTooltipPosition="below" class="pull-right btn-primary with-icon no-bg">
+                    <mat-icon>search</mat-icon> {{'genericMessages.search' | translate}}
+                </button>
+
+            </mat-card-header>
+            <mat-card-content class="overflow-x-auto">
+
+                <div class="loading-table" *ngIf="dataSource.loading$ | async">
+                    <mat-spinner></mat-spinner>
+                </div>
+
+                <table matSort mat-table aria-describedby="aria" [dataSource]="dataSource">
+                    <ng-container matColumnDef="photo" sticky>
+                        <th mat-header-cell scope="col" *matHeaderCellDef>{{'usersAdmin.avatar' | translate}}</th>
+                        <td mat-cell *matCellDef="let element" class="text-left">
+                            <div class="avatar-sm">
+                                <app-avatar [user]="element"></app-avatar>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="personalData.name">
+                        <th mat-header-cell scope="col" *matHeaderCellDef mat-sort-header>{{'genericMessages.name' | translate}}</th>
+                        <td mat-cell *matCellDef="let element">
+                            <strong>{{element.personalData.name}}</strong>
+                            <small class="dropDate" *ngIf="element.dropDate">{{'usersAdmin.dropDate' | translate}}{{element.dropDate |date:'mediumDate':'+0200':lang}}
+                            </small>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="personalData.lastName">
+                        <th mat-header-cell scope="col" *matHeaderCellDef mat-sort-header>{{'genericMessages.lastName' | translate}}</th>
+                        <td mat-cell *matCellDef="let element"> {{element.personalData.lastName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell scope="col" *matHeaderCellDef mat-sort-header>{{'usersAdmin.position' | translate}}</th>
+                        <td mat-cell *matCellDef="let element"> {{element.position.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="roles">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>Roles</th>
+                        <td mat-cell *matCellDef="let element"> {{element.rolesString}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openEditPersonalData(element)" *ngIf="environment.services.massiveUserLoader">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>{{'usersAdmin.editData' | translate}}</span>
+                                </button>
+                                <button mat-menu-item (click)="editUserInfo(element)" *ngIf="environment.services.massiveUserLoader">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>{{'usersAdmin.editUserInfo' | translate}}</span>
+                                </button>
+                                <button mat-menu-item (click)="seeUserCardPosition(element.cardPosition)" *ngIf="element.cardPosition && element.cardPosition.name">
+                                    <mat-icon>assignment_ind</mat-icon>
+                                    <span>{{'genericMessages.seeCardPosition' | translate}}</span>
+                                </button>
+                                <button mat-menu-item (click)="openAssignRolModal(element)">
+                                    <mat-icon>account_box</mat-icon>
+                                    <span>{{'usersAdmin.assignRole' | translate}}</span>
+                                </button>
+                                <button mat-menu-item (click)="unsubscribeUser(element)" *ngIf="environment.services.massiveUserLoader && !element.dropDate">
+                                    <mat-icon>delete_outline</mat-icon>
+                                    <span>{{'usersAdmin.unsubscribeUser' | translate}}</span>
+                                </button>
+                                <button mat-menu-item (click)="registerUser(element)" *ngIf="environment.services.massiveUserLoader && element.dropDate">
+                                    <mat-icon>add</mat-icon>
+                                    <span>{{'usersAdmin.registerUser' | translate}}</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                </table>
+
+                <div *ngIf="dataSource.totalEmployees === 0">
+                    <p class="description no-items">
+                        <mat-icon>error_outline</mat-icon>
+                        {{'genericMessages.noResultsSimple' | translate}}
+                    </p>
+                </div>
+                <div *ngIf="search !== null || dataSource.totalEmployees === 0">
+                    <div class="clearfix mt-sm"></div>
+                    <a (click)="backToAll()" class="fake-button btn-sm btn-stroked-primary">
+                        <mat-icon>keyboard_arrow_left</mat-icon> {{'genericMessages.backToAllM' | translate}}
+                    </a>
+                </div>
+
+                <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [length]="dataSource.totalEmployees" showFirstLastButtons></mat-paginator>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

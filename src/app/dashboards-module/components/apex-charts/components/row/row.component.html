@@ -1,0 +1,64 @@
+<app-select *ngIf="row.select" [filter]="row.select" (onFilterChange)="filterChange($event,chart,i,j)">
+</app-select>
+
+<app-slider [sliderOptions]="row?.slider?.sliderOptions" *ngIf="row.slider" (sliderChange)="sliderChange($event)">
+</app-slider>
+
+<app-toggle (onToggle)="toggle($event)" [toogleOptions]="row.toggle" *ngIf="row?.toggle?.type === 'toggle'">
+</app-toggle>
+
+<div class="pl-m">
+    <mat-chip-list *ngIf="row.slider" aria-label="{{label}}">
+        <mat-chip color="primary" selected>{{label}}</mat-chip>
+    </mat-chip-list>
+</div>
+
+<div *ngIf="!row.toggle || row?.toggle?.type !== 'merge' ">
+    <div *ngFor="let chart of row.cols;let j = index">
+        <mat-chip-list class="p-m" *ngIf="chart.chip" aria-label="{{label}}">
+            <mat-chip color="primary" selected>{{chart.chip}}</mat-chip>
+        </mat-chip-list>
+        <app-description [description]="desc" *ngIf="index === 0  && desc" class="col-6"></app-description>
+
+        <div [class]="chart.class" [ngSwitch]="chart?.chartType">
+            <div *ngSwitchCase="'radialbar'">
+                <app-radialbar [series]="chart.data.series">
+                </app-radialbar>
+            </div>
+
+            <div *ngSwitchCase="'donut'">
+                <app-pie [chart]="chart" [series]="chart.data.series"></app-pie>
+            </div>
+
+            <div *ngSwitchCase="'grid'">
+                <app-grid [chart]="chart" [dashboardId]="dashboard._id"></app-grid>
+            </div>
+
+            <div *ngSwitchCase="'sparklines'">
+                <app-sparklines [chart]="chart">
+                </app-sparklines>
+            </div>
+
+            <div *ngSwitchCase="'bar'">
+                <app-bar [filter]="filter" [dashboardId]="dashboard._id" [chart]="chart"></app-bar>
+            </div>
+
+            <div *ngSwitchCase="'heatmap'">
+                <app-heatmap [filter]="filter" [chart]="chart">
+                </app-heatmap>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="row?.toggle?.type === 'merge'">
+    <app-description [legend]="dashboard.dashboard.legend" [description]="desc" *ngIf="index === 0 && desc" class="col-6">
+    </app-description>
+    <div [class]="row?.cols[0].class">
+        <app-radialbar *ngIf="row?.cols[0].chartType === 'radialbar'" [row]="row">
+        </app-radialbar>
+        <app-pie *ngIf="chart?.chartType === 'donut'" [dashboardId]="dashboard._id" [chart]="chart" [series]="chart.data.series"></app-pie>
+        <app-bar *ngIf="row?.cols[0].chartType === 'bar'" [filter]="filter" [row]="row"></app-bar>
+        <app-heatmap *ngIf="row?.cols[0].chartType === 'heatmap'" [filter]="filter" [row]="row"></app-heatmap>
+    </div>
+</div>

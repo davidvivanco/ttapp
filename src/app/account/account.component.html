@@ -1,0 +1,65 @@
+<app-breadcrumb breadcrumbs="Talentoo,{{ 'genericMessages.account' | translate }}"></app-breadcrumb>
+
+<div class="row" *ngIf="config.services.account.services.changePassword">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon style="margin-right: 2px;">vpn_key</mat-icon>
+                    {{'genericMessages.account' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                    <form [formGroup]="accountForm" class="personal-data">
+                        <div class="account-container">
+                            <div class="col-4" style="display: flex;flex-direction: column;justify-content: center;">
+                                <mat-form-field class="center">
+                                    <input [type]="hideOldPassword ? 'password' : 'text'" matInput
+                                        [placeholder]="'account.oldPassword' | translate" class="name"
+                                        formControlName="oldPassword" (change)="onChange()">
+                                    <button tabindex="-1" mat-icon-button matSuffix
+                                        (click)="changeVisibilityPassword($event,'hideOldPassword')"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon tabindex="-1">{{hideOldPassword ? 'visibility_off' : 'visibility'}}
+                                        </mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <app-error-messages [control]="accountForm.get('oldPassword')"></app-error-messages>
+                                <mat-form-field>
+                                    <input [type]="hideNewPassword ? 'password' : 'text'" matInput
+                                        [placeholder]="'account.newPassword' | translate" class="name"
+                                        formControlName="newPassword" (change)="onChange()">
+                                    <button tabindex="-1" mat-icon-button matSuffix
+                                        (click)="changeVisibilityPassword($event,'hideNewPassword')"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon tabindex="-1">{{hideNewPassword ? 'visibility_off' : 'visibility'}}
+                                        </mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <app-error-messages [control]="accountForm.get('newPassword')"></app-error-messages>
+
+                                <mat-form-field>
+                                    <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput
+                                        [placeholder]="'account.confirmPassword' | translate" class="name"
+                                        formControlName="confirmPassword" (change)="onChange()">
+                                    <button tabindex="-1" mat-icon-button matSuffix
+                                        (click)="changeVisibilityPassword($event,'hideConfirmPassword')"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon tabindex="-1">
+                                            {{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <app-error-messages [control]="accountForm.get('confirmPassword')"></app-error-messages>
+                            </div>
+                        </div>
+                    </form>
+            </mat-card-content>
+            <mat-card-actions class="center">
+                <button (click)="changePassword()" mat-flat-button
+                    [disabled]="accountForm.invalid || accountForm.untouched" class="btn-primary button-margin-bot">
+                    <span class="ml-sm f-s ">{{'account.changePassword' | translate}}</span>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

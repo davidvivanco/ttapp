@@ -1,0 +1,11 @@
+<div class="close-dialog"><button mat-flat-button (click)="close()"><em class="material-icons">close</em></button></div>
+<h1 mat-dialog-title>
+  {{data.title === 'before' ? ('audits.dataBefore' | translate) : ('audits.dataAfter' | translate)}}
+</h1>
+<div class="mat-dialog-content">
+  <div class="row">
+    <div class="col-12 code">
+      <code><pre>{{data.data | json}}</pre></code>
+    </div>
+  </div>
+</div>

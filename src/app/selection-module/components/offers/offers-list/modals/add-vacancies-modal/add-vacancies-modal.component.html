@@ -1,0 +1,28 @@
+<div class="close-dialog"><button mat-flat-button class="text-right" (click)="close()"><mat-icon>close</mat-icon></button></div>
+<h1 mat-dialog-title>
+    {{'selectionAdmin.offers.list.modal.addVacancies.title' | translate}}
+</h1>
+<div [formGroup]="formGroup" class="question-form">
+    <div class="row">
+        <div class="col-12">
+            <p>{{title}}</p>
+            <mat-form-field>
+                <input matInput
+                    placeholder="{{'genericMessages.vacancies' | translate}}"
+                    formControlName="vacancies">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+                <mat-error *ngIf="formGroup.controls.vacancies.invalid">
+                    {{'genericMessages.required' | translate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">{{'genericMessages.cancel' | translate}}</button>
+    <button mat-flat-button class="btn-primary" [disabled]="formGroup && formGroup.touched && formGroup?.invalid"
+        (click)="submit()" cdkFocusInitial>{{'genericMessages.add' | translate}}</button>
+</div>

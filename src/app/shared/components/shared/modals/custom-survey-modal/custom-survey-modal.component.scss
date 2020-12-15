@@ -1,0 +1,186 @@
+.closeContainer {
+    float: right;
+    top: -10px;
+    position: relative;
+}
+
+.loading-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-dialog-content {
+    max-height: 55vh;
+}
+
+mat-form-field {
+    margin-bottom: 5px;
+}
+
+.close-dialog {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    .title-section {
+        .mat-dialog-title {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+    }
+    .text-right {
+        margin-right: 20px;
+    }
+}
+
+.welcome-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .welcome-title {
+        display: flex;
+        padding: 0 20px;
+        .info-icon {
+            padding-left: 5px;
+        }
+    }    
+    .welcome-paragraph {
+        flex-basis: 80%;
+        padding: 0 20px;
+    }
+    .welcome-footer {
+        display: flex;
+        align-content: flex-end;
+        padding: 0 20px;
+        margin-bottom: 5px;
+    }
+}
+
+.questions-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .questions-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 0 20px;
+        mat-icon {
+            margin-right: 8px;
+            &:hover { 
+                cursor: pointer;
+            }
+        }
+    }
+    .questions-content {
+        flex-basis: 80%;
+        .questions-content-subtitle {
+            font-weight: bold;
+            padding: 0 20px;
+        }
+        .questions-content-description {
+            padding: 0 20px;
+        }
+        .custom-survey-form {
+            padding: 0 20px;
+            mat-radio-group {
+                display: flex;
+                flex-direction: column;
+                .mat-radio-button {
+                    padding-top: 15px;
+                    margin-left: 0px;
+                    .image-wrapper, .video-wrapper {
+                        width: 100px;
+                        height: 100px;
+                    }
+                }
+            }
+            .search-icon {
+                text-align: center;
+                position: relative;
+                float: right;
+                display: block;
+                width: 20px;
+                height: 20px;
+                background: #fafafa;
+                margin-left: -64px;
+                border: revert;
+                mat-icon {
+                    top: 0px;
+                }
+            }
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .button-group {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+}
+
+.feedback-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .feedback-title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 0 20px;
+        mat-icon {
+            margin-right: 8px;
+            &:hover { 
+                cursor: pointer;
+            }
+        }
+    }  
+    .feedback-paragraph {
+        flex-basis: 80%;
+        padding: 0 20px;
+    }
+    .button-group {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px;
+    }
+}
+
+.answers-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .answers-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 0 20px;
+        mat-icon {
+            margin-right: 8px;
+            &:hover { 
+                cursor: pointer;
+            }
+        }
+    }
+    .answers-name {
+        padding: 0 20px;
+    }
+    .answers-content {
+        flex-basis: 80%;
+        padding: 0 20px;
+        .answers-content-title {
+            font-size: 12px;
+            padding-top: 12px;
+        }
+    }
+    .button-group {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+}

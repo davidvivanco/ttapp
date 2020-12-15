@@ -1,0 +1,113 @@
+.login-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .custom-login-wrapper {
+    background: white;
+    position: static;
+    box-sizing: border-box;
+    z-index: 1000;
+    padding: 30px 30px 15px;
+
+    .mat-form-field {
+      width: 100% !important;
+      display: flex;
+      justify-content: center;
+      flex-flow: column;
+      max-width: 260px;
+      align-self: center;
+    }
+
+    .mat-card-header-text {
+      text-align: center;
+      width: 100% !important;
+    }
+
+    .logo {
+      text-align: center;
+      margin: 0 auto;
+
+      h1 {
+        margin: 0;
+        font-family: $logo-font;
+        color: white;
+        font-weight: normal;
+        font-size: 3em;
+      }
+
+      img {
+        width: 90%;
+        max-width: 260px;
+      }
+    }
+
+    .recovery-link {
+      width: 100%;
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .error-message-wrapper {
+      display: none;
+    }
+
+    .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline,
+    .mat-form-field-appearance-legacy .mat-form-field-underline {
+      background-image: none;
+      // background-color: white !important;
+    }
+
+    // FOCUS
+    .mat-form-field.mat-focused,
+    .mat-form-field-appearance-legacy.mat-focused {
+      &.mat-form-field-disabled .mat-form-field-underline {
+        background-image: none;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      .login-button-wrapper {
+        display: flex;
+        justify-content: center;
+        max-width: 260px;
+        width: 260px;
+        align-self: center;
+      }
+      .other-access{
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.linkedin-register-button {
+  background-color: #0077b5 !important;
+}
+.facebook-register-button {
+  background-color: #3B5998 !important;
+}
+.google-register-button {
+  background-color: #fff !important;
+  border: 1px solid !important;
+  border-color: rgba(0,0,0,0.12) !important;
+  // border-color: #3285F4 !important;
+  .white-box{
+      background-color: #fff;
+      padding: 0 3px;
+  }
+}
+
+.access-buttons button {
+  max-width: 260px;
+  height: 36px;
+  margin: 0 5px;
+}
+
+.access-buttons {
+  display: flex;
+  justify-content: center;
+}

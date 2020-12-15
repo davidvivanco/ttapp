@@ -1,0 +1,42 @@
+<a mat-list-item [routerLink]="['/home']" matTooltip="Talentoo" matTooltipPosition="right" routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }" class="show-mobile companyLogo">
+    <div class="avatar-sm">
+      <img [src]="config.company.companyLogo" [alt]="config.company.companyName + 'logo'" />
+    </div>
+  </a>
+
+<div style="display: inline-block; margin-right: 5px;">
+  <p style="margin: 0;font-size: 12px;" class="primary">Hola, <strong>{{user.personalData.name}}</strong></p>
+</div>
+
+<button mat-icon-button *ngIf="permissions.show_search_employee" class="primary-color" [title]="'genericMessages.makeSearch' | translate" [matTooltip]="'genericMessages.makeSearch' | translate" matTooltipPosition="below" (click)="openSearchDialog()">
+  <mat-icon aria-label="Search button">search</mat-icon>
+</button>
+
+<mat-form-field style="max-width: 50px;" *ngIf="config.services.translations.active" title="Idiomas" floatLabel="never">
+    <mat-label>Idioma</mat-label>
+    <mat-select [ngModel]="selectedLang" (ngModelChange)="onChangeLang($event)" [disabled]="this.availableLangs.length == 1">
+        <mat-option *ngFor="let lang of availableLangs" [value]="lang">{{lang}}</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<app-notifications *ngIf="config.services.notifications"></app-notifications>
+
+<div class="avatar-sm pointer mr-sm" title="{{user.personalData.name}}" matTooltip="{{user.personalData.name}}" matTooltipPosition="below">
+    <app-avatar [matMenuTriggerFor]="appMenu" [user]="user"></app-avatar>
+</div>
+
+<mat-menu #appMenu="matMenu">
+    <button mat-menu-item [title]="'header.registerInOuts' | translate" (click)="openFichajeDialog()" *ngIf="config.services.checkinout && permissions.show_checkinout">
+    <mat-icon>timer</mat-icon>{{'header.chekInOut' | translate}}
+  </button>
+    <button *ngIf="permissions.show_profiledata" mat-menu-item [title]="'header.seePersonalData' | translate" [routerLink]="['/datos-personales']">
+    <mat-icon>person</mat-icon>{{'genericMessages.personalData' | translate}}
+  </button>
+    <button mat-menu-item [title]="'header.changePassword' | translate" [routerLink]="['/cuenta']" *ngIf="config.services.account.active && permissions.show_account">
+    <mat-icon>vpn_key</mat-icon>{{'genericMessages.account' | translate}}
+  </button>
+  <button mat-menu-item [title]="'header.exitApp' | translate" (click)="logout()">
+    <mat-icon>power_settings_new</mat-icon>{{'header.exit' | translate}}
+  </button>
+</mat-menu>

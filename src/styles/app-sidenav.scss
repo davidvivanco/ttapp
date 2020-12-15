@@ -1,0 +1,439 @@
+mat-sidenav, mat-drawer {
+  width: $menu-width;
+  border: none !important;
+  a {
+    font-weight: normal;
+  }
+}
+
+.main-menu-button {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  // background: $light;
+  border-radius: 50%;
+  overflow: hidden;
+  text-align: center;
+  span {
+    font-size: 23px;
+    position: relative;
+    top: -3px;
+  }
+  .mat-icon {color: white;top:2px;}
+}
+
+.sidenav.main-menu {
+  width: $appMenuWidth;
+  position: absolute;
+  left: 0;
+  height: 100vh;
+  //background: $primary;
+  z-index: 10;
+
+  button, a {
+    width: $appMenuWidth;
+    height: $appMenuWidth;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+
+    .mat-icon {
+      color: white;
+      width: $appIconSize;
+      height: $appIconSize;
+      font-size: $appIconSize;
+      line-height: $appIconSize;
+    }
+  }
+
+  .mat-list-item-content {
+    height: 60px;
+    padding: 15px 0;
+    box-sizing: border-box;
+  }
+
+}
+
+.menu-title {
+  height: 64px;
+  text-align: left;
+  padding: 18px 16px;
+  box-sizing: border-box;
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    //color: lighten($primary, 15%);
+  }
+
+  /*w 600*/
+  @media (max-width: 37.5em) {
+    height: 58px;
+  }
+}
+
+.drawer-container {
+  width: calc(100% - #{$appMenuWidth});
+  margin-left: $appMenuWidth;
+}
+
+.mat-nav-list {
+
+  // position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  background: $white;
+  width: $menu-width;
+  height: 100vh;
+  overflow-y: auto;
+  transition: width .6s ease;
+  padding-top: 0 !important;
+  box-sizing: border-box !important;
+
+  .company-info {
+    height: 64px;
+    overflow: hidden;
+    width: 260px;
+    box-sizing: border-box;
+    padding: 0 16px;
+    display: table-cell;
+    vertical-align: middle;
+
+    a {
+
+      text-align: center;
+
+      h1.app-name {
+        padding: 0;
+        margin: 0;
+        font-family: $logo-font;
+        font-weight: normal;
+      }
+
+      &:hover {
+        background-color: none !important;
+      }
+
+    }
+
+    /*w 600*/
+    @media (max-width: 37.5em) {
+      height: 56px;
+    }
+  }
+
+  .mat-list-icon, .mat-icon {
+    text-align: center;
+    padding: 0px 15px 0 0 !important;
+    color: $gray;
+  }
+
+  .mat-list-item {
+
+    transition: all .3s ease;
+
+    &:hover {
+      transition: all .3s ease;
+      background-color: rgba($light, 0.36);
+    }
+
+    &.extra-access {
+      border-top: 1px solid $l-gray;
+    }
+
+    .mat-icon {
+      margin-right: 5px;
+    }
+
+    &.active {
+      background-color: rgba($light, 0.72);
+    }
+
+  }
+
+  .mat-button {
+
+    @extend .mat-list-item;
+    width: 100%;
+    text-align: left;
+    height: 48px;
+    font-size: 16px;
+    font-weight: normal;
+
+    .mat-icon {
+      font-size: 24px;
+      height: 24px;
+      margin-right: 0;
+    }
+
+  }
+
+  span.linkText {
+    opacity: 0;
+    display: block;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.open {
+
+    width: 320px;
+    transition: width .3s ease;
+
+    span {
+      opacity: 1;
+    }
+
+  }
+
+  &#mainSidenav {
+    z-index: 1000;
+  }
+
+  &.submenu {
+
+    &#submenuManager {
+      z-index: 999;
+    }
+
+    &#submenuAdmin {
+      z-index: 998;
+    }
+
+    margin-left: 0px;
+    transition: margin-left .5s ease;
+
+    span.linkText {
+      opacity: 0;
+    }
+
+    &.open {
+      margin-left: 100px;
+      transition: margin-left .3s ease;
+
+      span.linkText {
+        opacity: 1;
+      }
+    }
+
+  }
+
+}
+
+.hamb-menu-btn {
+
+  border-radius: 0 !important;
+  width: 100% !important;
+  text-align: center;
+  height: 64px;
+
+  .hamb-menu-icon {
+
+    max-width: 30px;
+    margin: 0 auto;
+    height: 30px;
+    padding-top: 5px;
+
+    span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      margin-bottom: 6px;
+      background: #555555;
+      transition: all .3s ease;
+    }
+
+  }
+
+}
+
+.main {
+  width: calc(100% - 100px);
+  padding-left: 100px;
+  transition: padding .6s ease;
+}
+
+
+// OPEN MAIN SIDENAV
+body.open-mainSidenav {
+
+  .main {
+    transition: padding .3s ease;
+  }
+
+  .hamb-menu-btn {
+
+    .hamb-menu-icon {
+
+      span {
+
+        position: relative;
+
+        &:last-child {
+          transform: rotate(-45deg);
+          top: 2px;
+        }
+
+        &:first-child {
+          transform: rotate(45deg);
+          top: 10px;
+        }
+
+        &:nth-child(2) {
+          display: none;
+        }
+
+        transition: all .3s ease;
+
+      }
+
+    }
+
+  }
+
+  // SUB MENUS
+  .mat-nav-list {
+    &.submenu {
+
+      &.open {
+        margin-left: 320px;
+
+        span.linkText {
+          opacity: 1;
+        }
+      }
+
+    }
+  }
+
+}
+
+.content-overlay {
+
+  position: fixed;
+  top: 0;
+  left: 7px;
+  z-index: 10;
+  width: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transition: all .3s ease-in-out;
+
+  &.show {
+    width: calc(100vw - 7px);
+    opacity: 1;
+    transition: all .3s ease-in-out;
+  }
+
+}
+
+.close-submenu {
+  max-width: 100%;
+  margin: 0 auto;
+  height: 60px;
+  padding-top: 4px;
+  text-align: right;
+
+  .mat-icon {
+    height: 50px;
+    width: 50px;
+    font-size: 50px;
+    color: $l-gray;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+// SUB MENUS
+// NESTED
+.side-nav-nested {
+  margin-left: calc(100% + 60px) !important;
+  margin-top: -24px !important;
+  padding: 0 16px;
+
+  .mat-menu-content {
+    a {
+      color: $gray;
+      transition: all .3s ease;
+
+      &:hover {
+        // color: mat-color($mat-red, 500);
+        //color: $blue;
+        // background-color: lighten(mat-color($mat-red, 100),9%);
+        background-color: #f0f3fc;
+        transition: all .3s ease;
+      }
+    }
+
+    .mat-icon {
+      height: 18px;
+      width: 18px;
+      font-size: 18px;
+      position: relative;
+      top: 3px;
+      margin-right: 3px;
+    }
+  }
+
+  /*w 600*/
+  @media (max-width: 37.5em) {
+    margin-left: calc(100% + 20px) !important;
+    z-index: 10000;
+  }
+  
+}
+
+// MAT EXPANSION PANEL
+.side-nav-collapsible {
+  box-shadow: none !important;
+}
+
+
+.mat-nav-list {
+  .mat-expansion-panel {
+    .mat-expansion-panel-header {
+      padding: 0 16px;
+      .mat-content {
+        padding: 0;
+        .mat-expansion-panel-header-title {
+          color: $primary;
+          span {
+            top: 4px;
+            position: relative;
+          }
+          .mat-icon {
+            width: 24px !important;
+            margin-right: 5px;
+            color: $primary;
+          }
+        }
+      }
+      .mat-expansion-indicator:after {
+        color: $primary;
+      }
+    }
+    
+    .mat-expansion-panel-body {
+      padding: 0 0 0 56px;
+    }
+
+  }
+}
+
+.mat-bottom-sheet-container {
+  height: 50vh;
+  margin-top: 50vh;
+  // transform: none !important;
+  .mat-nav-list {
+    height: auto !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+}

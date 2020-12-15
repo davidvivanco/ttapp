@@ -1,0 +1,28 @@
+<app-breadcrumb [breadcrumbs]=breadcrumbList></app-breadcrumb>
+<div class="row">
+    <div class="col-12" *ngIf="idAnnouncement">
+        <button mat-flat-button class="btn-primary btn-sm mr-m" [routerLink]="['/seleccion/convocatorias-internas']">
+      <mat-icon class="mr-sm">arrow_back</mat-icon>{{'genericMessages.return' | translate}}
+    </button>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <button *ngIf="hasPosition" mat-flat-button class="btn-primary btn-sm mr-m" (click)="goBack()">
+            <mat-icon class="mr-sm">arrow_back</mat-icon>{{ 'genericMessages.return' | translate }}
+        </button>
+        <small>{{'genericMessages.presentOffer' | translate}}</small>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <app-offers-list-announcement *ngIf="showView" (fromSubscription)="hasPositionId($event)" [announcement]=announcement [employeeHasCurriculum]="employeeHasCurriculum">
+        </app-offers-list-announcement>
+
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="close-dialog">
+  <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color">{{'ngOrganizationChartNode.userList' | translate}} {{data.title}}</h1>
+<mat-dialog-content>
+  <div *ngIf="data">
+    <div *ngFor="let employee of data.people">
+      <!-- Admin View || itsMe || myEmployee-->
+      <div *ngIf="data.permissions.buscar_todos_personal_data || data.userId === employee.id || data.employees[employee.id] === true"
+       class="pointer fake-link with-icon" (click)="openPersonalEmployeeDataDetail(employee)">
+        <mat-icon class="mr-sm">account_box</mat-icon>
+        <span>{{employee.fullName}}</span>
+      </div>
+      <!-- !Admin View && !itsMe && not myEmployee-->
+      <div *ngIf="!data.permissions.buscar_todos_personal_data && data.userId !== employee.id && data.employees[employee.id] === false" 
+      class="fake-link with-icon">
+        <mat-icon class="mr-sm">account_box</mat-icon>
+        <span>{{employee.fullName}}</span>
+      </div>
+    </div>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+</mat-dialog-actions>

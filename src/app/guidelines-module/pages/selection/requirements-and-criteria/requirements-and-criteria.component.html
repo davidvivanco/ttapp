@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>playlist_add_check</mat-icon> BAREMOS<br>
+    </h3>
+    <mat-accordion class="dark-header">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span>Qué son y cómo funcionan</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="f-bold">1 - Descripción</p>
+        <p>Un baremo es un conjunto de criterios que a su vez es un conjunto de valoraciones o combinaciones utilizados para valorar/puntuar a un usuario en un proceso de selección.</p>
+        <p class="f-bold">2 - Funcional</p>
+        <ul>
+          <li>2.1 - <b>¿Qué necesitamos para poder crear baremos?</b><br>
+            <ul>
+              <li>Para poder crear baremos debe haber un schema de cv publicado.</li>
+              <li>Campos obligatorios para crear un baremo:
+                <ul>
+                  <li>Título</li>
+                </ul>
+              </li>
+              <li>Campos opcionales para crear un baremo:
+                <ul>
+                  <li>Descripción</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li>2.2 - <b>¿Qué necesitamos para poder usar baremos?</b><br>
+            <ul>
+              <li>Para poder usar baremos deben tener al menos 1 criterio y el criterio al menos 1 valoración o que todos los méritos puntúen.</li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li>2.3 - <b>Añadir Criterios a un baremo</b><br>
+            <ul>
+              <li>2.3.1 - <b>¿Qué es un criterio?</b>
+                <ul>
+                  <li>Un criterio define el bloque de CV a puntuar y la fórmula que se empleará para puntuar los elementos de dicho bloque.</li>
+                  <li>Puede haber más de un criterio para el mismo bloque dentro del mismo baremo pero con fórmulas distintas.</li>
+                </ul>
+              </li>
+              <li>2.3.2 - <i>Campos obligatorios para <b>crear</b> un criterio</i>
+                <ul>
+                  <li>Título</li>
+                  <li>Bloque de CV al que hace referencia</li>
+                  <li>Fórmula a utilizar. En la fórmula habrá que decidir si todos los méritos puntúan o no. Si todos los méritos puntúan no hace falta añadir valoraciones/combinaciones ya que cualquiera puntuará.</li>
+                </ul>
+              </li>
+              <li>2.3.3 - <i>Fórmula a <b>usar</b> de un criterio</i>
+                <ul>
+                  <li>La fórmula define como puntuaremos. Puntúa si existe una combinación o condicionales específicos (solo tenemos estas 2 hoy por hoy)</li>
+                  <li>La fórmula tiene:
+                    <ul>
+                      <li>Si todos lo méritos puntúan. Al elegir esta opción cualquier combinación de elementos de este bloque de CV punturá. Y todos lo harán por igual (el admin tiene que definir la puntuación por mérito aquí)</li>
+                      <li>Puntuación máxima global. <i>La puntuación máxima que un usuario podrá obtener en este bloque de CV usando este criterio</i></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>2.3.4 - <i>Campos obligatorios para poder <b>usar</b> un criterio</i>
+                <ul>
+                  <li>Los anteriores</li>
+                  <li>Y al menos 1 valoración o que todos los méritos puntúen</li>
+                </ul>
+              </li>
+              <li>2.3.5 - Añadir <b>Valoraciones</b> a un criterio<br>
+                <ul>
+                  <li>Una valoración es la combinación de elementos de un bloque de cv que otorgará N puntos al usuario.</li>
+                  <li>Por ejemplo, si el bloque "idiomas" tiene un select de idiomas, otro de nivel y otro de escuela la valoración o combinación sería:<br> inglés + nivel 1 + Cambridge</li>
+                  <li>A esa combinación se le aplicará la fórmula elegida de puntuación al baremar a un usuario en un proceso de selección y se le asignará una puntuación.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li>2.4 - <b>Añadir Otros Criterios a un baremo</b><br>
+            <ul>
+              <li>2.4.1 - <b>¿Qué son otros criterios?</b>
+                <ul>
+                  <li>Son criterios específicos de puntuación que dependen de cada cliente.</li>
+                  <li>La colección en bbdd es "otherMerits"</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

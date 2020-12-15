@@ -1,0 +1,9 @@
+<div class="iframe-container">
+  <app-breadcrumb breadcrumbs="Talentoo,{{ 'mainPage.matTooltip.academy' | translate }}"></app-breadcrumb>
+  <div class="row iframe-wrapper">
+    <div class="col-12">
+      <iframe title="academy" *ngIf="finishLoading" [attr.src]="urlAcademySafe" style="overflow:hidden;" height="100%" width="100%"></iframe>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>

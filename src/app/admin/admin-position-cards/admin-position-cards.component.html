@@ -1,0 +1,81 @@
+<div class="row">
+    <app-breadcrumb breadcrumbs="Talentoo,Admin,{{ 'cardPositionAdmin.cardPositions' | translate }}"></app-breadcrumb>
+    <div class="col-12">
+        <button mat-flat-button (click)="createPositionCard()" *ngIf="permissions.crear_card_position" class="btn-primary btn-sm">
+      <mat-icon class="mr-sm">add_circle_outline</mat-icon>{{'genericMessages.add' | translate}}
+    </button>
+    </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <mat-card class="card-dark-header">
+      <mat-card-header>
+        <mat-card-title id="aria">{{'cardPositionAdmin.cardPositionsList' | translate}}</mat-card-title>
+        <button mat-flat-button title="Realizar búsqueda" matTooltip="Realizar búsqueda" matTooltipPosition="below"
+          (click)="searchCardPosition()" class="pull-right btn-primary with-icon no-bg">
+          <mat-icon aria-label="Search button">search</mat-icon>
+          {{'genericMessages.search' | translate}}
+        </button>
+      </mat-card-header>
+      <mat-card-content *ngIf="dataSource" class="with-table without-mat-filter">
+        <div class="loading-table" *ngIf="dataSource.loading$ | async">
+          <mat-spinner></mat-spinner>
+        </div>
+        <table matSort mat-table aria-describedby="aria" [dataSource]="dataSource">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell scope="col" *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="text-left">{{element.name}}</td>
+          </ng-container>
+          <!-- Action Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell scope="col" *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="right">
+              <button mat-icon-button [matMenuTriggerFor]="menuEdit">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+                            <mat-menu #menuEdit="matMenu" xPosition="before">
+                                <button *ngIf="permissions.buscar_todos_card_position" mat-menu-item (click)="showCardPosition(element)">
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span> {{'genericMessages.see' | translate}}</span>
+                </button>
+                                <button *ngIf="permissions.actualizar_card_position" mat-menu-item (click)="editCardPosition(element, true)">
+                  <mat-icon>edit</mat-icon>
+                  <span> {{'genericMessages.edit' | translate}}</span>
+                </button>
+                                <button *ngIf="permissions.actualizar_card_position" mat-menu-item (click)="clonePositionCards(element)">
+                  <mat-icon>add_circle</mat-icon>
+                  <span> {{'genericMessages.clone' | translate}}</span>
+                </button>
+                                <button *ngIf="permissions.actualizar_card_position" mat-menu-item (click)="printPositionCard(element)">
+                  <mat-icon>picture_as_pdf</mat-icon>
+                  <span> {{'cardPositionAdmin.toPdf' | translate}}</span>
+                </button>
+                                <button *ngIf="permissions.eliminar_card_position" mat-menu-item (click)="deleteCardPosition(element._id)">
+                  <mat-icon>delete_outline</mat-icon>
+                  <span> {{'genericMessages.delete' | translate}}</span>
+                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                </table>
+
+                <div *ngIf="dataSource.totalCardPositions === 0">
+                    <p class="description no-items">
+                        <mat-icon>error_outline</mat-icon>
+                        {{'genericMessages.noResults' | translate}}
+                    </p>
+                </div>
+                <div *ngIf="search !== null || dataSource.totalCardPositions === 0">
+                    <div class="clearfix mt-sm"></div>
+                    <a (click)="backToAll()" class="fake-button btn-sm btn-stroked-primary">
+                        <mat-icon>keyboard_arrow_left</mat-icon> Volver a ver todas
+                    </a>
+                </div>
+
+                <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [length]="dataSource.totalCardPositions" showFirstLastButtons></mat-paginator>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

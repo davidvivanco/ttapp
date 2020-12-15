@@ -1,0 +1,36 @@
+.closeContainer {
+    float: right;
+    top: -10px;
+    position: relative;
+}
+
+.loading-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-dialog-content {
+    max-height: 55vh;
+}
+
+mat-form-field {
+    margin-bottom: 5px;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .filter-select{
+    max-height: 225px;
+    overflow-y: auto;
+  }
+
+.answer-form { min-width: 50vw; }
+
+img{
+    max-width: 250px;
+}

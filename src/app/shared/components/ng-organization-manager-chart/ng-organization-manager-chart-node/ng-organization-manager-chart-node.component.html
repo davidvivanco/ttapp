@@ -1,0 +1,37 @@
+<div class="container-node {{ classHighlight }}">
+  <div *ngIf="node" (click)="clickNode()" class="pointer f-bold node-title">
+    {{ node.name }}
+  </div>
+  <!-- Puedo ver fichas de puesto??
+      - Si es la mia
+      - Si es de mi equipo
+      - Si soy admin
+    -->
+  <div
+    *ngIf="node && (permissions.buscar_todos_card_position || node.id === user.id || (myEmployees[node.id] && myEmployees[node.id] === true))">
+    <div (click)="openCardPositionModal(node)" class="pointer fake-link with-icon">
+      <em class="material-icons">assignment_ind</em><span> {{node.positionName}}</span>
+    </div>
+  </div>
+
+  <!-- No admin && !itsMe && not my employee-->
+  <div
+    *ngIf="node && !permissions.buscar_todos_card_position && node.id !== user.id && (!myEmployees[node.id] || myEmployees[node.id] === false)">
+    <div class="fake-link with-icon">
+      <em class="material-icons">assignment_ind</em><span> {{node.positionName}}</span>
+    </div>
+  </div>
+  <!-- Admin View || itsMe || myEmployee-->
+  <div
+    *ngIf="node && (permissions.buscar_todos_personal_data || node.id === user.id || (myEmployees[node.id] && myEmployees[node.id] === true))"
+    class="node-details">
+    <div (click)="openPersonalEmployeeDataDetail(node)" class="pointer fake-link with-icon">
+      <em class="material-icons">person</em><span> {{'genericMessages.seePersonalData' | translate}}</span>
+    </div>
+  </div>
+</div>
+
+<ng-organization-manager-chart-list [ngClass]="'ng-organization-chart-list'" [nodeList]="node.children"
+  (ClickNode)="onClickDeepNode($event)" *ngIf="isChildrenVisible && node.children && node.children.length > 0"
+  [class]="childrenStyleClass" (showCardPositionDetail)="openCardPositionModal($event)"
+  (showPersonalEmployeeDataDetail)="openPersonalEmployeeDataDetail($event)"></ng-organization-manager-chart-list>

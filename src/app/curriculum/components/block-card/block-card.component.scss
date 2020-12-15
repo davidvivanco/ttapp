@@ -1,0 +1,22 @@
+$color: white;
+$padding: 16px;
+
+:host {
+	position: relative;
+	padding: 0;
+
+	.header {
+		background-color: var(--primary-color);
+		padding: $padding;
+		color: $color;
+		margin-bottom: 0;
+	}
+
+	.body {
+		padding: $padding;
+	}
+
+	/deep/ .mat-card {
+		padding: 0;
+	}
+}

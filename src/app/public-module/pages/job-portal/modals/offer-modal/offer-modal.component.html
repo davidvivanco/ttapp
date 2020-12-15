@@ -1,0 +1,177 @@
+<div class="close-dialog">
+    <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="primary-color">{{ 'genericMessages.offer' | translate }}</h1>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-12">
+            <form *ngIf="offer" [formGroup]="formGroup">
+                <div class="row">
+                    <div class="col-12">
+                        <mat-form-field>
+                            <input matInput [placeholder]="'jobWebsite.offerModal.offerTitle' | translate" formControlName="title" [readonly]="true">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field>
+                            <input matInput [placeholder]="'jobWebsite.offerModal.position' | translate" formControlName="position" [readonly]="true">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <mat-form-field>
+                            <input matInput [placeholder]="'genericMessages.vacancies' | translate" formControlName="vacancies" [readonly]="true">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                        <mat-form-field>
+                            <input matInput [placeholder]="'jobWebsite.offerModal.salary' | translate" formControlName="salary" [readonly]="true">
+                            <mat-icon matSuffix>euro_symbol</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                        <mat-form-field>
+                            <mat-label>{{ 'genericMessages.publicationDate' | translate }}</mat-label>
+                            <input matInput [matDatepicker]="pickerPublished" formControlName="startsAt" [readonly]="true">
+                            <mat-datepicker-toggle matSuffix [for]="pickerPublished"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerPublished></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3">
+                        <mat-form-field>
+                            <mat-label>{{ 'genericMessages.expirationDate' | translate }}</mat-label>
+                            <input matInput [matDatepicker]="pickerExpiry" formControlName="finishAt" [readonly]="true">
+                            <mat-datepicker-toggle matSuffix [for]="pickerExpiry"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerExpiry></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <mat-form-field>
+                            <textarea matInput [placeholder]="'genericMessages.desc' | translate" formControlName="description" [readonly]="true"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div *ngIf="requeriments?.length > 0; else emptyRequerimentsInThisOffer">
+                            <div class="approach" *ngFor="let requeriment of requeriments; let i = index">
+                                <div class="container-approachs">
+                                    <strong>{{ requeriment.title }}</strong><br />
+                                    <small><strong>{{ 'genericMessages.desc' | translate }}: </strong>{{ requeriment.description }}</small>
+                                </div>
+
+                                <div class="flexGrow"></div>
+
+                            </div>
+                        </div>
+                        <ng-template #emptyRequerimentsInThisOffer>
+                            <p>
+                                {{'selection.offers.noRequeriments' | translate}}
+                            </p>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <div *ngIf="offer.phases.length else elseBlockPhases">
+                            <label class="mat-header-cell">
+                {{ 'genericMessages.phases' | translate }}</label>
+                            <div class="phase" *ngFor="let phase of offer.phases; let i = index">
+                                <div class="container-phase-doc">
+                                    <strong>{{phase.title}}</strong><br>
+                                    <small><strong>{{ 'genericMessages.date' | translate }}: </strong>{{phase.startsAt | date:'dd/MM/yy'}}</small>
+                                </div>
+
+                                <div class="flexGrow"></div>
+
+                                <div>
+                                    <button (click)="openModalInfo(phase, i)" mat-icon-button class="button-action">
+                    <mat-icon>info</mat-icon>
+                  </button>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #elseBlockPhases>
+                            <p>{{ 'jobWebsite.offerModal.noPhasesAdded' | translate }}</p>
+                        </ng-template>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div *ngIf="offer.documentation.length else elseBlockDoc">
+                            <label class="mat-header-cell">
+                {{ 'genericMessages.documentation' | translate }}</label>
+                            <div class="documentation" fxLayout fxLayoutAlign="start center" *ngFor="let doc of offer.documentation; let i = index">
+                                <div class="container-phase-doc">
+                                    <a (click)="downloadFile(doc.file, 'documentations')" class="pointer">{{doc.title}}
+                    <span class="material-icons">
+                      attach_file
+                    </span>
+                  </a>
+                                </div>
+
+                                <div class="flexGrow"></div>
+                            </div>
+                        </div>
+                        <ng-template #elseBlockDoc>
+                            <p>{{ 'jobWebsite.offerModal.noDocumentationAdded' | translate }}</p>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8 announcement">
+                        <mat-form-field style="width: calc(100% - 30px); margin-left: 10px;">
+                            <input matInput [placeholder]="'jobWebsite.offerModal.announcementConnected' | translate" formControlName="urlAnnouncement" [readonly]="true">
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-2"></div>
+
+                    <div class="col-2 fees">
+                        <mat-form-field style="width: calc(100% - 10px); margin-left: 10px;">
+                            <input matInput placeholder="Tasas" formControlName="fees" #fees [readonly]="true">
+                            <mat-icon matSuffix>euro_symbol</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div [ngSwitch]="offer.state">
+                            <div *ngSwitchCase="'incomplete'" class="fake-mat-chip warning">
+                                {{ 'genericMessages.incomplete' | translate }}
+                            </div>
+                            <div *ngSwitchCase="'closed'" class="fake-mat-chip">
+                                {{ 'genericMessages.closed' | translate }}
+                            </div>
+                            <div *ngSwitchCase="'cancelled'" class="fake-mat-chip">
+                                {{ 'genericMessages.canceled' | translate }}
+                            </div>
+                            <div *ngSwitchCase="'extended'" class="fake-mat-chip">
+                                {{ 'genericMessages.extended' | translate }}
+                            </div>
+                            <div *ngSwitchCase="'published'" class="fake-mat-chip success">
+                                {{ 'genericMessages.valid' | translate }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button mat-flat-button class="btn-primary" (click)="applyOffer()">
+    {{ 'genericMessages.present' | translate }}
+  </button>
+</div>

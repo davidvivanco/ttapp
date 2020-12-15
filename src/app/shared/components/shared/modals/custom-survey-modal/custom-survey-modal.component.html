@@ -1,0 +1,191 @@
+<section class="welcome-section" *ngIf="showWelcome">
+    <div class="close-dialog bg-primary">
+        <div class="title-section">
+            <h1 class="mat-dialog-title white" style="color:white !important;">{{objectData.title}}</h1>
+        </div>
+        <button mat-flat-button class="text-right bg-primary" (click)="close()">
+            <em class="material-icons"><span class="white">close</span></em>
+        </button>
+    </div>
+
+    <div class="welcome-title">
+        <mat-card-header>
+            <mat-card-title class="primary-color f-bold">{{'home.welcome.female' | translate}}</mat-card-title>
+        </mat-card-header>
+        <mat-icon class="info-icon primary-color f-bold" matSuffix>info</mat-icon>
+    </div>
+
+    <div class="welcome-paragraph">
+        <p>{{objectData.welcomeText}}</p>
+    </div>
+
+    <div class="welcome-footer" mat-dialog-actions>
+        <button mat-flat-button class="btn-primary" (click)="beginForm()" cdkFocusInitial>{{'genericMessages.start' | translate}}</button>
+    </div>
+</section>
+
+<section class="questions-section" *ngIf="showQuestions">
+    <div class="close-dialog bg-dark">
+        <div class="title-section">
+            <h1 class="mat-dialog-title white">{{objectData.title}}</h1>
+        </div>
+        <button mat-flat-button class="text-right bg-dark" (click)="close()">
+            <em class="material-icons"><span class="white">close</span></em>
+        </button>
+    </div>
+
+    <div class="questions-header">
+        <div class="questions-header-title">
+            <mat-card-header *ngFor="let question of questionsInArray(); index as i">
+                <mat-card-title class="primary-color f-bold" [ngStyle]="visibility[i]">Paso {{ i + 1 }} de {{ numQuestions() }}
+                </mat-card-title>
+            </mat-card-header>
+        </div>
+        <div class="questions-header-icon">
+            <mat-icon class="info-icon primary-color f-bold" matSuffix (click)="openInfoModal()">info</mat-icon>
+        </div>
+    </div>
+
+    <div class="questions-content" *ngFor="let question of questionsInArray(); index as i" [ngStyle]="visibility[i]">
+        <span class="questions-content-subtitle dark f-bold">{{i + 1}}. {{question.name}}</span>
+        <div class="questions-content-description gray">
+            <p>{{question.description}}</p>
+        </div>
+        <form [formGroup]="customForm" class="custom-survey-form">
+            <mat-radio-group *ngIf="question.type === 'unique'" aria-label="Select an option" [formControlName]="question._id">
+                <mat-radio-button class="answer" *ngFor="let answer of question.answers" [value]="answer" required>
+                    <span *ngIf="answer.type === 'text'">{{ answer.name }}</span>
+                    <div *ngIf="answer.type === 'image'" class="image-wrapper">
+                        <img alt="answer.name" src="{{answer.urlImagen}}" width="100" height="100">
+                        <button class="search-icon primary-color f-bold" (click)="viewFullSize(answer.urlImagen, answer.type)">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="answer.type === 'video'" class="video-wrapper">
+                        <video width="100" height="100" controls>
+                            <source src="{{answer.urlVideo}}" type="video/mp4">
+                        </video>
+                        <button class="search-icon primary-color f-bold" (click)="viewFullSize(answer.urlVideo, answer.type)">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </mat-radio-button>
+            </mat-radio-group>
+            <div *ngIf="question.type === 'multi'" class="checkbox-group">
+                <mat-checkbox (change)="setValue($event, answer, question)" [value]="answer" class="mat-checkbox" *ngFor="let answer of question.answers" required>
+                    <span *ngIf="answer.type === 'text'">{{ answer.name }}</span>
+                    <div *ngIf="answer.type === 'image'" class="image-wrapper">
+                        <img alt="answer.name" src="{{answer.urlImagen}}" width="100" height="100">
+                        <button class="search-icon primary-color f-bold" (click)="viewFullSize(answer.urlImagen, answer.type)">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="answer.type === 'video'" class="video-wrapper">
+                        <video width="100" height="100" controls>
+                            <source src="{{answer.urlVideo}}" type="video/mp4">
+                        </video>
+                        <button class="search-icon primary-color f-bold" (click)="viewFullSize(answer.urlVideo, answer.type)">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </mat-checkbox>
+            </div>
+        </form>
+    </div>
+
+    <div class="button-group">
+        <button mat-flat-button class="btn-primary anterior" (click)="beforeQuestion()" [disabled]="questionShowing == 0">
+            <mat-icon>chevron_left</mat-icon> {{('genericMessages.previous' | translate).toUpperCase()}}
+        </button>
+        <button mat-flat-button class="btn-primary siguiente" (click)="nextQuestion()" *ngIf="questionShowing < numQuestions() - 1" [disabled]="prepareControls()[questionShowing].invalid">
+            <mat-icon>chevron_right</mat-icon> {{('genericMessages.next' | translate).toUpperCase()}}
+        </button>
+        <button mat-flat-button class="btn-primary guardar" (click)="beginFeedback()" *ngIf="questionShowing == numQuestions() - 1" [disabled]="customForm.invalid">
+            {{('genericMessages.SAVE' | translate).toUpperCase()}}
+        </button>
+    </div>
+</section>
+
+<section class="feedback-section" *ngIf="showFeedback">
+    <div class="close-dialog bg-dark">
+        <div class="title-section">
+            <h1 class="mat-dialog-title white">{{objectData.title}}</h1>
+        </div>
+        <button mat-flat-button class="text-right bg-dark" (click)="close()">
+            <em class="material-icons"><span class="white">close</span></em>
+        </button>
+    </div>
+
+    <div class="feedback-title">
+        <mat-card-header>
+            <mat-card-title class="primary-color f-bold">{{'Feedback'}}</mat-card-title>
+        </mat-card-header>
+        <mat-icon class="info-icon primary-color f-bold" matSuffix (click)="openInfoModal()">info</mat-icon>
+    </div>
+
+    <div class="feedback-paragraph">
+        <p>{{objectData.feedbackText}}</p>
+    </div>
+
+    <div class="button-group">
+        <button mat-flat-button class="btn-primary siguiente" (click)="seeAnswers()">
+            <mat-icon>chevron_right</mat-icon> {{('genericMessages.next' | translate).toUpperCase()}}
+        </button>
+    </div>
+</section>
+
+<section class="answers-section" *ngIf="showAnswers">
+    <div class="close-dialog bg-dark">
+        <div class="title-section">
+            <h1 class="mat-dialog-title white">{{objectData.title}}</h1>
+        </div>
+        <button mat-flat-button class="text-right bg-dark" (click)="close()">
+            <em class="material-icons"><span class="white">close</span></em>
+        </button>
+    </div>
+
+    <div class="answers-header">
+        <div class="answers-header-title">
+            <mat-card-header *ngFor="let question of questionsInArray(); index as i">
+                <mat-card-title class="primary-color f-bold" [ngStyle]="visibility[i]">Paso {{ i + 1 }} de {{ numQuestions() }}
+                </mat-card-title>
+            </mat-card-header>
+        </div>
+        <div class="answers-header-icon">
+            <mat-icon class="info-icon primary-color f-bold" matSuffix (click)="openInfoModal()">info</mat-icon>
+        </div>
+    </div>
+
+    <div class="answers-name dark f-bold" *ngFor="let question of questionsInArray(); index as i" [ngStyle]="visibility[i]">
+        <div>{{i + 1}}. {{ question.name }}</div>
+    </div>
+
+    <div class="answers-content" *ngFor="let answer of prepareAnswers(); index as i" [ngStyle]="visibility[i]">
+        <div *ngIf="answer.length; else uniqueName">
+            <div *ngFor="let item of answer">
+                <p class="answers-content-title gray">{{'Respuesta'}}</p>
+                <p class="answers-content-response primary-color">{{item.name}}</p>
+                <p class="answers-content-title gray">{{'Acción'}}</p>
+                <p class="answers-content-response primary-color">{{item.action}}</p>
+            </div>
+        </div>
+        <ng-template #uniqueName>
+            <p class="answers-content-title gray">{{'Respuesta'}}</p>
+            <p class="answers-content-response primary-color">{{answer.name}}</p>
+            <p class="answers-content-title gray">{{'Acción'}}</p>
+            <p class="answers-content-response primary-color">{{answer.action}}</p>
+        </ng-template>
+    </div>
+
+    <div class="button-group">
+        <button mat-flat-button class="btn-primary anterior" (click)="beforeQuestion()" [disabled]="questionShowing == 0">
+            <mat-icon>chevron_left</mat-icon> {{('genericMessages.previous' | translate).toUpperCase()}}
+        </button>
+        <button mat-flat-button class="btn-primary siguiente" (click)="nextQuestion()" *ngIf="questionShowing < numQuestions() - 1">
+            <mat-icon>chevron_right</mat-icon> {{('genericMessages.next' | translate).toUpperCase()}}
+        </button>
+        <button mat-flat-button class="btn-primary finalizar" (click)="finishSurvey()" *ngIf="questionShowing == numQuestions() - 1">
+            {{('genericMessages.finish' | translate).toUpperCase()}}
+        </button>
+    </div>
+</section>

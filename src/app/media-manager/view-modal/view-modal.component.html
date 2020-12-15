@@ -1,0 +1,52 @@
+<div class="close-dialog">
+    <button mat-flat-button (click)="close()"><i class="material-icons">close</i></button>
+</div>
+<div class="row">
+    <div class="col-12 info">
+        {{'genericMessages.title' | translate}}: {{data.element.title}}
+    </div>
+    <div class="col-12 info">
+        URL: <a [href]="webUrlSafe">{{data.element.fullPath}}</a>
+    </div>
+    <div class="col-12 info">
+        {{'genericMessages.date' | translate}}: {{data.element.updatedAt}}
+    </div>
+    <div class="col-12 info">
+        {{'genericMessages.uploadedBy' | translate}}: {{data.element.employee.personalData.name}}
+        {{data.element.employee.personalData.lastName}}
+    </div>
+</div>
+<div class="clearfix mt-l" style="height: 10px;"></div>
+<div class="media-wrapper">
+    <div class="text-center">
+        <mat-dialog-content>
+            <img *ngIf="data.type === 'image'" id="imageDisplay" title="imageDisplay" [src]="webUrlSafe">
+            <div class="video-responsive" *ngIf="data.type === 'video'" (window:resize)="onResize($event)">
+                <iframe id="videoDisplay" title="videoDisplay" [src]="webUrlSafe" [width]="iframeWidth" [height]="iframeHeight"
+                    allowfullscreen scrolling="no" alt="video" (window:resize)="onResize($event)"></iframe>
+            </div>
+            <div *ngIf="data.type === 'pdf'" (window:resize)="onResize($event)">
+                <iframe [src]="webUrlSafe" [width]="iframeWidth" [height]="iframeHeight" frameborder="0"></iframe>
+            </div>
+        </mat-dialog-content>
+        <div *ngIf="data.type === 'doc'" class="pointer" (click)="download()">
+            <mat-icon class="file">description</mat-icon>
+            <div class="fileName">{{data.element.title}}</div>
+        </div>
+        <div *ngIf="data.type === 'unknown'" class="pointer" (click)="download()">
+            <mat-icon class="file">insert_drive_file</mat-icon>
+            <div class="fileName">{{data.element.title}}</div>
+        </div>
+    </div>
+</div>
+<div class="clearfix mt-l"></div>
+<div class="row" mat-dialog-actions>
+    <div class="col-12 right actions">
+        {{'genericMessages.deleteQuestion' | translate}}
+    </div>
+    <div class="col-12 right actions">
+        <button mat-button (click)="close()">{{'genericMessages.cancel' | translate }}</button>
+        <button mat-flat-button class="btn-primary" cdkFocusInitial
+            (click)="delete()">{{'genericMessages.ok' | translate }}</button>
+    </div>
+</div>

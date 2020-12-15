@@ -1,0 +1,127 @@
+<div class="close-dialog" *ngIf="!loading">
+  <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+
+
+<h1 *ngIf="fromCreateUrl" class="mat-dialog-title primary-color">
+  {{'menu.addUrl' | translate}}
+</h1>
+<h1 *ngIf="fromEditUrl" class="mat-dialog-title primary-color">
+  {{'menu.editUrl' | translate}}
+</h1>
+<div *ngIf="loading">
+  <div>{{'genericMessages.pleaseWait' | translate}}</div>
+  <div class="clearfix"></div>
+  <div class="loading-section">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+<mat-dialog-content>
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <div class="row mt-l mb-m">
+      <div class="col-12">
+        <mat-form-field>
+          <input type="text" matInput placeholder="{{'adminPersonalData.modal.writeTitle' | translate}}"
+            formControlName="title" (input)="onTitleChange($event.target.value)">
+          <mat-hint>{{'genericMessages.requiredField' | translate}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field>
+          <mat-select formControlName="icon" (selectionChange)="onIconChange()" [(value)]="selectedIconItem"
+          placeholder="{{'menu.modal.icon' | translate}}">
+          <input matInput [placeholder]="'announcements.list.filterElements' | translate"
+            (keyup)="onKeyIcon($event.target.value)" class="inputHeight">
+            <mat-select-trigger>
+              <mat-icon>{{ selectedIconItem }}</mat-icon>
+            </mat-select-trigger>
+            <mat-option> {{'menu.modal.icon' | translate}} </mat-option>
+            <mat-option *ngFor="let icon of selectedIconList" [value]="icon.icon">
+              <mat-icon>{{icon.icon}}</mat-icon><span>{{icon.name}}</span>
+            </mat-option>
+          </mat-select>
+          <mat-hint>{{'genericMessages.requiredField' | translate}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field>
+          <input type="text" matInput placeholder="{{'menu.modal.writeDesc' | translate}}" formControlName="desc">
+          <mat-hint>{{'menu.modal.noRequired' | translate}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-hint class="mat-hintmodal">{{'menu.modal.linkType' | translate}}</mat-hint>
+        <div>
+          <mat-radio-group aria-label="Tipo de enlace:" (change)="onSelectionChange($event)" required name="radio"
+            formControlName="linkType">
+            <mat-radio-button [checked]="radioFlag === true" [value]="true" name="radio">
+              {{'menu.modal.innerLink' | translate}}
+            </mat-radio-button>
+            <mat-radio-button [checked]="radioFlag === false" [value]="false" name="radio">
+              {{'menu.modal.webLink' | translate}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-hint class="mat-hintmodal">{{'genericMessages.requiredField' | translate}}</mat-hint>
+        <div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="type === true && type !== null ">
+        <mat-form-field>
+          <mat-label>{{'menu.modal.innerHint' | translate}}</mat-label>
+          <mat-select formControlName="innerLink" (selectionChange)="urlChange($event)">
+            <mat-option *ngFor="let url of pages" [value]="url.id">
+              {{url.title}}
+            </mat-option>
+          </mat-select>
+          <mat-hint>{{'genericMessages.requiredField' | translate}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-12" *ngIf="type === false && type !== null">
+        <mat-form-field>
+          <mat-label>{{'menu.modal.permissions' | translate}}</mat-label>
+          <mat-select formControlName="permissions" multiple (selectionChange)="urlChangePermissions($event)">
+            <mat-option #todos value="todosPermisos">
+              {{'menu.modal.selectAll' | translate}}
+            </mat-option>
+            <mat-option #ninguno (click)="toggleNone()">
+              {{'menu.modal.selectNone' | translate}}
+            </mat-option>
+            <mat-option *ngFor="let p of permissions" [value]="p._id" [disabled]="allPermissionsSelected">
+              {{p.name}}
+            </mat-option>
+          </mat-select>
+          <mat-hint>{{'genericMessages.requiredField' | translate}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-12" *ngIf="type === false && type !== null">
+        <mat-form-field>
+          <input type="url" matInput placeholder="{{'menu.modal.webHint' | translate}}" formControlName="webLink"
+            (input)="onLabelChange($event.target.value)">
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-slide-toggle (change)="onChange($event)" class="ml-sm" formControlName="blank">
+          {{'menu.modal.blank' | translate}}
+        </mat-slide-toggle>
+      </div>
+      <div class="col-12" *ngIf="type === false && type !== null">
+        <mat-slide-toggle (change)="iframe($event)" class="ml-sm" formControlName="iframe">
+          {{'menu.modal.iframe' | translate}}
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="clearfix mt-sm"></div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="!loading">
+  <button class="btn-stroked-primary" (click)="close()"
+    mat-flat-button>{{'genericMessages.cancel' | translate}}</button>
+  <button *ngIf="fromCreateUrl" class="btn-primary" [disabled]="(formGroup.invalid && formGroup.touched)
+          || (!addEnabledUrl2 && !addEnabledUrl)" (click)="addNewUrl()"
+    mat-flat-button>{{'genericMessages.add' | translate}}</button>
+  <button *ngIf="fromEditUrl" class="btn-primary" [disabled]="(formGroup.invalid && formGroup.touched)
+          || (!addEnabledUrl2 && !addEnabledUrl)" (click)="editUrl()"
+    mat-flat-button>{{'genericMessages.edit' | translate}}</button>
+</mat-dialog-actions>

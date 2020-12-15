@@ -1,0 +1,25 @@
+<div class="row container filters-containers" *ngIf="filters?.length">
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <div class="col-12 filter-container">
+      <mat-form-field class="filter mr-l" *ngFor="let filter of filters">
+        <mat-label>{{filter.name.es}}</mat-label>
+        <mat-select [formControlName]="filter.id" multiple>
+          <mat-option *ngFor="let option of filter.options" [value]="option.value">{{option.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+
+      <div class="btn-container">
+        <button mat-flat-button class="btn-primary apply-filter mr-m" (click)="filter(true)"
+          [disabled]="!filterSelected">
+          Deshacer filtros
+        </button>
+        <button mat-flat-button class="btn-primary apply-filter" (click)="filter()" [disabled]="false">
+          Aplicar filtros
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

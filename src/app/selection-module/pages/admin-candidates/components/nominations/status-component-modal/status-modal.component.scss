@@ -1,0 +1,17 @@
+.loading-section, .drop-section, .my-drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .my-drop-zone { border: dotted 3px lightgray; height: 100px; flex-direction: column;}
+  .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+  
+  .hide{display:none}
+
+  .decisionTree{ margin: 10px 5px 10px 0 !important; }
+
+  .mat-hint-custom{
+    font-size: 75%;
+    display: block;
+  }
+  

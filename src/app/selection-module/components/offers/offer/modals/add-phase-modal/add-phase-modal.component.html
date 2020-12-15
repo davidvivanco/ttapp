@@ -1,0 +1,103 @@
+<div class="close-dialog">
+    <button mat-button (click)="close(null,true)"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color">{{title}}</h1>
+<mat-dialog-content>
+    <form [formGroup]="formGroup">
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field>
+                    <input  matInput placeholder="Título de la fase" formControlName="title">
+                    <mat-icon *ngIf="!readonly" matSuffix>mode_edit</mat-icon>
+                    <mat-hint *ngIf="!readonly">{{'genericMessages.requiredField' | translate}}</mat-hint>
+                    <mat-error>
+                        {{'genericMessages.requiredField' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-label>{{'genericMessages.startDate' | translate}}</mat-label>
+                    <input  matInput [matDatepicker]="startsAt" formControlName="startsAt"
+                        (dateChange)="setValue(0, $event)" [max]="maxDate">
+                    <mat-datepicker-toggle matSuffix [for]="startsAt"></mat-datepicker-toggle>
+                    <mat-datepicker #startsAt></mat-datepicker>
+                    <mat-hint *ngIf="!readonly">{{'genericMessages.requiredField' | translate}}</mat-hint>
+                    <mat-error>
+                        {{'genericMessages.requiredField' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-label> {{'genericMessages.expiration' | translate}}
+                    </mat-label>
+                    <input  matInput [matDatepicker]="finishAt" formControlName="finishAt"
+                        (dateChange)="setValue(1, $event)" [min]="minDate">
+                    <mat-datepicker-toggle matSuffix [for]="finishAt"></mat-datepicker-toggle>
+                    <mat-datepicker #finishAt></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="col-6">
+                <mat-form-field *ngIf="!readonly">
+                    <mat-label>{{'genericMessages.type' | translate}}</mat-label>
+                    <mat-select (selectionChange)="changeType($event)" required formControlName="type">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let type of types" [value]="type[0]">
+                            {{type[1]}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>{{'genericMessages.selectType' | translate}}</mat-error>
+
+                </mat-form-field>
+                <mat-form-field *ngIf="readonly">
+                    <input  matInput placeholder="Tipo" formControlName="type">
+                </mat-form-field>
+            </div>
+            <div class="col-12" *ngIf="formGroup.controls['type'].value === 'feePayment'">
+                <mat-form-field>
+                    <input  matInput placeholder="Url pasarela de pago" formControlName="url">
+                    <mat-icon matSuffix>mode_edit</mat-icon>
+                    <mat-hint>{{'genericMessages.requiredField' | translate}}</mat-hint>
+                    <mat-error>
+                        {{'genericMessages.requiredField' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-12">
+                <mat-form-field>
+                    <textarea matInput  placeholder="Descripción"
+                        formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row" *ngIf="!readonly">
+            <div class="col-12 text-center">
+                <div class="col-12 text-center">
+                    <button mat-stroked-button class="btn-stroked-primary" (click)="fileInput.click()">
+                        <mat-icon>cloud_upload</mat-icon> {{'genericMessages.addFile' | translate}}
+                    </button>
+                    <input type="file" #fileInput ng2FileSelect [uploader]="uploader" [disabled]="uploader.isUploading"
+                        style="display: none" (change)="fileChangeEvent($event)" />
+                </div>
+                <div class="text-center col-12">
+                    <input type="text" formControlName="file" [value]="fileInput.value" style="display: none" />
+                    <span>{{fileName}}</span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="clearfix"></div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <div *ngIf="!readonly" class="mt-m" fxLayout fxLayoutAlign="end">
+        <button class="mat-button" (click)="close(null,true)"> {{'genericMessages.cancel' | translate}}</button>
+        <button class="btn-primary" color="primary" (click)="saveData()" [disabled]="!formGroup.valid" mat-button>
+            {{'genericMessages.accept' | translate}}</button>
+    </div>
+    <div *ngIf="readonly" class="mt-m" fxLayout fxLayoutAlign="end">
+        <button class="btn-primary" color="primary" (click)="close(null,true)"
+             mat-button> {{'genericMessages.accept' | translate}}</button>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div *ngIf="requirementCriteria?.length > 0; else emptyRequirementCriteria">
+  <div class="approach" *ngFor="let criterion of requirementCriteria; let i = index">
+    <div class="container-approachs">
+
+      <div *ngIf="title; else elseBlock"> <strong>{{title }}</strong><br /></div>
+      <ng-template #elseBlock> <strong>{{ criterion.title }}</strong><br /></ng-template>
+
+      <section class="exists-requirement" *ngIf="criterion.formula.type === 'exists'">
+        <small>
+          <span class="f-p">{{
+            "selectionAdmin.assessments.form.approach.isUniqueFormula"
+              | translate
+          }}:
+          </span>
+
+          <b *ngIf="criterion.scoreUniqueFormula">Sí </b>
+          <b *ngIf="!criterion.scoreUniqueFormula">No </b>
+        </small>
+
+        <small>
+          <span class="f-p">{{ 'selectionAdmin.assessments.form.approach.allMeritsCount' | translate }}:
+          </span>
+
+          <b *ngIf="criterion.allMeritsScore">Sí </b>
+          <b *ngIf="!criterion.allMeritsScore">No </b>
+        </small>
+
+        <small>
+          <span class="f-p">{{
+            "selectionAdmin.assessments.form.approach.globalValue"
+              | translate
+          }}:
+          </span>
+          <b *ngIf="criterion.mainValue" class="f-p">{{ criterion.mainValue }} </b>
+          <b *ngIf="!criterion.mainValue" class="f-p"> 0 </b>
+        </small>
+
+        <small>
+          <span class="f-p">{{
+            "selectionAdmin.assessments.form.approach.maxValue"
+              | translate
+          }}:
+          </span>
+          <b class="f-p">{{ criterion.maxValue }} </b>
+        </small>
+      </section>
+
+      <section class="exists-requirement" *ngIf="criterion.formula.type === 'conditionals'">
+        <small>
+          <span class="f-p">{{
+            "selectionAdmin.approaches.modal.maxValoration"
+              | translate
+          }}:
+          </span>
+          <b class="f-p">{{ criterion.maxValue }} </b>
+        </small>
+      </section>
+      
+    </div>
+
+    <div class="flexGrow"></div>
+
+    <div>
+      <button *ngIf="!hideDeleteButton" (click)="deleteCriterion( i)" mat-icon-button class="button-action">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button *ngIf="!hideEditButton" (click)="editCriterion(criterion, i)" mat-icon-button class="button-action">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyRequirementCriteria>
+  <p *ngIf="view !== 'parent'">
+    {{
+    "selectionAdmin.assessments.form.noFormula" | translate
+  }}
+  </p>
+  <p *ngIf="view === 'parent'">
+    {{
+    "selectionAdmin.requirements.form.noApproaches" | translate
+  }}
+  </p>
+</ng-template>

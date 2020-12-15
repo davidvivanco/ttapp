@@ -1,0 +1,29 @@
+.pages {
+  height: calc(100% - 64px);
+  @media (max-width: 37.5em) {
+    height: calc(100% - 56px);
+  }
+}
+
+.content {
+
+	padding: 0 16px 30px;
+	min-height: calc(100vh - 241px);
+
+	.content-header {}
+
+}
+
+body.blurContent {
+
+	.main {
+		transition: filter .3s ease;
+		filter: blur(2px);
+	}
+
+}
+
+/*1024*/
+@media only screen and (max-width: $breakpoint-xlarge) {
+
+}

@@ -1,0 +1,46 @@
+.layout-toolbar {
+
+  background: #fff;
+
+  /*w 600*/
+  @media (max-width: 37.5em) {
+    padding: 0 10px !important;
+  }
+
+  .fill-remaining-space {
+    /* This fills the remaining space, by using flexbox.
+        Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+  }
+
+  .mat-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+  }
+
+  .mat-icon-button {
+    line-height: 45px;
+  }
+
+  .avatar-sm {
+    position: relative;
+    top: 6px;
+  }
+
+  &.mat-toolbar-row, &.mat-toolbar-single-row {
+    width: calc(100% - #{$appMenuWidth});
+  }
+
+  .notifications-bell {
+    margin-right: 12px;
+  }
+
+}
+
+/*w 600*/
+@media (max-width: 37.5em) {
+  .layout-toolbar.mat-toolbar-row, .layout-toolbar.mat-toolbar-single-row {
+    // width: calc(100% - #{$appMenuWidth});
+  }
+}

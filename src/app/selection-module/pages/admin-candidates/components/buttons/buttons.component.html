@@ -1,0 +1,96 @@
+<div class="row hide-mobile">
+  <div class="col-12">
+    <button mat-flat-button (click)="goBack()" class="btn-primary btn-sm  mr-m">
+      <mat-icon class="mr-sm">arrow_back_ios</mat-icon>
+      <div class="hide-md">{{'genericMessages.return' | translate}}</div>
+      <mat-icon class="hide-lg">account_circle</mat-icon>
+    </button>
+    <div style="display: inline;" *ngIf="component === 'personal-data'">
+      <button mat-stroked-button (click)="goToCurriculum()" class="btn-stroked-primary btn-sm  mr-m">
+        <mat-icon class="mr-sm">portrait</mat-icon>
+        <div class="hide-md">{{'genericMessages.curriculum' | translate}}</div>
+        <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="goToCandidatures()" class="btn-stroked-primary btn-sm mr-m">
+        <mat-icon class="mr-sm">create</mat-icon>
+        <div class="hide-md">{{'genericMessages.candidatures' | translate}}</div>
+        <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+      </button>
+    </div>
+    <div style="display: inline;" *ngIf="component === 'curriculum'">
+      <button mat-stroked-button (click)="goToPersonalData()" class="btn-stroked-primary btn-sm  mr-m">
+        <mat-icon class="mr-sm">person</mat-icon>
+        <div class="hide-md">{{'genericMessages.personalData' | translate}}</div>
+        <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="goToCandidatures()" class="btn-stroked-primary btn-sm mr-m">
+        <mat-icon class="mr-sm">create</mat-icon>
+        <div class="hide-md">{{'genericMessages.candidatures' | translate}}</div>
+        <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+      </button>
+    </div>
+    <div style="display: inline;" *ngIf="component === 'candidatures'">
+      <button mat-stroked-button (click)="goToCurriculum()" class="btn-stroked-primary btn-sm  mr-m">
+        <mat-icon class="mr-sm">person</mat-icon>
+        <div class="hide-md">{{'genericMessages.curriculum' | translate}}</div>
+        <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="goToPersonalData()" class="btn-stroked-primary btn-sm mr-m">
+        <mat-icon class="mr-sm">create</mat-icon>
+        <div class="hide-md">{{'genericMessages.personalData' | translate}}</div>
+        <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row show-mobile">
+  <div class="col-12">
+      <button class="btn-primary btn-sm" mat-button [matMenuTriggerFor]="resp">
+        <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+    </button>
+      <mat-menu #resp="matMenu">
+        <button mat-menu-item (click)="goBack()" class="btn-stroked-primary btn-sm">
+          <mat-icon class="mr-sm">arrow_back_ios</mat-icon>
+          <div class="hide-md">{{'genericMessages.return' | translate}}</div>
+          <mat-icon class="hide-lg">account_circle</mat-icon>
+        </button>
+        <div style="display: inline;" *ngIf="component === 'personal-data'">
+          <button mat-menu-item (click)="goToCurriculum()" class="btn-stroked-primary btn-sm ">
+            <mat-icon class="mr-sm">portrait</mat-icon>
+            <div class="hide-md">{{'genericMessages.curriculum' | translate}}</div>
+            <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+          </button>
+          <button mat-menu-item (click)="goToCandidatures()" class="btn-stroked-primary btn-sm">
+            <mat-icon class="mr-sm">create</mat-icon>
+            <div class="hide-md">{{'genericMessages.candidatures' | translate}}</div>
+            <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+          </button>
+        </div>
+        <div style="display: inline;" *ngIf="component === 'curriculum'">
+          <button mat-menu-item (click)="goToPersonalData()" class="btn-stroked-primary btn-sm ">
+            <mat-icon class="mr-sm">person</mat-icon>
+            <div class="hide-md">{{'genericMessages.personalData' | translate}}</div>
+            <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+          </button>
+          <button mat-menu-item (click)="goToCandidatures()" class="btn-stroked-primary btn-sm">
+            <mat-icon class="mr-sm">create</mat-icon>
+            <div class="hide-md">{{'genericMessages.candidatures' | translate}}</div>
+            <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+          </button>
+        </div>
+        <div style="display: inline;" *ngIf="component === 'candidatures'">
+          <button mat-menu-item (click)="goToCurriculum()" class="btn-stroked-primary btn-sm ">
+            <mat-icon class="mr-sm">person</mat-icon>
+            <div class="hide-md">{{'genericMessages.curriculum' | translate}}</div>
+            <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+          </button>
+          <button mat-menu-item (click)="goToPersonalData()" class="btn-stroked-primary btn-sm">
+            <mat-icon class="mr-sm">create</mat-icon>
+            <div class="hide-md">{{'genericMessages.personalData' | translate}}</div>
+            <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+          </button>
+        </div>
+      </mat-menu>
+      
+  </div>
+</div>

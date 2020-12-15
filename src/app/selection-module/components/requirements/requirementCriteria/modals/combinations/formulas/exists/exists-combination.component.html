@@ -1,0 +1,102 @@
+<div *ngIf="block">
+    <span class="fake-mat-chip" *ngIf="combinationBusy">Valoración ya usada</span>
+
+    <form [formGroup]="form">
+
+        <div class="field">
+            <div class="decisionTree mt-sm mb-m">
+
+                <mat-form-field class="same-width">
+                    <p class="mat-header-cell no-padding">
+                        {{'genericMessages.title' | translate}}
+                    </p>
+                    <input matInput formControlName="title" [readonly]="disabled" />
+                    <mat-icon class="icon-small" matSuffix>mode_edit</mat-icon>
+                    <mat-error *ngIf="!disabled">
+                        {{ 'genericMessages.requiredField' | translate }}
+                        
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+        </div>
+
+        <div class="field" [ngSwitch]="field.type" *ngFor="let field of block.fields;let i = index">
+
+            <div *ngSwitchCase="'decisionTree'" class="decisionTree mt-sm mb-m">
+                <p class="mat-header-cell">
+                    {{field.label}}
+                </p>
+                <button class="decisionTreeSelect" mat-raised-button [matMenuTriggerFor]="menu.childMenu">
+                    <span *ngIf="!field.branchSelected">
+                        {{'selectionAdmin.valuations.conditional.chooseOption' | translate}}
+                    </span>
+                    <span *ngIf="field.branchSelected">
+                        {{field.branchSelected}}
+                    </span>
+                    <mat-icon style="position: fixed;right: 2%;">
+                        arrow_drop_down
+                    </mat-icon>
+                </button>
+                <app-nested-menu (onBranchSelected)="branchSelected($event,i)" #menu [formControlName]="field._id"
+                    [tree]="field.tree">
+                </app-nested-menu>
+                <mat-error
+                    *ngIf="!form.get(field._id).value && form.get(field._id).invalid && form.get(field._id).touched">
+                    {{'genericMessages.required' | translate}}</mat-error>
+            </div>
+
+
+            <!-- RADIO -->
+            <app-options-field *ngSwitchCase="'radio'" [single]="true" [label]="field.label"
+                [formControlName]="field._id" [options]="field.options" [required]="field.validation.required">
+            </app-options-field>
+
+            <!-- SELECT -->
+            <mat-form-field *ngSwitchCase="'select'" class="mt-sm same-width">
+                <p class="mat-header-cell">
+                    {{field.label}}
+                </p>
+                <mat-select [compareWith]="compareFunction" [formControlName]="field._id">
+                    <mat-option [disabled]="true">--</mat-option>
+                    <mat-option *ngFor="let option of field.options"
+                        [value]="{'value':option.value,'label':option.label,'requirement':option._id}">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>{{'genericMessages.required' | translate}}</mat-error>
+            </mat-form-field>
+
+        </div>
+        <div class="row">
+            <!--
+            <div class="col-6">
+                <p [ngClass]="{disabled: !scoreUniqueFormula}">* {{ 'selectionAdmin.valuations.modal.countsWithUniqueFormula' | translate }}</p>
+            </div>
+            -->
+
+            <div class="col-12">
+                <mat-form-field>
+                    <p class="mat-header-cell">
+                        {{ 'genericMessages.forms.ifExistsCounts' | translate }}
+                    </p>
+
+                    <input [ngClass]="{disabled: scoreUniqueFormula}" type="number" matInput placeholder=""
+                        formControlName="combinationValue" />
+                    <mat-icon *ngIf="!scoreUniqueFormula" matSuffix>mode_edit</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div mat-dialog-actions>
+            <div class="mt-m" fxLayout fxLayoutAlign="end">
+                <button class="mat-button" (click)="cancel()">{{ 'genericMessages.CANCEL' | translate }}</button>
+                <button [disabled]="form.invalid || combinationBusy" class="btn-primary" color="primary"
+                    (click)="submitForm()" mat-button>
+                    <span *ngIf="!edit">{{ 'genericMessages.add' | translate }}</span>
+                    <span *ngIf="edit">{{ 'genericMessages.ok' | translate }}</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

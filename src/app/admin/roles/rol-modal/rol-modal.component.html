@@ -1,0 +1,39 @@
+<div class="close-dialog"><button mat-flat-button (click)="close()"><em class="material-icons">close</em></button></div>
+<h1 mat-dialog-title>{{'rolesAdmin.modal.title' |translate}}</h1>
+<div [formGroup]="formGroup">
+    <mat-form-field>
+        <input matInput [placeholder]="'rolesAdmin.modal.placeholders.name' |translate" formControlName="name">
+        <mat-error *ngIf="formGroup?.touched && formGroup.get('name').errors?.required">
+            {{'genericMessages.required' |translate}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [placeholder]="'rolesAdmin.modal.placeholders.description' |translate"
+            formControlName="description">
+        <mat-error *ngIf="formGroup?.touched && formGroup.get('description').errors?.required">
+            {{'genericMessages.required' |translate}}</mat-error>
+    </mat-form-field>
+</div>
+<div class="dialog-content-height" mat-dialog-content [formGroup]="formGroup">
+    <div class="loading-section" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="mb-m" *ngFor="let permission of permissions" formGroupName="permissions">
+        <mat-checkbox [formControlName]="permission._id" [disabled]="rol._id === '5d19fb3a3dc2de1b2c70deeb'">
+        </mat-checkbox>
+        <span class="ml-sm" *ngIf="permissionsTitlesAux[permission.name]">{{permissionsTitlesAux[permission.name]}}</span>
+        
+        <div *ngIf="permissionsDescAux[permission.name]" class="description-display">
+            {{permissionsDescAux[permission.name]}}
+
+        </div>
+    </div>
+</div>
+<mat-error class="mt-m">
+    <small [ngClass]="{'hideError' : !(formGroup?.touched && formGroup.get('permissions').errors?.atLeast)}">
+        {{'rolesAdmin.modal.message' |translate}}</small>
+</mat-error>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">{{'genericMessages.cancel' |translate}}</button>
+    <button mat-flat-button class="btn-primary" [disabled]="formGroup && formGroup.touched && formGroup?.invalid"
+        (click)="submit()" cdkFocusInitial>{{'genericMessages.save' |translate}}</button>
+</div>

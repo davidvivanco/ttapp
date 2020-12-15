@@ -1,0 +1,27 @@
+<div class="close-dialog"><button mat-button (click)="closeModal()"><em class="material-icons">close</em></button></div>
+<h1 id="aria" class="mat-dialog-title primary-color">{{'searchModalOrg.title' | translate}}</h1>
+<div mat-dialog-content class="full-height-dialog min-width recog-dialog">
+    <mat-form-field>
+        <input matInput [(ngModel)]="inputSearchGlobal" (keyup)="applyFilter(inputSearchGlobal)"
+            (keyup.enter)="onEnterKeyPress(inputSearchGlobal)" placeholder="Filtro">
+
+    </mat-form-field>
+    <table mat-table aria-describedby="aria" matSort [dataSource]="dataSource" class="search-table">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell scope="col" *matHeaderCellDef mat-sort-header> {{'genericMessages.cardPosition' | translate}}</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="select">
+            <th mat-header-cell scope="col" *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="right">
+                <button mat-flat-button class="btn-stroked-primary btn-sm"
+                    (click)="highLightUser(element)">{{'genericMessages.see' | translate}}</button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [length]="dataSource.totalCardPositions"
+        showFirstLastButtons></mat-paginator>
+    <div class="clearfix"></div>
+</div>

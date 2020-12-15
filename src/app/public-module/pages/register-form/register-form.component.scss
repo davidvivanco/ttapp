@@ -1,0 +1,56 @@
+.recovery-link {
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+.access-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    strong {
+        font-size: 13px;
+    }
+}
+
+.button-logo {
+    width: 30px;
+    height: 30px;
+    padding-top: 3px;
+}
+
+.fb-logo{
+    padding-right: 5px;
+}
+
+.google-logo{
+    height: 26px;
+    width: 26px;
+    padding-top: 4px;
+}
+
+.register-text {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-text-google {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-buttons {
+    text-align: center;
+    display: flex;
+    max-width: 260px;
+    justify-content: center;
+    div {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.other-access {
+    justify-content: center;
+}

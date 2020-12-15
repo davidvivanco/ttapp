@@ -1,0 +1,4 @@
+<app-checkbox-table *ngIf="positions" (onCancel)="cancel($event)" (onClose)="close($event)" (onSubmit)="submit($event)"
+  [elements]="positions" [title]="title" [displayedColumns]="displayedColumns" [modal]="'addPosition'"
+  [selects]="selects" [selectElementManually]="selectElementManually">
+</app-checkbox-table>

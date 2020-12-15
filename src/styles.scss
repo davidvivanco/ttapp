@@ -1,0 +1,146 @@
+// BODY
+:root, body, html {
+	font-size: 16px !important;
+}
+
+/* You can add global styles to this file, and also import other style files */
+// @import "~angular-tree-component/dist/angular-tree-component.css";
+
+// COLORES SEGUN EMPRESA
+// Para asegurar compatibilidad con ie11 se escriben los estilos
+// referentes a variables de colores en user.service.ts
+
+// NORMALIZE ALL BROWSERS
+@import "styles/normalize.css";
+
+// MATERIAL
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "styles/custom-theme.scss";
+
+// Add CSS stylesheet for Material Icons!
+// @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+// @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+/*
+mat-icon {
+  font-family: 'Material Icons' !important;
+}
+.material-icons-outlined {
+  font-family: 'Material Icons Outlined' !important;
+}
+*/
+
+body {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+// LAYOUT
+$menu-width: 260px;
+$appMenuWidth: 60px;
+$appIconSize: 30px;
+.mat-drawer {
+  width: $menu-width !important;
+  border-right: 0px !important;
+  overflow-x: hidden;
+}
+.mat-drawer-container {
+  background: $white;
+  .mat-drawer-content {
+    background: $light;
+  }
+  /*w 600*/
+  @media (max-width: 37.5em) {
+    .mat-drawer-content {
+      width: 100%;
+    }
+  }
+}
+
+//COLOR PICKER
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+
+// UI ELEMENTS
+@import "styles/_grid.scss"; 			    // GRID SYSTEM
+@import "styles/_helpers.scss"; 		  // HELPERS AND RESETS
+@import "styles/_buttons.scss"; 		  // BUTTONS
+@import "styles/_forms.scss"; 		    // FORMS
+@import "styles/_cards.scss"; 			  // CARDS
+@import "styles/_lists.scss"; 			  // LISTS
+@import "styles/_tables.scss"; 			  // TABLES
+@import "styles/_tabs.scss"; 			    // TABS
+@import "styles/_tree.scss";          // TREE
+@import "styles/_accordion.scss"; 	  // ACCORDIONS
+@import "styles/_dialogs.scss"; 		  // DIALOGS - MODALS
+@import "styles/_toggle_slide.scss";  // Toggle Slider
+
+// SCSS cargados así para poder acceder a las variables de
+// color sin tener que importar cada vez que las queramos usar
+@import "styles/app-login.scss"; 	  	// APP LOGIN
+@import "styles/app-sidenav.scss"; 		// APP NAV
+@import "styles/app-header.scss"; 		// APP HEADER
+@import "styles/app-content.scss"; 		// APP CONTENT
+@import "styles/app-footer.scss"; 		// APP FOOTER
+@import "styles/app-chart.scss"; 	  	// APP CHART
+@import "styles/app-bot-assistant.scss"; 	  	// APP BOT ASSISTANT
+
+// RESPONSIVE STYLES
+@import "styles/app-responsive.scss"; 		// APP RESPONSIVE
+
+/*w 1200*/
+@media (min-width: 75em) {
+
+}
+
+/*w 1140*/
+@media (max-width: 71.25em) {
+
+}
+
+/*w 992*/
+@media (max-width: 62em) {
+
+}
+
+/*w 900*/
+@media (max-width: 56.25em) {
+
+}
+
+/*w 800*/
+@media (max-width: 50em) {
+
+}
+
+/*w 768*/
+@media (max-width: 48em) {
+
+}
+
+/*w 640*/
+@media (max-width: 40em) {
+
+}
+
+/*w 600*/
+@media (max-width: 37.5em) {
+
+}
+
+/*w 540*/
+@media (max-width: 33.75em) {
+
+}
+
+/*w 480*/
+@media (max-width: 30em) {
+
+}
+
+/*w 380*/
+@media (max-width: 23.75em) {
+
+}

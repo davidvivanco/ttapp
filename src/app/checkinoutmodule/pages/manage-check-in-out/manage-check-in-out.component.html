@@ -1,0 +1,40 @@
+<app-breadcrumb breadcrumbs="Talentoo,{{ 'manageCheckInOut.title' | translate }}"></app-breadcrumb>
+
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>{{'manageCheckInOut.teamList' |translate}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <kendo-treelist [kendoTreeListFlatBinding]="myTeam" idField="employeeId" parentIdField="parent" [sortable]="{ mode: 'multiple' }" [filterable]="true" [filter]="filter">
+                    <kendo-treelist-column [expandable]="true" field="name" [title]="'genericMessages.name' | translate" [width]="180"></kendo-treelist-column>
+                    <kendo-treelist-column field="lastName" [title]="'genericMessages.lastName' | translate" [width]="180">
+                    </kendo-treelist-column>
+                    <kendo-treelist-column [title]="'genericMessages.checkInOuts' | translate" [width]="40" [filterable]="false">
+                        <ng-template kendoTreeListCellTemplate let-dataItem>
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="seeCheckInOut(dataItem)">
+                                    <mat-icon>today</mat-icon>
+                                    <span>{{'genericMessages.checkInOuts' |translate}}</span>
+                                </button>
+                            </mat-menu>
+                        </ng-template>
+                    </kendo-treelist-column>
+                    <kendo-treelist-messages [filterContainsOperator]="'manageCheckInOut.kendo.messages.contains' | translate" [filterEndsWithOperator]="'manageCheckInOut.kendo.messages.finishAt' | translate" [filterEqOperator]="'manageCheckInOut.kendo.messages.equal' | translate"
+                        [filterNotEqOperator]="'manageCheckInOut.kendo.messages.noEqual' | translate" [filterNotContainsOperator]="'manageCheckInOut.kendo.messages.noContains' | translate" [filterStartsWithOperator]="'manageCheckInOut.kendo.messages.startAt' | translate"
+                        [filterIsNullOperator]="'manageCheckInOut.kendo.messages.isNull' | translate" [filterIsNotNullOperator]="'manageCheckInOut.kendo.messages.notNull' | translate" [filterIsEmptyOperator]="'manageCheckInOut.kendo.messages.isEmpty' | translate"
+                        [filterIsNotEmptyOperator]="'manageCheckInOut.kendo.messages.noEmpty' | translate" [noRecords]="'manageCheckInOut.kendo.messages.message' | translate">
+                    </kendo-treelist-messages>
+                    <ng-template kendoTreeListNoRecordsTemplate>
+                        {{'manageCheckInOut.teamList' |translate}}
+                    </ng-template>
+                </kendo-treelist>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<!-- item.linkType === true -->
+    <!-- Router link interno con target -->
+    <a *ngIf="item.linkType && item.innerLink !== ''" target="{{(item.blank) ? '_blank' : '_self'}}"
+        [routerLink]="[item.innerLink]" 
+        mat-list-item (click)="hideMenu()" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>{{item.icon}}</mat-icon> {{item.title}}
+    </a>
+    <!-- MODAL -->
+    <a *ngIf="item.linkType && item.innerLink === ''" 
+         mat-list-item
+        (click)="modalType(item);hideMenu();" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>{{item.icon}}</mat-icon> {{item.title}}
+    </a>
+
+<!-- item.linkType === false -->
+    <!-- Externo Iframe -->
+    <a *ngIf="!item.linkType && item.iframe" mat-list-item 
+        [routerLink]="['/iframe', item.webLink]" (click)="hideMenu()">
+        <mat-icon>{{item.icon}}</mat-icon> {{item.title}}
+    </a>
+
+    <!-- Externo con target -->
+    <a *ngIf="!item.linkType && !item.iframe" mat-list-item
+        (click)="hideMenu()" [href]="item.webLink" target="{{(item.blank) ? '_blank' : '_self'}}">
+        <mat-icon>{{item.icon}}</mat-icon> {{item.title}}
+    </a>

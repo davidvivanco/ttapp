@@ -1,0 +1,12 @@
+<div class="iframe-container">
+  <app-breadcrumb breadcrumbs="Talentoo,{{ 'mainPage.matTooltip.observatory' | translate }}"></app-breadcrumb>
+
+
+  <div class="row iframe-wrapper">
+    <div class="col-12">
+      <iframe title="observatory" *ngIf="finishLoading" [src]="urlObservatorySafe"
+        style="overflow:hidden;" height="100%" width="100%"></iframe>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>

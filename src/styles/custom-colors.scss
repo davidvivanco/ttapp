@@ -1,0 +1,149 @@
+// METRO COLOR PALETTE WITH http://mcg.mbitson.com
+// MATERIAL COLORS
+$mat-primary: (
+	50 : #e2edf5,
+    100 : #b8d1e6,
+    200 : #88b3d5,
+    300 : #5894c4,
+    400 : #357db7,
+    500 : #1166aa,
+    600 : #0f5ea3,
+    700 : #0c5399,
+    800 : #0a4990,
+    900 : #05387f,
+    A100 : #aecaff,
+    A200 : #7ba9ff,
+    A400 : #4887ff,
+    A700 : #2e77ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+$mat-accent: (
+	50 : #f0f7e0,
+    100 : #daebb3,
+    200 : #c2de80,
+    300 : #a9d14d,
+    400 : #96c726,
+    500 : #84bd00,
+    600 : #7cb700,
+    700 : #71ae00,
+    800 : #67a600,
+    900 : #549800,
+    A100 : #e0ffc3,
+    A200 : #c6ff90,
+    A400 : #acff5d,
+    A700 : #9fff44,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$mat-red: (
+	50 : #fce8e9,
+	100 : #f8c7c8,
+	200 : #f4a1a4,
+	300 : #ef7b80,
+	400 : #eb5f64,
+	500 : #e84349,
+	600 : #e53d42,
+	700 : #e23439,
+	800 : #de2c31,
+	900 : #d81e21,
+	A100 : #ffffff,
+	A200 : #ffdbdc,
+	A400 : #ffa8aa,
+	A700 : #ff8f91,
+	contrast: (
+		50 : #000000,
+		100 : #000000,
+		200 : #000000,
+		300 : #000000,
+		400 : #000000,
+		500 : #ffffff,
+		600 : #ffffff,
+		700 : #ffffff,
+		800 : #ffffff,
+		900 : #ffffff,
+		A100 : #000000,
+		A200 : #000000,
+		A400 : #000000,
+		A700 : #000000,
+	)
+);
+
+// OTHER COLORS AND USES
+/* CUSTOM COLORS*/
+$blue: #1166aa;
+$red:  #E84349;
+$dark: #333F48;
+$light:#EFEFEF;
+$gray: #555555;
+$green:#84bd00;
+$orange: #f57c00;
+$yellow: #fff600;
+
+$primary: var(--primary-color);
+$secondary: var(--secondary-color);
+
+$warning:$red;
+
+$black: $dark;
+$l-black: #333333;
+
+$d-gray: darken($gray,5%);
+$l-gray: #C6C6C6;
+
+$white: #fff;
+
+.primary {color: $primary !important;}
+.secondary {color: $secondary !important;}
+.blue   {color: $blue !important;}
+.red    {color: $red !important;}
+.dark   {color: $dark !important;}
+.light  {color: $light !important;}
+.gray   {color: $gray !important;}
+.green  {color: $green !important;}
+.orange {color: $orange !important;}
+.yellow {color: $yellow !important;}
+.white  {color: $white !important;}
+
+.bg-primary {background-color: $primary !important;}
+.bg-secondary {background-color: $secondary !important;}
+.bg-blue    {background-color: $blue !important;}
+.bg-red     {background-color: $red !important;}
+.bg-dark    {background-color: $dark !important;}
+.bg-light   {background-color: $light !important;}
+.bg-gray    {background-color: $gray !important;}
+.bg-green   {background-color: $green !important;}
+.bg-orange  {background-color: $orange !important;}
+.bg-yellow  {background-color: $yellow !important;}
+.bg-white   {background-color: $white !important;}
+/* CUSTOM END COLORS*/

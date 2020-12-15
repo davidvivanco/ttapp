@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="col-12">
+    <mat-card class="card-dark-header"
+      [ngClass]="{'state-container-s': innerWidth < 480,'state-container-m': innerWidth > 530 && innerWidth < 700 ,'state-container-l': innerWidth >= 700 && innerWidth < 900,'state-container-xl': innerWidth >= 900}">
+      <mat-card-header>
+        <div class="card-header">
+          <p id="aria">Estado</p>
+          <mat-icon [ngClass]="{'info-icon-s': innerWidth < 480 ,'info-icon-m': innerWidth >= 480}">info</mat-icon>
+        </div>
+      </mat-card-header>
+      <div class="clearfix"></div>
+      <mat-card-content>
+        <div class="col-12">
+          <div class="personal-data">
+            <app-avatar *ngIf="user" [ngClass]="{'avatar-xs': innerWidth < 480 ,'avatar-s': innerWidth >= 480}"
+              class="mr-sm" [user]="user" [photoUrl]="user.photo">
+            </app-avatar>
+            <h3 *ngIf="user && innerWidth >= 480">{{name}}</h3>
+            <p class="f-m no-mp" *ngIf="user && innerWidth < 480">{{user.personalData.name}}</p>
+          </div>
+          <p class="no-mp" [ngClass]="{'f-p': innerWidth < 400,'f-m': innerWidth >= 480}" *ngIf="email">
+            {{email}}</p>
+        </div>
+
+        <div class="chart-container" *ngIf="innerWidth > 350 ">
+          <app-pie [responsive]="true" [showCard]="false" [chart]="chart" [series]="[1, 3, 6]"></app-pie>
+        </div>
+      </mat-card-content>
+      <div class="clearfix"></div>
+    </mat-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <mat-card class="card-dark-header">
+      <mat-card-header>
+        <div class="card-header">
+          <p id="aria">¿Cómo te encuentras?</p>
+        </div>
+      </mat-card-header>
+      <div class="clearfix"></div>
+      <mat-card-content>
+        <div class="row">
+
+          <div class="col-12">
+            <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="goToSurvey()">
+              Realizar de nuevo
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+      <div class="clearfix"></div>
+    </mat-card>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-12">
+    <mat-accordion class="dark-header">
+      <mat-expansion-panel [disabled]="true" #mep="matExpansionPanel" [hideToggle]="true" [expanded]="mepOpen">
+        <mat-expansion-panel-header>
+
+          <p id="aria" class="indicator-title">Indicadores</p>
+
+        </mat-expansion-panel-header>
+        <div [ngSwitch]="showDashboard">
+
+          <div *ngSwitchCase="false">
+            <div class="row">
+              <div class="col-12"
+                [ngClass]="{'card-indicator-container': innerWidth <= 360 , 'card-indicator-container-mobile': innerWidth < 460 && innerWidth > 360,'card-indicator-container': innerWidth >= 460}">
+                <mat-card *ngFor="let item of ['Emocional','Familia','Salud','Movilidad','Educación','Impacto']"
+                  class="indicator">
+                  <div>
+                    <h3>{{item}}</h3>
+                    <mat-icon matSuffix class="ml-sm pointer">edit</mat-icon>
+                  </div>
+                  <div>
+                    <mat-icon class="star">grade</mat-icon>
+                    <mat-icon class="star">grade</mat-icon>
+                    <mat-icon class="star">grade</mat-icon>
+                    <mat-icon class="star disabled">grade</mat-icon>
+                    <mat-icon class="star disabled">grade</mat-icon>
+
+                    <mat-icon matSuffix (click)="seeDashboard(mep)" class="info pointer">info</mat-icon>
+
+                  </div>
+
+                </mat-card>
+              </div>
+            </div>
+          </div>
+
+          <div *ngSwitchDefault>
+            <div class="row">
+              <div class="col-12">
+                <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="showDashboard = false">
+                  Volver
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <apx-chart [series]="dashboard[0].chart.chartOptions.series"
+                  [chart]="dashboard[0].chart.chartOptions.chart"
+                  [dataLabels]="dashboard[0].chart.chartOptions.dataLabels"
+                  [plotOptions]="dashboard[0].chart.chartOptions.plotOptions"
+                  [yaxis]="dashboard[0].chart.chartOptions.yaxis" [xaxis]="dashboard[0].chart.chartOptions.xaxis"
+                  [legend]="dashboard[0].chart.chartOptions.legend" [colors]="dashboard[0].chart.chartOptions.colors"
+                  [grid]="dashboard[0].chart.chartOptions.grid"></apx-chart>
+              </div>
+              <div class="col-12">
+                <apx-chart [series]="dashboard[1].chart.chartOptions.series"
+                  [chart]="dashboard[1].chart.chartOptions.chart"
+                  [dataLabels]="dashboard[1].chart.chartOptions.dataLabels"
+                  [plotOptions]="dashboard[1].chart.chartOptions.plotOptions"
+                  [title]="dashboard[1].chart.chartOptions.title">
+                </apx-chart>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

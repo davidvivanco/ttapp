@@ -1,0 +1,74 @@
+mat-form-field,
+mat-select {
+    width: 200px;
+}
+
+mat-grid-tile {
+    background   : white;
+    border-radius: 3px;
+}
+
+mat-paginator {
+    width       : fit-content;
+    margin      : 0 auto;
+    padding-left: 6px;
+}
+
+mat-grid-tile-footer,
+mat-grid-tile-header {
+    background: none !important;
+    color     : black !important;
+    height    : 30px !important;
+}
+
+mat-grid-tile-footer {
+    justify-content: center;
+}
+
+mat-grid-tile-header {
+    justify-content: flex-end;
+    padding-right  : 2px !important;
+}
+
+.file {
+    font-size: 100px;
+    width    : 100px;
+    height   : 120px;
+    color    : gray;
+}
+
+.menu {
+    background-color: #efefef;
+    color           : black;
+    box-shadow      : 0 2px 3px black;
+    width           : 23px;
+    height          : 23px;
+    top             : -2px;
+}
+
+.menuIcon {
+    top: -12px !important;
+}
+
+img {
+    height: 100%;
+}
+
+.fileName {
+    text-align   : center;
+    width        : 100%;
+    overflow     : hidden;
+    white-space  : nowrap;
+    text-overflow: ellipsis;
+}
+
+.no-items {
+    width       : fit-content;
+    margin-bottom     : 14px;
+}
+
+.mat-paginator {
+    width: 100%;
+    background: none;
+    border-top: 1px solid #ccc;
+}

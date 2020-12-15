@@ -1,0 +1,111 @@
+
+    <div class="logo primary text-center mb-m">
+      <img [src]="configuration.company.loginLogo" [alt]="configuration.company.companyName + ' logo'">
+    </div>
+    <form [formGroup]="registerForm" class="pt-2 pb-0 px-4 mt-l">
+      <div class="login-button-wrapper mb-m">
+
+        <strong>{{'register.register' | translate}}</strong>
+
+      </div>
+      <mat-form-field>
+        <input matInput placeholder="Nombre" formControlName="name">
+        <button tabindex="-1" mat-icon-button matSuffix>
+          <!-- <mat-icon tabindex="-1">name</mat-icon> -->
+        </button>
+        <mat-error *ngIf="registerForm.get('name').errors?.required">{{'genericMessages.requiredField' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Apellidos" formControlName="lastName">
+        <button tabindex="-1" mat-icon-button matSuffix>
+          <!-- <mat-icon tabindex="-1">lastName</mat-icon> -->
+        </button>
+        <mat-error *ngIf="registerForm.get('lastName').errors?.required">{{'genericMessages.requiredField' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email" type="email">
+        <button tabindex="-1" mat-icon-button matSuffix>
+          <mat-icon tabindex="-1">email</mat-icon>
+        </button>
+        <mat-error *ngIf="registerForm.get('email').errors?.required">{{'genericMessages.requiredField' | translate}}
+        </mat-error>
+        <mat-error *ngIf="!registerForm.get('email').valid &&
+      !registerForm.get('email').errors?.required">{{'register.invalidEmail' | translate}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Contraseña" [type]="hide ? 'password' : 'text'" formControlName="newPassword">
+        <button tabindex="-1" mat-icon-button matSuffix (click)="changeVisibilityIcon($event)"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon tabindex="-1"> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-hint class="small">{{'register.passwordMin' | translate}}</mat-hint>
+
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Confirmar contraseña" [type]="hide ? 'password'
+      : 'text'" formControlName="confirmPassword">
+        <button return="false" tabindex="-1" mat-icon-button matSuffix (click)="changeVisibilityIcon($event)"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon tabindex="-1"> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error
+          *ngIf=" registerForm.controls.confirmPassword.errors && registerForm.controls.confirmPassword.errors.confirmPassword">
+          {{'register.passwordMatch' | translate}}
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('confirmPassword').errors?.required">{{'genericMessages.requiredField' | translate}}
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('confirmPassword').errors?.minLength">
+          {{'register.passwordMin' | translate}}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="login-button-wrapper mb-m mt-m">
+        <button (click)="doRegister()" mat-flat-button class="btn-primary w-100
+      mt-3" [disabled]="registerForm.invalid || registerForm.untouched">
+          <span class="ml-sm f-s">{{'genericMessages.access' | translate}}</span>
+        </button>
+      </div>
+      <div *ngIf="canSeeSocialLogin" class="other-access">
+        <div class="mb-m access-label">
+          <strong>
+            {{'login.socialLogin' | translate}}
+          </strong>
+        </div>
+        <div class="access-buttons">
+          <button (click)="signInWithLinkedIn($event)" mat-flat-button
+            class="linkedin-register-button register-buttons" *ngIf="configuration.services.linkedinAccess">
+            <div>
+              <img *ngIf="linkedInImage" alt="linkedin" class="button-logo link-fb-logo" [src]="linkedInImage">
+            </div>
+          </button>
+          <button (click)="googleAccess($event)" mat-flat-button
+            class="google-register-button register-buttons" *ngIf="configuration.services.googleAccess">
+            <div>
+              <img *ngIf="googleImage" alt="Google" class="button-logo" [src]="googleImage">
+            </div>
+          </button>
+          <button (click)="facebookAccess($event)" mat-flat-button
+            class="facebook-register-button register-buttons" *ngIf="configuration.services.facebookAccess">
+            <div>
+              <img *ngIf="facebookImage" alt="Facebook" class="button-logo fb-logo" [src]="facebookImage">
+            </div>
+          </button>
+        </div>
+        <p class="f-sm center">{{'login.privateMode' | translate}}</p>
+      </div>
+      <div class="clearfix"></div>
+
+      <div *ngIf="modalFlag === true; else elseBlock">
+        <a tabindex="-1" (click)="openLoginModal()" target="_self" class="recovery-link pointer f-sm primary">{{'register.hasAccount' | translate}}</a>
+      </div>
+      <ng-template #elseBlock>
+        <a tabindex="-1" href="public/login" target="_self" class="recovery-link pointer f-sm primary">{{'register.hasAccount' | translate}}</a>
+      </ng-template>
+
+    </form>

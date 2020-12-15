@@ -1,0 +1,17 @@
+.filter-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    .filter{
+        flex: 1 0 calc(25% - 10px);
+    }
+}
+.filters-containers{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: flex-end;
+}

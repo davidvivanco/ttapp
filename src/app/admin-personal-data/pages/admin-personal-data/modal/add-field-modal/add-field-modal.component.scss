@@ -1,0 +1,26 @@
+.edit-position-card {
+  div[class^="col"] {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.filter-select{
+  max-height: 225px;
+  overflow-y: auto;
+}
+
+.mat-hintmodal{
+  font-size: 75%;
+  font-weight: 400;
+  line-height: 1.125;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: rgba(0, 0, 0, 0.54);
+}

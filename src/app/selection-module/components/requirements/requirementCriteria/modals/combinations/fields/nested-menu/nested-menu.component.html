@@ -1,0 +1,27 @@
+<mat-menu [id]="path" #childMenu="matMenu" [overlapTrigger]="false">
+  <span *ngFor="let branch of tree;let i = index">
+    <!-- Handle branch node menu items -->
+    <span *ngIf="branch.tree && branch.tree.length > 0  && branch.tree[0].label !== ''">
+      <button mat-menu-item color="primary" [matMenuTriggerFor]="menu.childMenu">
+        <span>{{branch.label}}</span>
+      </button>
+      <app-nested-menu (onBranchSelected)="branchSelected($event)" [onChangeFn]="onChangeFn"
+        [path]="path + branch.label + ','" #menu [tree]="branch.tree">
+      </app-nested-menu>
+    </span>
+
+    <!-- Handle leaf node menu items -->
+    <!-- Padres que no tienen hijos de base de datos llegan con todas las columnas pero con un item vacío -->
+    <span *ngIf="branch.tree && branch.tree.length > 0  && branch.tree[0].label === ''">
+      <button mat-menu-item (click)="selectLeaf(branch,i)">
+        <span>{{branch.label}}</span>
+      </button>
+    </span>
+    <!-- Solo los items de la ultima columna NO tienen tree -->
+    <span *ngIf="!branch.tree">
+      <button mat-menu-item (click)="selectLeaf(branch,i)">
+        <span>{{branch.label}}</span>
+      </button>
+    </span>
+  </span>
+</mat-menu>

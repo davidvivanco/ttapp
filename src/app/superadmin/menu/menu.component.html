@@ -1,0 +1,166 @@
+<app-breadcrumb breadcrumbs="Talentoo,SuperAdmin,{{'menu.menu' | translate}}"></app-breadcrumb>
+<div class="row hide-mobile">
+    <div class="col-12">
+        <button mat-flat-button class="btn-primary btn-sm" mat-button (click)="addMenu()">
+            <mat-icon class="mr-sm">add</mat-icon>{{'menu.addMenu' | translate}}
+        </button>
+        <span class="mr-m"></span>
+        <button mat-flat-button class="btn-primary btn-sm" mat-button (click)="addDirectUrl()">
+            <mat-icon class="mr-sm">add</mat-icon>{{'menu.addUrl' | translate}}
+        </button>
+        <span class="mr-m"></span>
+        <button mat-stroked-button class="btn-stroked-primary btn-sm" [disabled]="!canPublishAll"
+            (click)="publishAll()">
+            <mat-icon class="mr-sm">publish</mat-icon> {{'menu.publishAll' | translate}}
+        </button>
+    </div>
+</div>
+<div class="row show-mobile">
+    <div class="col-12">
+        <button class="btn-primary btn-sm" mat-button [matMenuTriggerFor]="resp">
+            <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+        </button>
+        <mat-menu #resp="matMenu">
+            <button mat-menu-item class="btn-stroked-primary btn-sm" (click)="addMenu()">
+                <mat-icon>add</mat-icon>{{'menu.addMenu' | translate}}
+            </button>
+            <button mat-menu-item class="btn-stroked-primary btn-sm" (click)="addDirectUrl()">
+                <mat-icon>add</mat-icon>{{'menu.addUrl' | translate}}
+            </button>
+            <button mat-menu-item class="btn-stroked-primary btn-sm" [disabled]="!canPublishAll" (click)="publishAll()">
+                <mat-icon>publish</mat-icon> {{'menu.publishAll' | translate}}
+            </button>
+        </mat-menu>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>speaker_notes</mat-icon>
+                </mat-card-title>
+                <p>{{'superAdminMenu.menu' | translate}}</p>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <div class="loading-table" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <ul class="unordered-list" cdkDropList (cdkDropListDropped)="dropMenu($event)"
+                    [cdkDropListData]="menuList" *ngIf="menuList.length !==0">
+                    <li cdkDrag [cdkDragData]="menu" class="block" cdkDropListGroup fxLayout
+                        fxLayoutAlign="start center" *ngFor="let menuItem of menuList; let i = index">
+                        <div class="row">
+                            <div class="hide-mobile">
+                                <div class="col-6">
+                                    <mat-icon class="handle mr-sm " cdkDragHandle>drag_handle</mat-icon>
+                                    <mat-icon *ngIf="!menuItem.hasOwnProperty('linkType')" class="mr-sm">folder
+                                    </mat-icon>
+                                    <mat-icon *ngIf="menuItem.hasOwnProperty('linkType')" class="mr-sm">link</mat-icon>
+                                    <strong>{{menuItem.title}}</strong>
+                                    <div class="status f-p" *ngIf="!menuItem.hasOwnProperty('linkType')">
+                                        <mat-icon class="mr-sm mat-icon-sm">security</mat-icon>
+                                        <span
+                                            *ngIf="rolesTextView[menuItem._id]">{{rolesTextView[menuItem._id].rolesView}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-2 pt-s text-right">
+                                    <span *ngIf="menuItem.status === 'draft'"
+                                        class="fake-mat-chip-sm bg-light ng-star-inserted">{{'menu.unPublished' | translate}}</span>
+                                    <span *ngIf="menuItem.status === 'published'"
+                                        class="fake-mat-chip-sm success bg-green ng-star-inserted">{{'genericMessages.publishedM' | translate}}</span>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button (click)="editMenu(menuItem, i)" mat-menu-item
+                                            *ngIf="!menuItem.hasOwnProperty('linkType')">
+                                            <mat-icon>edit</mat-icon> {{'genericMessages.edit' | translate}}
+                                        </button>
+                                        <button (click)="editUrl(menuItem, i)" mat-menu-item
+                                            *ngIf="menuItem.hasOwnProperty('linkType')">
+                                            <mat-icon>edit</mat-icon> {{'genericMessages.edit' | translate}}
+                                        </button>
+                                        <button (click)="publishUrlChange(menuItem, i)" mat-menu-item
+                                            *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.status==='draft'">
+                                            <mat-icon>publish</mat-icon> {{'genericMessages.publish' | translate}}
+                                        </button>
+                                        <button (click)="publishUrlChange(menuItem, i)" mat-menu-item
+                                            *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.status==='published'">
+                                            <mat-icon>cancel_presentation</mat-icon>
+                                            {{'genericMessages.unpublish' | translate}}
+                                        </button>
+                                        <button (click)="deleteMenu(menuItem, i)" mat-menu-item>
+                                            <mat-icon>delete</mat-icon> {{'genericMessages.delete' | translate}}
+                                        </button>
+                                    </mat-menu>
+                                </div>
+
+                            </div>
+                            <div class="show-mobile mobile-menu">
+                                <div class="menu-responsive menu-left">
+                                    <mat-icon class="handle mr-sm " cdkDragHandle>drag_handle</mat-icon>
+                                    <mat-icon *ngIf="!menuItem.hasOwnProperty('linkType')" class="mr-sm">folder
+                                    </mat-icon>
+                                    <mat-icon *ngIf="menuItem.hasOwnProperty('linkType')" class="mr-sm">link</mat-icon>
+                                    <strong>{{menuItem.title}}</strong>
+                                    <div class="status f-p" *ngIf="!menuItem.hasOwnProperty('linkType')">
+                                        <mat-icon class="mr-sm mat-icon-sm">security</mat-icon>
+                                        <span
+                                            *ngIf="rolesTextView[menuItem._id]">{{rolesTextView[menuItem._id].rolesView}}</span>
+                                    </div>
+                                </div>
+                                <div class="menu-responsive menu-right">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button (click)="editMenu(menuItem, i)" mat-menu-item
+                                            *ngIf="!menuItem.hasOwnProperty('linkType')">
+                                            <mat-icon>edit</mat-icon> {{'genericMessages.edit' | translate}}
+                                        </button>
+                                        <button (click)="editUrl(menuItem, i)" mat-menu-item
+                                            *ngIf="menuItem.hasOwnProperty('linkType')">
+                                            <mat-icon>edit</mat-icon> {{'genericMessages.edit' | translate}}
+                                        </button>
+                                        <button (click)="publishUrlChange(menuItem, i)" mat-menu-item
+                                            *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.status==='draft'">
+                                            <mat-icon>publish</mat-icon> {{'genericMessages.publish' | translate}}
+                                        </button>
+                                        <button (click)="publishUrlChange(menuItem, i)" mat-menu-item
+                                            *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.status==='published'">
+                                            <mat-icon>cancel_presentation</mat-icon>
+                                            {{'genericMessages.unpublish' | translate}}
+                                        </button>
+                                        <button (click)="deleteMenu(menuItem, i)" mat-menu-item>
+                                            <mat-icon>delete</mat-icon> {{'genericMessages.delete' | translate}}
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                                <div class="pt-s menu-responsive menu-right">
+                                    <span *ngIf="menuItem.status === 'draft'"
+                                    class="fake-mat-chip-sm bg-light ng-star-inserted">{{'menu.unPublished' | translate}}</span>
+                                    <span *ngIf="menuItem.status === 'published'"
+                                    class="fake-mat-chip-sm success bg-green ng-star-inserted">{{'genericMessages.publishedM' | translate}}</span>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+                    </li>
+                </ul>
+                <div class="row" *ngIf="menuList.length === 0">
+                    <div class="col-12">
+                        {{'menu.noMenus' | translate}}
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </mat-card-content>
+        </mat-card>
+        <div class="clearfix"></div>
+    </div>
+</div>

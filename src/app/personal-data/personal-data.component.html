@@ -1,0 +1,298 @@
+<div class="row" *ngIf="!fromModal">
+
+    <app-breadcrumb *ngIf="itsMe" breadcrumbs="Talentoo,{{ 'genericMessages.personalData' | translate }}">
+    </app-breadcrumb>
+    <app-breadcrumb *ngIf="!itsMe"
+        breadcrumbs="Talentoo,{{ 'genericMessages.personalData' | translate }},{{user?.personalData.name}} {{user?.personalData.lastName}}">
+    </app-breadcrumb>
+
+</div>
+<div class="row red mt-m mb-m" *ngIf="!itsMe && !permissions.buscar_todos_personal_data && !isMemberMyTeam">
+    {{'personalData.errorMessage' | translate}}
+</div>
+
+<!--Existe cuando NO soy yo pero tengo permisos para visualizar, o cuando soy yo-->
+<div class="row"
+    *ngIf="((!itsMe && (permissions.buscar_todos_personal_data || isMemberMyTeam)) && user?.personalData) || (itsMe &&  user?.personalData)">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>persona</mat-icon>
+                    {{'genericMessages.personalData' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="personalDataForm">
+                <form [formGroup]="personalDataForm" class="personal-data">
+                    <div class="row">
+                        <!-- Avatar usuario -->
+                        <div class="col-12 text-center" *ngIf="configuration.photo">
+                            <div class="avatar-l mb-m">
+                                <app-avatar [user]="user" [photoUrl]="user.personalData.photo">
+                                </app-avatar>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center" *ngIf="permissions.actualizar_personal_data">
+                            <button mat-stroked-button color="primary" (click)="uploadPhoto()">
+                                <mat-icon class="mat-list-icon mat-icon f-m material-icons" mat-list-icon role="img"
+                                    aria-hidden="true">
+                                    cloud_upload
+                                </mat-icon>
+                                <span class="ml-sm f-p">{{'personalData.changePhoto' | translate}}</span>
+                            </button>
+                            <div class="clearfix mt-sm"></div>
+                            <div class="mb-m">
+                                <button *ngIf="user.personalData.photo" mat-stroked-button
+                                    class="btn-stroked-primary btn-sm" (click)="deletePhoto()">
+                                    <mat-icon mat-list-icon>delete_outline</mat-icon>
+                                    <span class="mobile-span-hide f-p"
+                                        style="top:0px">{{'genericMessages.delete' | translate}}
+                                        {{'genericMessages.photo' | translate}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-container>
+                            <div class="col-6" *ngIf="configuration.name">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="'genericMessages.name' |translate"
+                                        formControlName="name" [readonly]="!isEditMode" (change)="onChange()">
+                                    <mat-error *ngIf="personalDataForm.controls.name.invalid">
+                                        {{'genericMessages.requiredField' | translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6" *ngIf="configuration.lastName">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="'genericMessages.lastName' |translate"
+                                        formControlName="lastName" [readonly]="!isEditMode" (change)="onChange()">
+                                    <mat-error *ngIf="personalDataForm.controls.lastName.invalid">
+                                        {{'genericMessages.requiredField' | translate}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6" *ngIf="configuration.id">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="'genericMessages.id' |translate"
+                                        formControlName="id" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6" *ngIf="configuration.gender">
+                                <p *ngIf="!isEditMode" class="fake-input">
+                                    <small>{{'genericMessages.gender' | translate}}&nbsp;</small>
+                                    <span>{{gender}}</span>
+                                </p>
+                                <mat-form-field *ngIf="isEditMode">
+                                    <mat-label> {{'genericMessages.gender' | translate}}</mat-label>
+                                    <mat-select formControlName="gender" [value]="personalDataForm.controls.gender" (selectionChange)="onChange()">
+                                        <mat-option value="f" [disabled]="!isEditMode">
+                                            {{'personalData.women' | translate}}</mat-option>
+                                        <mat-option value="m" [disabled]="!isEditMode">
+                                            {{'personalData.men' | translate}}</mat-option>
+                                        <mat-option value="u" [disabled]="!isEditMode">
+                                            {{'personalData.other' | translate}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="personalDataForm.controls.gender.invalid">
+                                        {{'genericMessages.requiredField' | translate}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6" *ngIf="configuration.birthday">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker"
+                                        [placeholder]="'personalData.placeholders.birthday' | translate"
+                                        formControlName="birthday" [readonly]="!isEditMode" (change)="onChange()">
+                                    <mat-datepicker-toggle matSuffix [for]="picker" class="mat-icon"
+                                        style="margin-right: 3px">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6" *ngIf="configuration.emails.professional">
+                                <mat-form-field>
+                                    <input matInput
+                                        [placeholder]="'personalData.placeholders.professionalEmail' |translate"
+                                        [formControl]="personalDataForm.get('email').get('professional').controls[0]"
+                                        [readonly]="!isEditMode" (change)="onChange()">
+                                    <mat-icon matSuffix>email</mat-icon>
+                                    <mat-error
+                                        *ngIf="personalDataForm.get('email').get('professional').controls[0].invalid">
+                                        {{'personalData.wrongFormat' | translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6" *ngIf="configuration.emails.personal">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="'personalData.placeholders.personalEmail' |translate"
+                                        [formControl]="personalDataForm.get('email').get('personal').controls[0]"
+                                        [readonly]="!isEditMode" (change)="onChange()">
+                                    <mat-icon matSuffix>email</mat-icon>
+                                    <mat-error
+                                        *ngIf="personalDataForm.get('email').get('personal').controls[0].invalid">
+                                        {{'personalData.wrongFormat' | translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6" *ngIf="unity">
+                                <mat-form-field>
+                                    <input disabled="true" matInput
+                                        [placeholder]="'userInfo.placeholders.unity' | translate" [value]="unity.name" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <!-- TELÉFONOS -->
+                    <div class="row" formGroupName="phones">
+                        <div *ngIf="personalDataForm.get('phones').get('professional').controls.length > 0">
+                            <div formArrayName="professional"
+                                *ngFor="let professionalPhone of personalDataForm.get('phones').get('professional').controls; let i = index;"
+                                class="col-6">
+                                <div class="d-flex" [formGroupName]="i" *ngIf="configuration.phones.professional">
+                                    <mat-form-field class="">
+                                        <input formControlName="value" matInput
+                                            [placeholder]="this.user.personalData.phones.professional.length > 1 ? ('personalData.placeholders.professionalPhone' |translate) + ' ' + (i+1) : 'personalData.placeholders.professionalPhone' | translate"
+                                            [readonly]="!isEditMode" (change)="onChange()">
+                                        <mat-icon matSuffix>local_phone</mat-icon>
+                                        <mat-error
+                                            *ngIf="personalDataForm.get('phones').get('professional').controls[i].invalid">
+                                            {{'personalData.wrongFormat' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div formArrayName="personal"
+                            *ngFor="let personalPhone of personalDataForm.get('phones').get('personal').controls; let i = index;"
+                            class="col-6">
+                            <div class="d-flex" [formGroupName]="i" *ngIf="configuration.phones.personal">
+                                <mat-form-field class="">
+                                    <input formControlName="value" matInput
+                                        [placeholder]="user.personalData.phones.personal.length > 1 ? ('personalData.placeholders.personalPhone' |translate) + ' ' + (i+1) : 'personalData.placeholders.personalPhone' | translate"
+                                        [readonly]="!isEditMode" (change)="onChange()">
+                                    <mat-icon matSuffix>smartphone</mat-icon>
+                                    <mat-error
+                                        *ngIf="personalDataForm.get('phones').get('personal').controls[i].invalid">
+                                        {{'personalData.wrongFormat' | translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DIRECCIÓN PERSONAL -->
+                    <div *ngIf="configuration.address" formGroupName="address">
+                        <div class="row">
+                            <div class="col-4 col-12-sm">
+                                <mat-form-field>
+                                    <input type="text" matInput
+                                        [placeholder]="'personalData.placeholders.street' |translate"
+                                        formControlName="street" [readonly]="!isEditMode" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4 hide-md">
+                                <mat-form-field>
+                                    <input type="number" min="1" matInput maxlength="4"
+                                        [placeholder]="'genericMessages.number' |translate"
+                                        formControlName="number" [readonly]="!isEditMode" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field>
+                                    <input matInput #postalCode maxlength="5"
+                                        [placeholder]="'personalData.placeholders.postalCode' |translate"
+                                        formControlName="zipCode" [readonly]="!isEditMode" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row hide-md">
+
+                            <div class="col-4">
+                                <mat-form-field>
+                                    <input type="text" matInput
+                                        [placeholder]="'personalData.placeholders.city' |translate"
+                                        formControlName="city" [readonly]="!isEditMode" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field>
+                                    <input type="text" matInput
+                                        [placeholder]="'personalData.placeholders.province' |translate"
+                                        formControlName="province" [readonly]="!isEditMode" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field>
+                                    <input type="text" matInput
+                                        [placeholder]="'personalData.placeholders.country' |translate"
+                                        formControlName="country" [readonly]="!isEditMode" (change)="onChange()">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="extraData">
+                        <div class="row">
+                            <div [ngSwitch]="field.type" *ngFor="let field of schemaFields">
+                                <div class="col-6 col-12-sm">
+                                    <mat-form-field *ngIf="field.type !== 'date'">
+                                        <input [type]="field.type" matInput [placeholder]="field.label" class="name"
+                                            [readonly]="!isEditMode" [formControlName]="field.label" (change)="onChange()">
+                                    </mat-form-field>
+
+                                    <mat-form-field *ngIf="field.type === 'date'">
+                                        <mat-label>{{field.label}}</mat-label>
+                                        <input matInput [matDatepicker]="picker" [readonly]="!isEditMode"
+                                            [formControlName]="field.label" (change)="onChange()">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ver ficha de puesto -->
+                    <div class="row mt-m"
+                        *ngIf="fromModal !== 'viewCardPosition' && fromModal !== 'editSingleUser' && configuration.button && user?.cardPosition?.name">
+                        <div class="col-12 text-center">
+                            <button mat-stroked-button (click)="openCardPositionModal(user.cardPosition)"
+                                class="btn-stroked-primary">
+                                <mat-icon class="">assignment_ind</mat-icon>
+                                {{'genericMessages.cardPosition' | translate}}
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </mat-card-content>
+            <div class="clearfix" *ngIf="editPersonalData"></div>
+            <mat-card-actions class="right" *ngIf="editPersonalData">
+                <button *ngIf="!loading && isEditMode" mat-stroked-button class="btn-stroked-primary"
+                    (click)="cancelEditForm()">
+                    {{'genericMessages.cancel' | translate}}
+                </button>
+                <span *ngIf="!loading && isEditMode" class="mr-sm"></span>
+                <button [disabled]="loading || isEditMode && personalDataForm.invalid" mat-flat-button
+                    (click)="toggleEditMode()" class="btn-primary">
+                    <ng-container *ngIf="!loading" translate>
+                        <ng-template *ngIf="!isEditMode;then edit; else save">
+                        </ng-template>
+                        <ng-template #edit>
+                            <mat-icon>edit</mat-icon>
+                            {{'genericMessages.edit' | translate}}
+                        </ng-template>
+                        <ng-template #save>
+                            <mat-icon>save</mat-icon>
+                            {{'genericMessages.save' | translate}}
+                        </ng-template>
+                    </ng-container>
+                    <div *ngIf="loading">
+                        <mat-spinner diameter="30"></mat-spinner>
+                    </div>
+                </button>
+            </mat-card-actions>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>

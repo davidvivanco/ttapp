@@ -1,0 +1,10 @@
+<div class="close-dialog">
+  <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color">{{data.fullName}}</h1>
+<mat-dialog-content>
+  <div class="loading-data" *ngIf="!employee$">
+    <mat-spinner></mat-spinner>
+  </div>
+  <app-personal-data *ngIf="employee$" [employeePersonalData]="employee$" [fromModal]="data.modal" (onSave)=close(true)></app-personal-data>
+</mat-dialog-content>

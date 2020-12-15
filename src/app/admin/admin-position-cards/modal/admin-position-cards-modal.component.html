@@ -1,0 +1,455 @@
+<div class="close-dialog">
+    <button mat-button (click)="close(cardPositionsForm.dirty)"><em class="material-icons">close</em></button>
+</div>
+<form *ngIf="cardPositionsForm" [formGroup]="cardPositionsForm" class="edit-position-card" [ngClass]="{'hide' : hideContent}">
+    <h1 *ngIf="data.action" class="mat-dialog-title primary-color">
+        <span>
+            <mat-icon matSuffix>{{data.action === 'crear'? 'add' : 'edit'}}</mat-icon>
+        </span> {{(data.action === 'add') ? ('cardPositionAdmin.modal.createNew' | translate) : (('cardPositionAdmin.modal.edit' | translate) + ' ' + cardPositionsForm.get('name').value)}}
+    </h1>
+    <h1 *ngIf="!data.action" class="mat-dialog-title primary-color">{{'genericMessages.see' | translate}}</h1>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-12">
+                <mat-card class="card-dark-header">
+                    <mat-card-header>
+                        <mat-card-title>{{'genericMessages.cardPosition' | translate}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-l mb-m">
+                            <div class="col-12">
+                                <div class="clearfix mt-m"></div>
+                                <mat-form-field>
+                                    <input type="text" matInput [placeholder]="'cardPositionAdmin.modal.placeholders.title' | translate" class="name" formControlName="name">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input type="text" matInput [placeholder]="'cardPositionAdmin.modal.placeholders.area' | translate" class="areaAddress" formControlName="area">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input type="text" matInput [placeholder]="'cardPositionAdmin.modal.placeholders.department' | translate" class="department" formControlName="department">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input type="text" matInput [placeholder]="'cardPositionAdmin.modal.placeholders.workingDayType' | translate" class="dayType" formControlName="workdayType">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input type="text" matInput [placeholder]="'cardPositionAdmin.modal.placeholders.category' | translate" class="category" formControlName="category">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-checkbox labelPosition="before" formControlName="hasEmployees">
+                                    {{'cardPositionAdmin.modal.dependents' | translate}}</mat-checkbox>
+                            </div>
+                            <div class="col-9">
+                                <mat-form-field>
+                                    <mat-select name="report" formControlName="report" [placeholder]="'cardPositionAdmin.modal.placeholders.reportTo' | translate">
+                                        <mat-option *ngFor="let reportTo of availableReportTo" [value]="reportTo.id">
+                                            {{reportTo.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12">
+                                <mat-form-field>
+                                    <textarea type="text" matInput [placeholder]="'cardPositionAdmin.modal.placeholders.mission' | translate" class="objective" formControlName="goals"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="card-dark-header mt-l">
+                    <mat-card-header>
+                        <mat-card-title>{{'cardPositionAdmin.modal.tasks' | translate}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-l mb-m">
+                            <div class="col-12">
+                                <div class="clearfix mt-l"></div>
+                                <p class="f-bold kv-m">· {{'cardPositionAdmin.modal.addOtherFemale' | translate}}</p>
+                            </div>
+                            <div class="col-10">
+                                <mat-form-field floatLabel="never">
+                                    <input type="text" #taskCreated matInput placeholder="Nuevo nombre de tarea">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-2">
+                                <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button (click)="saveNewChip(taskCreated.value, 'tasks', 'array', [taskCreated])" [disabled]="!taskCreated.value">
+                                    <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                </button>
+                            </div>
+                            <div class="col-12 mb-sm" *ngIf="card['tasks'].length">
+                                <p class="f-bold">· {{'cardPositionAdmin.modal.tasksAdded' | translate}}</p>
+                                <mat-chip-list #chipList class="tags-list">
+                                    <mat-chip class="chip-pc" *ngFor="let task of card['tasks']; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(task, 'tasks', 'array')">
+                                        {{task}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </div>
+                        <div class="clearfix mt-sm"></div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="card-dark-header mt-l">
+                    <mat-card-header>
+                        <mat-card-title>{{'cardPositionAdmin.modal.requiredTraining' | translate}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-l mb-m">
+                            <div formGroupName="educations">
+                                <div class="col-12">
+                                    <p class="f-bold">· {{'cardPositionAdmin.modal.basicTraining' | translate}}</p>
+                                    <div class="col-12">
+                                        <p class="f-bold kv-m">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.addNewFemale' | translate}}
+                                        </p>
+                                    </div>
+                                    <div class="col-10">
+                                        <mat-form-field floatLabel="never">
+                                            <input type="text" #studiesCreated matInput [placeholder]="'cardPositionAdmin.modal.placeholders.writeHere' | translate">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-2">
+                                        <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button (click)="saveNewChip(studiesCreated.value, 'educations.studies', 'array', [studiesCreated])" [disabled]="!studiesCreated.value">
+                                            <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                        </button>
+                                    </div>
+                                    <div class="col-12 mb-sm" *ngIf="card['educations']['studies'].length">
+                                        <p class="f-bold">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.otherAddedFemale' | translate}}
+                                        </p>
+                                        <mat-chip-list #chipList class="tags-list">
+                                            <mat-chip class="chip-pc" *ngFor="let study of card['educations']['studies']; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(study, 'educations.studies', 'array')">
+                                                {{study}}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                </div>
+                                <div class="clearfix mt-m"></div>
+                                <div class="col-12">
+                                    <p class="f-bold">· {{'cardPositionAdmin.modal.computerKnowledge' | translate}}</p>
+                                    <div class="col-12">
+                                        <p class="f-bold kv-m">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.addOtherMale' | translate}}
+                                        </p>
+                                    </div>
+                                    <div class="col-6">
+                                        <mat-form-field floatLabel="never">
+                                            <mat-label>-- Elige un tipo --</mat-label>
+                                            <mat-select #computerKnowledgeName>
+                                                <mat-option *ngFor="let compKnow of availableComputerKnowledges" [value]="compKnow">
+                                                    {{compKnow}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-4">
+                                        <mat-form-field floatLabel="never">
+                                            <input type="text" #computerKnowledgeValue matInput [placeholder]="'cardPositionAdmin.modal.placeholders.defineLevel' | translate">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-2">
+                                        <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button [disabled]="!computerKnowledgeName.value || !computerKnowledgeValue.value" (click)="saveNewChip({key: computerKnowledgeName.value, value: computerKnowledgeValue.value}, 'educations.computerKnowledges', 'object', [computerKnowledgeName, computerKnowledgeValue])">
+                                            <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                        </button>
+                                    </div>
+                                    <div class="col-12 mb-sm" *ngIf="computerKnowledgesList.length">
+                                        <p class="f-bold">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.computerKnowledgeAdded' | translate}}
+                                        </p>
+                                        <mat-chip-list class="tags-list">
+                                            <mat-chip class="chip-pc" *ngFor="let computerKnowledge of card['educations']['computerKnowledges'] | keyvalue; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(computerKnowledge, 'educations.computerKnowledges', 'object')">
+                                                <strong>{{computerKnowledge.key}}:</strong>&nbsp;{{computerKnowledge.value}}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix mt-m"></div>
+                            <div class="col-12">
+                                <p class="f-bold">· {{'cardPositionAdmin.modal.languages' | translate}}</p>
+                                <div class="col-12">
+                                    <p class="f-bold kv-m">
+                                        <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                        {{'cardPositionAdmin.modal.addOtherFemale' | translate}}
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field floatLabel="never">
+                                        <input type="text" #languageName matInput [placeholder]="'cardPositionAdmin.modal.placeholders.newLanguage' | translate">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field floatLabel="never">
+                                        <input type="text" #languageValue matInput [placeholder]="'cardPositionAdmin.modal.placeholders.defineLevel' | translate">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-2">
+                                    <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button [disabled]="!languageName.value || !languageValue.value" (click)="saveNewChip({key: languageName.value, value: languageValue.value}, 'languages', 'obj', [languageName, languageValue])">
+                                        <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                    </button>
+                                </div>
+                                <div class="col-12 mb-sm" *ngIf="languagesList.length">
+                                    <p class="f-bold">
+                                        <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                        {{'cardPositionAdmin.modal.languagesAdded' | translate}}
+                                    </p>
+                                    <mat-chip-list class="tags-list">
+                                        <mat-chip class="chip-pc" *ngFor="let language of card['languages'] | keyvalue; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(language, 'languages', 'obj')">
+                                            <strong>{{language.key}}:</strong>&nbsp;{{language.value}}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </div>
+                            </div>
+                            <div formGroupName="educations">
+                                <div class="clearfix mt-m"></div>
+                                <div class="col-12">
+                                    <p class="f-bold">· {{'cardPositionAdmin.modal.others' | translate}}</p>
+                                    <div class="col-12">
+                                        <p class="f-bold kv-m">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.addNewMale' | translate}}
+                                        </p>
+                                    </div>
+                                    <div class="col-10">
+                                        <mat-form-field floatLabel="never">
+                                            <input type="text" #otherEducationsCreated matInput [placeholder]="'cardPositionAdmin.modal.placeholders.writeHere' | translate">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-2">
+                                        <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button (click)="saveNewChip(otherEducationsCreated.value, 'educations.other', 'array', [otherEducationsCreated])" [disabled]="!otherEducationsCreated.value">
+                                            <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                        </button>
+                                    </div>
+                                    <div class="col-12 mb-sm" *ngIf="card['educations']['other'].length">
+                                        <p class="f-bold">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.otherAddedMale' | translate}}
+                                        </p>
+                                        <mat-chip-list #chipList class="tags-list">
+                                            <mat-chip class="chip-pc" *ngFor="let otherEducation of card.educations['other']; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(otherEducation, 'educations.other', 'array')">
+                                                {{otherEducation}}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                </div>
+                            </div>
+                            <div formGroupName="other">
+                                <div class="col-12">
+                                    <p class="f-bold mt-l">· {{'cardPositionAdmin.modal.experience' | translate}}</p>
+                                    <mat-form-field>
+                                        <input type="text" matInput [placeholder]="'cardPositionAdmin.modal.placeholders.writeHere' | translate" class="name" formControlName="sectorExperience">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <div class="clearfix mt-sm"></div>
+                </mat-card>
+                <mat-card class="card-dark-header mt-l">
+                    <mat-card-header>
+                        <mat-card-title>{{'cardPositionAdmin.modal.otherTrainingsRequired' | translate}}
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-l mb-m" *ngIf="cardPositionsForm.value.driverLicenses">
+                            <div class="col-12">
+                                <p class="f-bold">· {{'cardPositionAdmin.modal.carnets' | translate}}</p>
+                                <div formGroupName="driverLicenses">
+                                    <div class="col-12 pt-sm">
+                                        <mat-checkbox class="mr-m" [formControlName]="license.key" *ngFor="let license of card.driverLicenses | keyvalue">
+                                            {{('cardPositionAdmin.modal.driverLicenses.' + license.key) | translate}}
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-l mb-m">
+                            <div formGroupName="other">
+                                <div class="col-12">
+                                    <p class="f-bold">· {{'cardPositionAdmin.modal.others' | translate}}</p>
+                                    <div class="col-12">
+                                        <p class="f-bold kv-m">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.addNewMale' | translate}}
+                                        </p>
+                                    </div>
+                                    <div class="col-10">
+                                        <mat-form-field floatLabel="never">
+                                            <input type="text" #otherSkills matInput [placeholder]="'cardPositionAdmin.modal.placeholders.writeHere' | translate">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-2">
+                                        <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button (click)="saveNewChip(otherSkills.value, 'other.other', 'array', [otherSkills])" [disabled]="!otherSkills.value">
+                                            <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                        </button>
+                                    </div>
+                                    <div class="col-12 mb-sm" *ngIf="card['other']['other'].length">
+                                        <p class="f-bold">
+                                            <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                            {{'cardPositionAdmin.modal.otherAddedMale' | translate}}
+                                        </p>
+                                        <mat-chip-list #chipList class="tags-list">
+                                            <mat-chip *ngFor="let otherSkill of card['other']['other']; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(otherSkill, 'other.other', 'array')">
+                                                {{otherSkill}}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix mt-sm"></div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="card-dark-header mt-l">
+                    <mat-card-header>
+                        <mat-card-title>{{'genericMessages.competences' | translate}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-l mb-m">
+                            <div class="col-12">
+                                <div class="clearfix mt-l"></div>
+                                <p class="f-bold kv-m">· {{'cardPositionAdmin.modal.addOtherFemale' | translate}}</p>
+                            </div>
+                            <div class="col-10">
+                                <mat-form-field floatLabel="never">
+                                    <mat-select #competenceSelect placeholder="Competencia">
+                                        <ng-container *ngFor="let c of availableCompetences">
+                                            <mat-option *ngIf="c.hide === false || c.hide === undefined || c.hide === null" value="{{c._id}}">
+                                                {{c.name}} <small>({{c.group}})</small>
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-2">
+                                <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button [disabled]="!competenceSelect.value" (click)="saveNewChip(competenceSelect.value, 'competences', 'array', [competenceSelect], availableCompetences)">
+                                    <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                </button>
+                            </div>
+                            <div class="col-12 mb-sm" *ngIf="card['competences'].length">
+                                <p class="f-bold">
+                                    <mat-icon class="mat-icon-sm with-text">keyboard_arrow_right</mat-icon>
+                                    {{'cardPositionAdmin.modal.competencesAdded' | translate}}
+                                </p>
+                                <mat-chip-list class="tags-list">
+                                    <mat-chip class="chip-pc" *ngFor="let competence of card['competences']; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(competence, 'competences', 'array', availableCompetences)">
+                                        <strong>{{competence.name}}</strong><small class="ml-sm">({{competence.group}})</small>
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <div class="clearfix mt-sm"></div>
+                </mat-card>
+                <mat-card class="card-dark-header mt-l">
+                    <mat-card-header>
+                        <mat-card-title>KPIs</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-l mb-m">
+                            <div class="col-12">
+                                <div class="clearfix mt-l"></div>
+                                <p class="f-bold kv-m">· {{'cardPositionAdmin.modal.addOtherFemale' | translate}}</p>
+                            </div>
+                            <div class="col-10">
+                                <mat-form-field floatLabel="never">
+                                    <input type="text" #kpiCreated matInput [placeholder]="'cardPositionAdmin.modal.placeholders.newKpi' | translate" (input)="findKpis($event.target.value)">
+                                    <ul class="filter-select">
+                                        <li *ngFor="let result of resultsFilterKpis" class="filter-select-list pointer" (click)="fillInput(result, [kpiCreated], [resultsFilterKpis])">
+                                            <p>· {{result}}</p>
+                                        </li>
+                                    </ul>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-2">
+                                <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button (click)="saveNewChip(kpiCreated.value, 'kpis', 'array', [kpiCreated])" [disabled]="!kpiCreated.value">
+                                    <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                </button>
+                            </div>
+                            <div class="col-12 mb-sm" *ngIf="card['kpis'].length">
+                                <p class="f-bold">· Kpis {{'cardPositionAdmin.added' | translate}}</p>
+                                <mat-chip-list #chipList class="tags-list">
+                                    <mat-chip class="chip-pc" *ngFor="let kpi of card['kpis']; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(kpi, 'kpis', 'array')">
+                                        {{kpi}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </div>
+                        <div class="clearfix mt-sm"></div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="card-dark-header mt-l" *ngIf="isAvailablePositionsLoaded | async">
+                    <mat-card-header>
+                        <mat-card-title>{{'genericMessages.positions' | translate}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-l mb-m">
+                            <div class="col-12">
+                                <div class="clearfix mt-l"></div>
+                                <p class="f-bold kv-m">· {{'cardPositionAdmin.modal.addOtherFemale' | translate}}</p>
+                            </div>
+                            <div class="col-10">
+                                <mat-form-field floatLabel="never">
+                                    <mat-select #positionSelect [placeholder]="'cardPositionAdmin.modal.placeholders.aviablePositions' | translate">
+                                        <ng-container *ngFor="let p of availablePositions">
+                                            <mat-option *ngIf="p.hide === false || p.hide === undefined || p.hide === null" value="{{p._id}}">
+                                                {{p.name}}
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-2">
+                                <button mat-stroked-button class="btn-stroked-primary w-100" mat-flat-button (click)="saveNewChip(positionSelect.value, 'positions', 'array', [positionSelect], availablePositions)" [disabled]="!positionSelect.value">
+                                    <mat-icon>add</mat-icon> {{'genericMessages.add' | translate}}
+                                </button>
+                            </div>
+                            <div class="col-12 mb-sm" *ngIf="card['positions'].length">
+                                <p class="f-bold">· {{'cardPositionAdmin.modal.positionsAdded' | translate}}</p>
+                                <mat-chip-list #chipList class="tags-list">
+                                    <mat-chip class="chip-pc" *ngFor="let position of card['positions']; let i = index" [selectable]="true" [removable]="true" (removed)="deleteMatChip(position, 'positions', 'array', availablePositions)">
+                                        {{position.name}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <div class="clearfix mt-sm"></div>
+                </mat-card>
+            </div>
+        </div>
+        <div class="clearfix mt-sm"></div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <small class="red" *ngIf="showTitleError">{{'cardPositionAdmin.modal.titleError' | translate}}
+        </small>
+        <button class="btn-stroked-primary" (click)="close(cardPositionsForm.dirty)" mat-flat-button>{{'genericMessages.cancel' | translate}}</button>
+        <button class="btn-primary" (click)="savePositionCard()" *ngIf="data.permissions.actualizar_card_position && this.data.action && this.data.action !== 'crear'" mat-flat-button>
+            <mat-icon>save</mat-icon> {{'genericMessages.save' | translate}}
+        </button>
+        <button class="btn-primary mr-m" (click)="savePositionCard()" *ngIf="data.permissions.crear_card_position && this.data.action === 'crear'" mat-flat-button>
+            <mat-icon>add</mat-icon> {{'cardPositionAdmin.modal.create' | translate}}
+        </button>
+    </mat-dialog-actions>
+</form>

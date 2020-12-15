@@ -1,0 +1,65 @@
+<div class="grid-wrapper">
+
+  <kendo-grid [data]="gridView" [sort]="state.sort" [skip]="state.skip" [filterable]="true" [filter]="filter"
+    [sortable]="true" [columnMenu]="true" [pageable]="true" [pageSize]="pageSize" [resizable]="true"
+    (filterChange)="filterChange($event)" (pageChange)="pageChange($event)" [groupable]="true" [group]="group"
+    (groupChange)="groupChange($event)">
+
+
+    <ng-template kendoGridToolbarTemplate>
+      <button type=" button" kendoGridExcelCommand icon="file-excel">{{'kendo.export' | translate}}</button>
+    </ng-template>
+
+    <kendo-grid-messages filterContainsOperator="{{'kendo.contains' | translate}}"
+      filterEndsWithOperator="{{'kendo.finishWith' | translate}}" filterEqOperator="{{'kendo.equal' | translate}}"
+      filterNotEqOperator="{{'kendo.noEqual' | translate}}"
+      filterNotContainsOperator="{{'kendo.noContains' | translate}}" filterStartsWithOperator="Comienza con"
+      filterIsNullOperator="{{'kendo.isNull' | translate}}" filterGteOperator="{{'kendo.greaterOrEqual' | translate}}"
+      filterGtOperator="{{'kendo.greaterThan' | translate}}" filterLteOperator="{{'kendo.lessThanOrEqual' | translate}}"
+      filterLtOperator="{{'kendo.lessThan' | translate}}" filterIsNotNullOperator="{{'kendo.noNull' | translate}}"
+      filterIsEmptyOperator="{{'kendo.isEmpty' | translate}}" filterIsFalse="No" filterIsTrue="Si"
+      filterIsNotEmptyOperator="{{'kendo.noEmpty' | translate}}" noRecords="{{'kendo.noElementsToShow' | translate}}"
+      pagerItems="{{'kendo.elements' | translate}}" pagerOf="{{'kendo.of' | translate}}"
+      columns="{{'kendo.columns' | translate}}" columnsApply="{{'kendo.apply' | translate}}"
+      columnsReset="{{'kendo.reset' | translate}}" pagerItemsPerPage="{{'kendo.elemetsPerPage' | translate}}"
+      columnsFilter="{{'kendo.filter' | translate}}" filterApply="{{'kendo.filter' | translate}}"
+      filter="{{'kendo.filter' | translate}}" sortAscending="{{'kendo.upward' | translate}}"
+      sortDescending="{{'kendo.falling' | translate}}" sortedDescending="{{'kendo.falling' | translate}}"
+      groupPanelEmpty="{{'kendo.groupPanel' | translate}}">
+    </kendo-grid-messages>
+
+    <ng-template *ngIf="showDetails" kendoGridDetailTemplate let-dataItem>
+
+      <div class="p-m">
+
+        <div *ngIf="dataItem.detailTables" class="row">
+          <div class="col-12" *ngFor="let key of getDetailsKeys(dataItem.detailTables) ;let i = index;">
+            <mat-accordion class="dark-header">
+
+              <mat-expansion-panel #mep="matExpansionPanel" [expanded]="i === 0">
+                <mat-expansion-panel-header>
+                  <p class="accordion-title">{{key}}</p>
+                </mat-expansion-panel-header>
+
+                <app-grid-template class="col-12" [fileName]="fileName" [showDetails]="false" [key]="key"
+                  [data]="dataItem.detailTables[key]">
+                </app-grid-template>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+
+    </ng-template>
+
+    <kendo-grid-column *ngFor="let column of columns" [field]="column.field" [title]="column.label"
+      [hidden]="column.hidden" [width]="column.width">
+    </kendo-grid-column>
+    <ng-template kendoGridNoRecordsTemplate>
+      {{'genericMessages.noResults' | translate}}
+    </ng-template>
+    <kendo-grid-excel fileName="{{fileName}}.xlsx"></kendo-grid-excel>
+
+  </kendo-grid>
+  <div *ngIf="loading" class="k-i-loading"></div>
+</div>

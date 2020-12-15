@@ -1,0 +1,20 @@
+<div class="chart" *ngIf="series">
+  <app-toggle-merge (onToggle)="updateOptions($event)" [row]="row" *ngIf="row?.toggle"></app-toggle-merge>
+  <mat-card *ngIf="showCard">
+    <apx-chart #chartComponent [legend]="chartOptions.legend" [series]="chartOptions.series"
+      [tooltip]="chartOptions.tooltip" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+      [plotOptions]="chartOptions.plotOptions" [fill]="chartOptions.fill" [responsive]="chartOptions.responsive"
+      [dataLabels]="chartOptions.dataLabels" [responsive]="chartOptions.responsive">
+    </apx-chart>
+  </mat-card>
+  <div *ngIf="!showCard">
+    <div class="chart-image">
+      <apx-chart #chartComponent [legend]="chartOptions.legend" [noData]="chartOptions.noData"
+        [series]="chartOptions.series" [tooltip]="chartOptions.tooltip" [chart]="chartOptions.chart"
+        [labels]="chartOptions.labels" [plotOptions]="chartOptions.plotOptions" [fill]="chartOptions.fill"
+        [responsive]="chartOptions.responsive" [dataLabels]="chartOptions.dataLabels"
+        [responsive]="chartOptions.responsive">
+      </apx-chart>
+    </div>
+  </div>
+</div>

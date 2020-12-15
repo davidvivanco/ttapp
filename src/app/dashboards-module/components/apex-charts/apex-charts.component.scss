@@ -1,0 +1,32 @@
+.global-filters{
+    visibility: hidden;
+}
+
+.filter-icon{
+    position: absolute;
+    right: 10px;
+}
+
+
+::ng-deep .mat-expansion-panel-header[aria-disabled=false] { 
+    background: transparent;
+    color: rgba(0,0,0,0); /* transparent */
+  }
+
+::ng-deep .mat-expansion-panel{
+    background: transparent;
+    color: rgba(0,0,0,0); /* transparent */
+}
+::ng-deep .mat-expansion-panel-header{
+    /* styles that were added to panel before */
+    background: #fff;
+    color: rgba(0,0,0,.87); 
+}
+
+
+::ng-deep .mat-expansion-panel-header[aria-disabled=true] {
+    /* change what you want */
+    border-radius: 10px;
+    background: rgba(0,0,0,.26);
+    color: rgb(107, 190, 198);
+}

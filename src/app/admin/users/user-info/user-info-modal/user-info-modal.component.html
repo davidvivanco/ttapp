@@ -1,0 +1,10 @@
+<div class="close-dialog">
+  <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color">{{data.employee.personalData.name}} {{data.employee.personalData.lastName}}</h1>
+<mat-dialog-content>
+  <div class="loading-data" *ngIf="!employee$">
+    <mat-spinner></mat-spinner>
+  </div>
+  <app-user-info *ngIf="data?.modal === 'editSingleUser'" (edit)="editUserInfo($event)" (isDirtyEvent)="setFormStatus($event)" [employeeUserInfo]="employee$" [fromModal]="data.modal"></app-user-info>
+</mat-dialog-content>

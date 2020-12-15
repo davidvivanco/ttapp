@@ -1,0 +1,15 @@
+<div class="row">
+    <app-breadcrumb breadcrumbs="Talentoo,{{ 'genericMessages.announcements' | translate }}"></app-breadcrumb>
+
+    <div class="col-12">
+        <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="addAnnouncement()">
+      <mat-icon class="mr-sm">add_circle_outline</mat-icon>{{'selectionAdmin.announcements.addAnnouncement' | translate}}
+    </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <app-announcements-list></app-announcements-list>
+    </div>
+</div>

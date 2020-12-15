@@ -1,0 +1,44 @@
+<app-breadcrumb breadcrumbs="Talentoo,{{ 'personalDataMenu.home' | translate }}"></app-breadcrumb>
+
+<div class="row" *ngIf="employee">
+    <div class="col-12" *ngIf="!conf.company.customHome || !conf.company.customHome.custom || conf.company.customHome.default">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>speaker_notes</mat-icon>
+                    {{(personalData.gender === 'f') ? ('home.welcome.female' | translate) : ('home.welcome.male' | translate)}}
+                </mat-card-title>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <p class="description">
+                    {{'home.greeting' | translate}}
+                    <strong>{{personalData.name}}</strong>,<br>{{ 'home.presentation' | translate}}
+                </p>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+
+    <div class="col-12" *ngIf="conf.company.customHome && conf.company.customHome.custom && !conf.company.customHome.default">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <span>{{conf.company.customHome.custom.title}}</span>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="conf.company.customHome.custom">
+                <div class="col-12">
+                    <span>{{conf.company.customHome.custom.intro}}</span>
+                    <br><br>
+                    <span [innerHTML]="conf.company.customHome.custom.description | keepHtml"></span>
+                </div>
+                <div class="clearfix"></div>
+                <mat-card-actions class="right" *ngIf="conf.company.customHome.custom.buttonUrl && conf.company.customHome.custom.buttonUrl !== ''">
+                    <a mat-flat-button class="btn-primary" href="{{conf.company.customHome.draft.buttonUrl}}">Ir<mat-icon>chevron_right</mat-icon></a>                    
+                </mat-card-actions>
+                <div class="clearfix"></div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

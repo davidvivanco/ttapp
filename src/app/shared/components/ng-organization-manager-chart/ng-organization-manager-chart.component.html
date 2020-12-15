@@ -1,0 +1,7 @@
+<ng-organization-manager-chart-list [ngClass]="'ng-organization-chart-list'"
+    [nodeList]="data"
+    (ClickNode)="onClickDeepNode($event)"
+    (showCardPositionDetail)="openCardPositionModal($event)"
+    (showPersonalEmployeeDataDetail)="openPersonalEmployeeDataDetail($event)"
+    class="d-flex">
+</ng-organization-manager-chart-list>

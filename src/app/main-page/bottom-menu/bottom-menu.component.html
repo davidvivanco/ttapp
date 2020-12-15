@@ -1,0 +1,45 @@
+<div class="pointer right" style="width:100%; height:25px" (click)="dismissBottomDrawer($event)">
+  <span><mat-icon class="mat-icon-sm">close</mat-icon></span>
+</div>
+<mat-nav-list style="margin-top:25px;">
+  <div *ngFor="let link of menuBottom">
+    <!-- Basico abre menu -->
+    <a mat-list-item *ngIf="!link.hasOwnProperty('linkType')" target="_self"
+      (click)="dismissBottomDrawer($event); toggleMenu({title: link.title, menu: link}, false)">
+      <mat-icon>{{link.icon}}</mat-icon> {{link.title}}
+    </a>
+
+    <!-- Basico NO abre menu -->
+    <!-- URL directo interno con path -->
+    <a mat-list-item *ngIf="link.hasOwnProperty('linkType') && link.innerLink !== '' && link.linkType"
+      [routerLink]="[link.innerLink]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      target="{{(link.blank) ? '_blank' : '_self'}}"
+      (click)="dismissBottomDrawer($event); toggleMenu({title: link.title, menu: link}, true)">
+      <mat-icon>{{link.icon}}</mat-icon> {{link.title}}
+    </a>
+
+    <!-- url directo interno sin path y con modal -->
+    <a mat-list-item *ngIf="link.hasOwnProperty('linkType') && link.innerLink === '' && link.linkType"
+      routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      target="{{(link.blank) ? '_blank' : '_self'}}"
+      (click)="dismissBottomDrawer($event); modalType(link);">
+      <mat-icon>{{link.icon}}</mat-icon> {{link.title}}
+    </a>
+
+    <!-- url directo externo -->
+    <a mat-list-item *ngIf="link.hasOwnProperty('linkType') && link.iframe === false && !link.linkType"
+      [href]="link.webLink"
+      target="{{(link.blank) ? '_blank' : '_self'}}"
+      (click)="dismissBottomDrawer($event); toggleMenu({title: link.title, menu: link}, true)">
+      <mat-icon>{{link.icon}}</mat-icon> {{link.title}}
+    </a>
+
+    <!-- url directo con iframe -->
+    <a mat-list-item *ngIf="link.hasOwnProperty('linkType') && link.iframe === true && !link.linkType"
+      [routerLink]="['/iframe', link.webLink]"
+      (click)="dismissBottomDrawer($event); toggleMenu({title: link.title, menu: link}, true)">
+      <mat-icon>{{link.icon}}</mat-icon> {{link.title}}
+    </a>
+
+  </div>
+</mat-nav-list>

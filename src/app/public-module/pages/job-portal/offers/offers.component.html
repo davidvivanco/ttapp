@@ -1,0 +1,10 @@
+<div class="offers-container">
+  <app-breadcrumb [breadcrumbs]=breadcrumbList></app-breadcrumb>
+
+  <div class="row">
+    <div class="col-12">
+      <app-offers-list *ngIf="showView" [announcement]=announcement [idAnnouncementSend]=idAnnouncement>
+      </app-offers-list>
+    </div>
+  </div>
+</div>

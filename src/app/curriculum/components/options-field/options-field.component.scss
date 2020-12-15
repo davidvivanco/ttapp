@@ -1,0 +1,32 @@
+.option {
+  $marginX: 15px;
+  margin-left: $marginX/2;
+  margin-right: $marginX/2;
+}
+
+.label {
+  margin-bottom: 10px;
+}
+
+:host {
+  display: block;
+  margin: 20px 0;
+}
+
+.mat-error{
+  font-size: 75%;
+}
+
+mat-hint{
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 75%;
+  display: block;
+  margin-top: 0.5%;
+  box-sizing: border-box;
+  width: 100%;
+  
+}
+
+.mat-radio-button, .option{
+  margin-left: 0 !important;
+}

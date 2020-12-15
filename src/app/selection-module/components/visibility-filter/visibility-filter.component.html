@@ -1,0 +1,17 @@
+<mat-form-field>
+  <mat-select placeholder="Filtra por tipo" (selectionChange)="filterByVisibility($event)">
+    <mat-option></mat-option>
+    <mat-option value="public">
+      {{'genericMessages.public' | translate}}
+    </mat-option>
+    <mat-option value="private" *ngIf="!user.externalUser">
+      {{'genericMessages.private' | translate}}
+    </mat-option>
+    <mat-option value="mobility" *ngIf="!user.externalUser">
+      {{'genericMessages.mobility' | translate}}
+    </mat-option>
+    <mat-option value="job" *ngIf="user.externalUser">
+      {{'genericMessages.job' | translate}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

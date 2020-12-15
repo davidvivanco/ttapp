@@ -1,0 +1,89 @@
+<mat-drawer-container [class.drawer-opened]="drawer.opened" class="drawer-container">
+    <!-- SIDE NAV MENU -->
+    <mat-drawer #drawer opened="false" mode="over" class="mat-nav-list-down show-mobile">
+        <mat-nav-list>
+            <div class="right show-mobile" style="width: 100%;padding: 3px;box-sizing: border-box;"
+                (click)="drawer.close()">
+                <mat-icon style="padding: 0 !important;">close</mat-icon>
+            </div>
+            <div class="links">
+                <a class="ml-m mr-m" mat-list-item [routerLink]="['convocatorias']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}" (click)="drawer.close()">
+                    <div>
+                        <mat-icon class="mr-m">assignment</mat-icon>
+                        <span>{{ 'genericMessages.announcements' | translate }}</span>
+                    </div>
+                </a>
+                <a class="ml-m mr-m" mat-list-item [routerLink]="['ofertas']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}" (click)="drawer.close()">
+                    <div>
+                        <mat-icon class="mr-m">description</mat-icon>
+                        <span>{{ 'genericMessages.offers' | translate }}</span>
+                    </div>
+                </a>
+                <a class="ml-m mr-m" mat-list-item (click)="openLoginModal(); drawer.close()">
+                    <div>
+                        <mat-icon class="mr-m" fontSet="material-icons-outlined">login</mat-icon>
+                        <span>{{ 'jobWebsite.header.login' | translate }}</span>
+                    </div>
+                </a>
+                <a class="ml-m mr-m" mat-list-item (click)="openRegisterModal(); drawer.close()">
+                    <div>
+                        <mat-icon class="mr-m" fontSet="material-icons-outlined">how_to_reg</mat-icon>
+                        <span>{{ 'jobWebsite.header.register' | translate }}</span>
+                    </div>
+                </a>
+            </div>
+        </mat-nav-list>
+    </mat-drawer>
+    
+    <mat-drawer-content class="drawer-content">
+        <!-- HEADER TOOLBAR -->
+        <mat-toolbar class="hide-mobile bg-primary layout-toolbar">
+            <img class="icon-company" [alt]="conf.company.publicName" [src]="conf.company.loginLogo" />
+            <div class="button-row">
+                <a mat-list-item class="cursor-pointer" [routerLink]="['convocatorias']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon>assignment</mat-icon>
+                    <span>{{ 'genericMessages.announcements' | translate }}</span>
+                </a>
+                <a mat-list-item class="cursor-pointer" [routerLink]="['ofertas']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon>description</mat-icon>
+                    <span>{{ 'genericMessages.offers' | translate }}</span>
+                </a>
+                <a mat-list-item class="cursor-pointer" (click)="openLoginModal()">
+                    <mat-icon fontSet="material-icons-outlined">login</mat-icon>
+                    <span>{{ 'jobWebsite.header.login' | translate }}</span>
+                </a>
+                <a mat-list-item class="cursor-pointer" (click)="openRegisterModal()">
+                    <mat-icon fontSet="material-icons-outlined">how_to_reg</mat-icon>
+                    <span>{{ 'jobWebsite.header.register' | translate }}</span>
+                </a>
+            </div>
+
+        </mat-toolbar>
+        <!-- RESPONSIVE HEADER -->
+        <mat-toolbar class="show-mobile bg-primary mobile-display layout-toolbar">
+            <img class="icon-company" [alt]="conf.company.publicName" [src]="conf.company.companyLogo" />
+            <button mat-icon-button (click)="drawer.toggle()" class="white" style="margin-top:3px;">
+                <mat-icon>reorder</mat-icon>
+            </button>
+        </mat-toolbar>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+
+
+        <!-- <a mat-list-item *ngIf="permissions.actualizar_employees" [routerLink]="['/admin/usuarios']"
+                (click)="hideMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <mat-icon>supervisor_account</mat-icon> {{'adminMenu.users' | translate}}
+            </a> -->
+        <!-- PAGE CONTENT -->
+
+
+
+    </mat-drawer-content>
+
+
+</mat-drawer-container>

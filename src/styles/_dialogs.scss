@@ -1,0 +1,305 @@
+.cdk-overlay-pane {
+  // max-width: none !important;
+  // width: 80vw !important;
+}
+
+.mat-dialog-title {
+  width: 100%;
+}
+
+.close-dialog {
+  width: 100%;
+  text-align: right;
+
+  button {
+    padding: 0 !important;
+    min-width: 0px;
+    width: 40px !important;
+  }
+
+}
+
+.mat-dialog-actions {
+
+  justify-content: flex-end;
+  padding-bottom: 24px !important;
+
+  .fake-button, button {
+    margin-left: 10px;
+  }
+
+  :first-child {
+    margin-left: 0px;
+  }
+
+}
+
+.mat-dialog-content {
+
+  max-width: 80vw !important;
+
+  .mat-form-field {
+
+    width: 100%;
+
+    .mat-form-field-wrapper {
+
+    }
+
+    &.date-field {
+      width: 48%;
+      margin-right: 2%;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    textarea.mat-input-element {
+
+      box-sizing: border-box;
+      min-height: 150px;
+
+      &.comment {
+        box-sizing: border-box;
+        margin-top: 10px;
+        max-height: 40px;
+        height: 40px;
+      }
+
+    }
+
+  }
+
+  .mat-checkbox {
+    display: inline-block;
+
+    &.until-now {
+      margin-bottom: 10px;
+    }
+
+  }
+
+  &.full-height-dialog {
+
+    // max-height: 90vh !important;
+    // max-height: 60vh !important;
+    max-height: 70vh !important;
+    overflow-y: auto;
+
+  }
+
+  &.recog-dialog {
+    max-width: 640px !important;
+  }
+
+}
+
+.no-overflow {
+  overflow: hidden !important;
+}
+
+.dialog-users-list {
+
+  .max-height-list {
+    overflow-y: auto;
+    max-height: 30vh;
+  }
+
+}
+
+.max-height-list {
+  overflow-y: auto;
+  max-height: 30vh;
+}
+
+.attached-file {
+  width: 100%;
+  display: inline-block;
+  font-size: 1em;
+  margin-top: 15px;
+
+  a, span {
+    text-decoration: none;
+
+    .mat-icon {
+      height: 16px;
+      width: 16px;
+      font-size: 16px;
+      position: relative;
+      top: 2px;
+    }
+
+    .delete {
+      &:hover {
+        cursor: pointer;
+      }
+
+      .mat-icon {
+        height: 18px;
+        width: 18px;
+        font-size: 18px;
+        position: relative;
+        top: 4px;
+      }
+    }
+
+  }
+}
+
+.votes-modal {
+  .modal-user-name {
+    height: 50px;
+  }
+
+  .employee-name {
+    position: relative;
+    top: -28px;
+    margin-left: 35px;
+    width: calc(100% - 75px);
+    display: block;
+    max-width: 480px;
+  }
+
+  .vote.knowledge-vote {
+
+    i {
+
+      &.voted {
+        color: #ff6600;
+      }
+
+    }
+
+  }
+
+  .vote.competence-vote {
+
+    i {
+      &.voted {
+        color: #2261AB;
+      }
+    }
+  }
+
+  .global-val-sm {
+    display: inline-block;
+    left: calc(100% - 30px);
+    top: -52px;
+    position: relative;
+  }
+
+}
+
+.change-avatar-dialog {
+
+  p.title {
+    margin: 0;
+  }
+
+  small {
+    display: block;
+    text-align: center;
+    font-size: .6em;
+    margin-top: 10px;
+  }
+
+}
+
+// Manager myTeam
+.change-manager-funct {
+
+  .divider {
+    width: 100%;
+    clear: both;
+    height: 1px;
+    background: $l-gray;
+    margin: 5px 0 10px;
+  }
+
+  .current-manager, .new-manager {
+
+    .avatar-sm {
+      position: relative;
+      top: -5px;
+    }
+
+    .user-name {
+
+      display: inline-block;
+      width: calc(100% - 35px);
+      box-sizing: border-box;
+      margin-left: 5px;
+
+      p {
+        margin: 0;
+      }
+
+      small {
+        color: $gray;
+      }
+
+    }
+
+  }
+}
+
+// QUEST CONTAINERS
+.quest-container {
+
+  ul {
+
+    padding-left: 25px;
+
+    li {
+
+      list-style-type: decimal-leading-zero;
+
+      .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+        margin-bottom: -20px;
+        font-weight: bold;
+      }
+
+    }
+  }
+
+}
+
+// modal fichas de puesto @preguntar a Antonio
+.edit-position-card {
+  textarea.mat-input-element {
+    min-height: auto !important;
+  }
+}
+
+.full-screen-dialog {
+  width: 100%;
+  height: 90%;
+  .mat-dialog-container {
+    padding: 0;
+  }
+  @media (max-width: 56.25em) {
+    max-width: 100vw !important;
+    height: 100%;
+  }
+}
+
+.responsive-width-dialog {
+  width: 50%;
+  @media (max-width: 56.25em) {
+   width: 90%;
+  }
+}
+
+.media-screen-dialog {
+  width: 100%;
+  height: 90%;
+  .mat-dialog-container {
+    padding: 0;
+    overflow: hidden;
+  }
+  @media (max-width: 56.25em) {
+    max-width: 100vw !important;
+    height: 100%;
+  }
+}

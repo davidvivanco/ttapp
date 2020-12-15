@@ -1,0 +1,24 @@
+<p class="f-bold">{{label}}</p>
+<div fxLayout fxLayoutAlign="space-evenly" class="row">
+  <mat-form-field>
+    <mat-label>{{startLabel}}</mat-label>
+    <input matInput [value]="value[0]" [matDatepicker]="pickerStart" (dateChange)="setValue(0, $event)" [max]="maxDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <mat-datepicker #pickerStart></mat-datepicker>
+    <mat-hint *ngIf="required">Campo obligatorio</mat-hint>
+  </mat-form-field>
+  <span class="mr-m"></span>
+  <mat-form-field *ngIf=!currently>
+    <mat-label>{{endLabel}}</mat-label>
+    <input matInput [value]="value[1]" [matDatepicker]="pickerEnd" (dateChange)="setValue(1, $event)" [min]="minDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+    <mat-datepicker #pickerEnd></mat-datepicker>
+  </mat-form-field>
+</div>
+
+<div class="clearfix mt-m"></div>
+<mat-slide-toggle [checked]="currently" (change)="currentlySwitch()"></mat-slide-toggle>
+<label class="gray"> Actualmente</label>
+<div class="clearfix"></div>
+
+<mat-error *ngIf="!value[0] && ngControl && ngControl.touched">Este campo es requerido</mat-error>

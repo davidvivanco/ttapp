@@ -1,0 +1,66 @@
+<app-breadcrumb *ngIf="edit === false" breadcrumbs="Talentoo,{{ 'selectionAdmin.announcements.addAnnouncement' | translate }}"></app-breadcrumb>
+<app-breadcrumb *ngIf="edit === true" breadcrumbs="Talentoo,{{ 'selectionAdmin.announcements.editAnnouncement' | translate }}"></app-breadcrumb>
+
+<div class="row hide-mobile" *ngIf="announcement">
+    <div class="col-12">
+        <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="goBack()">
+      <mat-icon class="mr-sm">arrow_back</mat-icon>{{'genericMessages.return' | translate}}
+    </button>
+        <button [disabled]="announcement.state === 'published' || unsavedChanges || !announcement.isPublishable" mat-stroked-button class="btn-stroked-primary btn-sm mr-m btn-caps" (click)="changeStateAnnouncement('published')">
+      <mat-icon class="mr-sm">publish</mat-icon>
+      <span *ngIf="announcement.state !== 'published'">{{'genericMessages.publish' | translate}}</span>
+      <span *ngIf="announcement.state === 'published'">{{'genericMessages.publishedF' | translate}}</span>
+    </button>
+
+
+        <button [disabled]="announcement.state !== 'published'" mat-stroked-button class="btn-stroked-primary btn-sm mr-m btn-caps" (click)="changeStateAnnouncement('cancelled')">
+      <mat-icon>cancel</mat-icon>
+      <span *ngIf="announcement?.state !== 'cancelled'">{{'genericMessages.revoke' | translate}}</span>
+      <span *ngIf="announcement?.state === 'cancelled'">{{'genericMessages.revoked' | translate}}</span>
+    </button>
+
+        <ng-container *ngIf="(unsavedChanges || !announcement.isPublishable ) && announcement.state !== 'published'">
+            <span class="fake-mat-chip-sm warning" *ngIf="unsavedChanges"> {{'genericMessages.unsavedChanges' | translate}}</span>
+            <span class="fake-mat-chip-sm warning" *ngIf="!unsavedChanges && !announcement.isPublishable">
+        {{'genericMessages.uncompleted' | translate}}</span>
+        </ng-container>
+    </div>
+</div>
+<div class="row show-mobile" *ngIf="announcement">
+    <div class="col-12">
+        <button class="btn-primary btn-sm" mat-button [matMenuTriggerFor]="resp">
+          <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+      </button>
+        <mat-menu #resp="matMenu">
+            <button mat-menu-item class="btn-stroked-primary btn-sm" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>{{'genericMessages.return' | translate}}
+          </button>
+            <button [disabled]="announcement.state === 'published' || unsavedChanges || !announcement.isPublishable" mat-menu-item class="btn-stroked-primary btn-sm" (click)="changeStateAnnouncement('published')">
+            <mat-icon>publish</mat-icon>
+            <span *ngIf="announcement.state !== 'published'">{{'genericMessages.publish' | translate}}</span>
+            <span *ngIf="announcement.state === 'published'">{{'genericMessages.publishedF' | translate}}</span>
+          </button>
+            <button [disabled]="announcement.state !== 'published'" mat-menu-item class="btn-stroked-primary btn-sm" (click)="changeStateAnnouncement('cancelled')">
+            <mat-icon>cancel</mat-icon>
+            <span *ngIf="announcement?.state !== 'cancelled'">{{'genericMessages.revoke' | translate}}</span>
+            <span *ngIf="announcement?.state === 'cancelled'">{{'genericMessages.revoked' | translate}}</span>
+          </button>
+        </mat-menu>
+        <ng-container *ngIf="(unsavedChanges || !announcement.isPublishable ) && announcement.state !== 'published'">
+            <span class="fake-mat-chip-sm warning ml-sm" *ngIf="unsavedChanges"> {{'genericMessages.unsavedChanges' | translate}}</span>
+            <span class="fake-mat-chip-sm warning ml-sm" *ngIf="!unsavedChanges && !announcement.isPublishable">
+                {{'genericMessages.uncompleted' | translate}}</span>
+        </ng-container>
+        <ng-container *ngIf="announcement.state === 'published'">
+            <span class="fake-mat-chip-sm success ng-star-inserted ml-sm"> {{'genericMessages.publishedF' | translate}}</span>
+        </ng-container>
+        <ng-container *ngIf="announcement.state === 'cancelled'">
+            <span class="fake-mat-chip-sm ng-star-inserted ml-sm"> {{'genericMessages.revoked' | translate}}</span>
+        </ng-container>
+    </div>
+</div>
+
+<app-announcement *ngIf="page === 'home'" (emitAnnouncement)="setAnnouncement($event)" (thereIsChanges)="setAnnouncementHasChanges($event)" (changePage)="changePage($event)" [validators]="state" [announcement]="announcement">
+</app-announcement>
+
+<app-offer *ngIf="page === 'addOffer'" [announcement]="announcement" (hasChanges)="checkChanges($event)" (emitOffer)="emitOffer($event)"></app-offer>

@@ -1,0 +1,55 @@
+<div class="close-dialog"><button mat-flat-button (click)="close()"><em class="material-icons">close</em></button></div>
+<h1 mat-dialog-title>
+  Campo
+</h1>
+<div class="mat-dialog-content full-height-dialog">
+  <form [formGroup]="form">
+
+    <mat-form-field class="field">
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let field of fields" [value]="field.value"
+          [disabled]="field.value === 'file' && fieldFileExists">
+          {{field.label}} {{ (field.value === 'file' && fieldFileExists) ? '(sólo se admite un Archivo Adjunto)' : ''}}
+        </mat-option>
+      </mat-select>
+      <mat-hint>Elige el tipo de elemento de los disponibles</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+
+      <input matInput formControlName="label" placeholder="Nombre del campo">
+      <mat-error>Campo es requerido</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="form.get('validation')" [formGroup]="form.get('validation')">
+      <mat-slide-toggle formControlName="required">Requerido</mat-slide-toggle>
+      <mat-slide-toggle formControlName="visible">Visible</mat-slide-toggle>
+    </div>
+
+    <div>
+      <app-select-field formControlName="options" errorMessage="Al menos un elemento es requerido" *ngIf="isOptions()">
+      </app-select-field>
+    </div>
+
+    <div *ngIf="form.get('type').value === 'decisionTree'">
+      <div fxLayout fxLayoutAlign="space-between center">
+        <h3>Añadir opciones</h3>
+        <button appearance="outline" mat-button (click)=downloadTreeExcelTemplate()>
+          <mat-icon>get_app</mat-icon> Descargar Plantilla
+        </button>
+      </div>
+      <p>
+        Para poder generar un árbol de decisión debes configurar un excel como el de la plantilla descargable
+      </p>
+      <app-decision-tree-input formControlName="tree"></app-decision-tree-input>
+    </div>
+
+  </form>
+
+</div>
+<div mat-dialog-actions class="right">
+  <button mat-button (click)="close()">Cancelar</button>
+  <button mat-flat-button [disabled]="form.invalid && form.touched" class="btn-primary"
+    (click)="save()">{{'genericMessages.save' | translate}}</button>
+
+</div>

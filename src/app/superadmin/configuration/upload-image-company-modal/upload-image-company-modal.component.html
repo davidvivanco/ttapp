@@ -1,0 +1,36 @@
+<div class="close-dialog"><button mat-flat-button mat-dialog-close (click)="onNoClick()"><em class="material-icons">close</em></button></div>
+<h1 class="mat-dialog-title primary-color">{{'uploadAvatarModal.upPhoto'| translate}}</h1>
+<div mat-dialog-content class="full-height-dialog min-width change-avatar-dialog">
+    <div class="row">
+        <div class="col-12 text-left" *ngIf="imageChangedEvent">
+            <p class="title primary">{{'uploadAvatarModal.cutImage'| translate}}</p>
+        </div>
+        <div *ngIf="data === 'loginLogo'">
+            <image-cropper class="img-container-horizontal" *ngIf="imageChangedEvent" [imageChangedEvent]="imageChangedEvent" [aspectRatio]="220/90" [resizeToWidth]="220" format="png" (imageCropped)="imageCropped($event)">
+            </image-cropper>
+        </div>
+        <div *ngIf="data !== 'loginLogo'">
+            <image-cropper class="img-container-horizontal" *ngIf="imageChangedEvent" [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1" [resizeToWidth]="40" format="png" (imageCropped)="imageCropped($event)">
+            </image-cropper>
+        </div>
+        <div class="col-12 text-center" *ngIf="!imageChangedEvent">
+            <p class="title gray">{{'uploadAvatarModal.message'| translate}}</p>
+        </div>
+        <div class="text-center mb-m" *ngIf="!imageChangedEvent">
+            <label for="fileProfilePic" class="mat-stroked-button fake-button mat-primary">
+        <mat-icon mat-list-icon>cloud_upload</mat-icon>
+        {{'uploadAvatarModal.up'| translate}} <span class="mobile-span-hide">{{'genericMessages.photo'| translate}}</span></label>
+            <small>{{(data === 'loginLogo')? '220x90' : '40x40'}}<br>{{'uploadAvatarModal.supportedFormats'| translate}} <strong>{{'uploadAvatarModal.typesFormats'| translate}}</strong></small>
+        </div>
+        <input type="file" #fileInput id="fileProfilePic" style="display: none" accept="image/png,image/jpg,image/jpeg,image/gif" (change)="fileChangeEvent($event)" />
+    </div>
+</div>
+<div mat-dialog-actions *ngIf="imageChangedEvent">
+    <label for="fileProfilePic" class="mat-stroked-button fake-button mat-primary btn-modal-trim-img-change">
+    <mat-icon mat-list-icon>cloud_upload</mat-icon>
+    {{'uploadAvatarModal.change'| translate}} <span class="mobile-span-hide">{{'genericMessages.photo'| translate}}</span></label>
+    <button type="button" mat-flat-button class="btn-primary btn-modal-trim-img-save" (click)="close()">
+    <mat-icon mat-list-icon>save</mat-icon>
+    <span class="mobile-span-hide">{{'genericMessages.save'| translate}}</span></button>
+</div>
+<div class="clearfix mt-l"></div>

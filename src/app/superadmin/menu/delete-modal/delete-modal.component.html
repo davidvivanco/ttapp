@@ -1,0 +1,14 @@
+<div class="close-dialog"><button mat-button mat-dialog-close (click)="cancel()"><em class="material-icons">close</em></button></div>
+<h1 class="mat-dialog-title primary-color">{{data.title}}</h1>
+<div mat-dialog-content class="full-height-dialog min-width change-avatar-dialog">
+    <div class="row">
+        <div class="col-12 text-left">
+            <p class="title gray">{{data.message}}</p>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button type="button" mat-flat-button class="btn-stroked-primary" (click)="cancel()">{{'genericMessages.cancel' | translate}}</button>
+    <span class="mr-sm"></span>
+    <button type="button" mat-flat-button class="btn-primary" (click)="closeModal(true)">{{'genericMessages.ok' | translate}}</button>
+</div>

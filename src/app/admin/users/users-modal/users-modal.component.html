@@ -1,0 +1,65 @@
+<div class="close-dialog">
+    <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-12">
+            <mat-card class="card-dark-header">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>persona</mat-icon>
+                        {{ 'usersAdmin.addUserModal.addUser' | translate }}
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content *ngIf="newUserForm">
+                    <form [formGroup]="newUserForm" class="personal-data">
+                        <div class="row">
+                            <ng-container>
+                                <div class="col-5">
+                                    <mat-form-field>
+                                        <input matInput placeholder="{{'genericMessages.name' | translate}}" formControlName="name">
+                                        <mat-error *ngIf="newUserForm.controls.name.invalid">{{'genericMessages.requiredField' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-5">
+                                    <mat-form-field>
+                                        <input matInput placeholder="{{'genericMessages.lastName' | translate}}" formControlName="lastName">
+                                        <mat-error *ngIf="newUserForm.controls.lastName.invalid">
+                                            {{'genericMessages.requiredField' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-2">
+                                    <mat-form-field>
+                                        <mat-label>{{'genericMessages.gender' | translate}}</mat-label>
+                                        <mat-select formControlName="gender">
+                                            <mat-option value="f">{{'personalData.women' | translate}}</mat-option>
+                                            <mat-option value="m">{{'personalData.men' | translate}}</mat-option>
+                                            <mat-option value="u">{{'personalData.other' | translate}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="newUserForm.controls.gender.invalid">{{'genericMessages.requiredField' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <mat-form-field>
+                                        <input matInput [placeholder]="'personalData.placeholders.professionalEmail' |translate" formControlName="emailAux">
+                                        <mat-icon matSuffix>email</mat-icon>
+                                        <mat-error *ngIf="newUserForm.controls.emailAux.invalid">
+                                            {{'personalData.wrongFormat' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </form>
+                </mat-card-content>
+                <div class="clearfix"></div>
+            </mat-card>
+        </div>
+    </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">{{'genericMessages.cancel' | translate}}</button>
+    <button mat-flat-button class="btn-primary" [disabled]="newUserForm.invalid" (click)="saveUser()">{{'usersAdmin.addUserModal.addUser' | translate}}</button>
+</div>

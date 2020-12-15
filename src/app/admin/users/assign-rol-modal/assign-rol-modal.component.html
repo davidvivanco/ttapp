@@ -1,0 +1,27 @@
+<div class="close-dialog"><button mat-flat-button (click)="close()"><em class="material-icons">close</em></button></div>
+<h1 mat-dialog-title>{{'usersAdmin.employeeAssignRolModal.title' | translate}}</h1>
+<div mat-dialog-content>
+    <div class="loading-section" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div *ngFor="let rol of rols">
+        <mat-checkbox [formControl]="formGroup?.controls[rol._id]" (change)="rolChanged($event)"
+            [disabled]="rol._id === this.rolId && (itsMe || !this.hasRolAdmin) || (externalUser && rol._id !== externalUserId)">{{rol.name}}
+        </mat-checkbox>
+        <button mat-icon-button (click)="toggleRol(rol.name)" class="list-button view-more ml-sm">
+            <mat-icon class="mat-icon-rtl-mirror">{{rol.name === rolOpened ? 'remove' : 'add'}}</mat-icon>
+        </button>
+        <ul class="mt-sm mb-sm" *ngIf="rol.name === rolOpened">
+            <li *ngFor="let permission of rol.permissions">{{permission.name}}</li>
+        </ul>
+    </div>
+</div>
+<mat-error class="mt-m">
+    <small
+        [ngClass]="{'hideError' : !(formGroup && formGroup.touched && formGroup?.invalid)}">{{'usersAdmin.employeeAssignRolModal.message' | translate}}</small>
+</mat-error>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">{{'genericMessages.cancel' | translate}}</button>
+    <button mat-flat-button class="btn-primary" [disabled]="formGroup && formGroup.touched && formGroup?.invalid"
+        (click)="submit()" cdkFocusInitial>{{'usersAdmin.employeeAssignRolModal.assignRoles' | translate}}</button>
+</div>

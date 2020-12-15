@@ -1,0 +1,28 @@
+.detailsField{
+    font-size: 12px;
+}
+.fake-mat-chip{
+    transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+    display: inline-flex;
+    padding: 2px 10px;
+    border-radius: 16px;
+    align-items: center;
+    cursor: default;
+    min-height: 24px;
+    height: 1px;
+    background-color: #e0e0e0;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 14px;
+}
+
+.mr-filter{
+    margin-right: 25px;
+}
+
+.grid-display{
+    display: flex;
+    @media screen and (max-width: 420px ){
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}

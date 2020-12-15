@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-12 breadcrumb primary-color pt-m">
+        <span>Talentoo <mat-icon>keyboard_arrow_right</mat-icon></span>
+        <span>Admin <mat-icon>keyboard_arrow_right</mat-icon></span>
+        <span>Baremaciones <mat-icon>keyboard_arrow_right</mat-icon></span>
+        <span *ngIf="requirement">{{requirement.title}} <mat-icon>keyboard_arrow_right</mat-icon></span>
+        <span *ngIf="!criterionTitle"> {{'genericMessages.forms.newApproach' | translate}} </span>
+        <span *ngIf="criterionTitle"> Criterio {{criterionTitle}} </span>
+    </div>
+
+    <div class="col-12">
+        <button mat-flat-button class="btn-primary btn-sm mr-m" (click)="goBack()">
+      <mat-icon class="mr-sm">arrow_back</mat-icon>{{ 'genericMessages.return' | translate }}
+    </button>
+    </div>
+</div>
+
+<app-requirementCriteria *ngIf="requirement" [requirement]="requirement" [criterionId]="criterionId" (thereIsChanges)="setCriterionHasChanges($event)">
+</app-requirementCriteria>

@@ -1,0 +1,87 @@
+<div class="close-dialog">
+  <button mat-flat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 id="aria">
+  <span *ngIf="!singleFile" mat-dialog-title>{{'multipleFilesUploader.title' | translate}}</span>
+  <span *ngIf="singleFile" mat-dialog-title>{{'usersAdmin.uploadTemplate.title' | translate}}</span>
+</h1>
+<div mat-dialog-content *ngIf="!singleFile">
+  <div class="drop-section">
+    <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+      [uploader]="uploader" (click)="fileInput.click()" class="my-drop-zone">
+      <small class="p-m">{{'multipleFilesUploader.drag' | translate}}</small>
+    </div>
+  </div>
+  <input type="file" #fileInput ng2FileSelect multiple [uploader]="uploader" [disabled]="uploader.isUploading"
+    style="display: none" />
+  <div class="row">
+    <div class="mt-m col-12" *ngIf="uploader?.queue?.length">
+      <table aria-describedby="aria" class="files">
+        <tbody>
+          <tr *ngFor="let item of uploader.queue">
+            <th scope="col">
+              <small>{{ item.file.name }}</small>
+              <mat-progress-bar *ngIf="uploader.isUploading" [mode]="progressBarMode" [value]="item.progress">
+              </mat-progress-bar>
+            </th>
+            <th scope="col" class="text-center">
+              <input type="file" #fileInputSingle ng2FileSelect [uploader]="uploader" [disabled]="uploader.isUploading"
+                style="display: none" (change)="item.remove()" />
+              <mat-icon class="update-file" (click)="fileInputSingle.click()"
+                matTooltip="{{'genericMessages.edit' | translate}}">cached</mat-icon>
+            </th>
+            <th scope="col" class="text-center">
+              <mat-icon class="delete-file" (click)="item.remove()"
+                matTooltip="{{'genericMessages.delete' | translate}}">delete</mat-icon>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content *ngIf="singleFile">
+  <div class="drop-section">
+    <div *ngIf="uploader?.queue?.length === 0 " ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+      (fileOver)="fileOverBase($event)" [uploader]="uploader" (click)="fileInputSingle.click()" class="my-drop-zone"
+      (drop)="deleteFiles()">
+      <small id="aria2" class="p-m">{{'usersAdmin.uploadTemplate.uploadBox' | translate}}</small>
+    </div>
+  </div>
+  <input type="file" #fileInputSingle ng2FileSelect [uploader]="uploader" [disabled]="uploader.isUploading"
+    style="display: none" />
+  <div class="row">
+    <div class="mt-m col-12" *ngIf="uploader?.queue?.length">
+      <table aria-describedby="aria2" class="files">
+        <tbody>
+          <tr>
+            <th scope="col">
+              <small>{{uploader?.queue[0]?.file.name}}</small>
+              <mat-progress-bar *ngIf="uploader.isUploading" [mode]="progressBarMode"
+                [value]="uploader?.queue[0]?.progress">
+              </mat-progress-bar>
+            </th>
+            <th scope="col" class="text-center">
+              <input type="file" #fileInputSingle ng2FileSelect [uploader]="uploader" [disabled]="uploader.isUploading"
+                style="display: none" (change)="uploader?.queue[0]?.remove()" />
+              <mat-icon class="update-file" (click)="fileInputSingle.click()"
+                matTooltip="{{'genericMessages.edit' | translate}}">cached</mat-icon>
+            </th>
+            <th scope="col" class="text-center">
+              <mat-icon class="delete-file" (click)="uploader?.queue[0]?.remove()"
+                matTooltip="{{'genericMessages.delete' | translate}}">delete</mat-icon>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button
+    (click)="uploader.cancelAll(); close()">{{'genericMessages.cancel' | translate}}</button>
+  <button *ngIf="singleFile" mat-flat-button class="btn-primary" (click)="close('success', uploader)"
+    [disabled]="!uploader.getNotUploadedItems().length || uploader.isUploading">{{'genericMessages.addFile' | translate}}</button>
+  <button *ngIf="!singleFile"  mat-flat-button class="btn-primary" (click)="close('success', uploader)"
+    [disabled]="!uploader.getNotUploadedItems().length || uploader.isUploading">{{'genericMessages.addMultipleFiles' | translate}}</button>
+</div>

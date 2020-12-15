@@ -1,0 +1,129 @@
+.phase, .documentation {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: gray solid 1px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-color:rgba(0, 0, 0, 0.12) !important;
+    span, mat-chip {
+      margin-left: 10px;
+    }
+    
+    .handle {
+      cursor: move;
+    }
+  
+    .flexGrow {
+      flex-grow: 1;
+    }
+
+   
+  }
+
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .button-action{
+    width: 25px !important;
+  }
+
+  .container-phase-doc{
+    padding: 15px;
+  }
+
+  .container-phase-doc span{
+    font-size: 20px;
+    vertical-align: middle;
+    margin-left: 0 !important;
+  }
+
+  .titleSection{
+    text-align: left;
+    line-height: 35px;
+    display: inline-block;
+  }
+
+  .btn-action-offer{
+    float: right;
+  }
+  
+  .section{
+    margin-bottom: 0 !important;
+  }
+
+  .approach {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: gray solid 1px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    span,
+    mat-chip {
+      margin-left: 10px;
+    }
+  
+    .disabled{
+      color:#bababa
+    }
+  
+  
+    .handle {
+      cursor: move;
+    }
+  
+    .flexGrow {
+      flex-grow: 1;
+    }
+  }
+  
+  .container-approachs {
+    padding: 15px;
+  }
+  
+  .container-approachs span {
+    font-size: 20px;
+    vertical-align: middle;
+    margin-left: 0 !important;
+  }
+  
+  .announcement .mat-form-field-infix {
+    width: 220px !important;
+  }
+  
+  .fees .mat-form-field-infix {
+    width: 80px !important;
+  }
+  
+  #add-approach-btn {
+    margin-left: 15px;
+  }
+  
+  .kh-p-important {
+    padding: 0px !important;
+  }
+  .kb-m-important {
+    margin-bottom: 0px !important;
+  }
+  .radio-visibility {
+    margin-top: 17px;
+    display: block;
+  }
+  

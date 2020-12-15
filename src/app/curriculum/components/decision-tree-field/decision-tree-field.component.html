@@ -1,0 +1,30 @@
+<div>
+  <form *ngIf="formArray && formArray.controls">
+    <div [id]="level + '-' + 'item' + '-' + i" [formGroup]="item" *ngFor="let item of formArray.controls;trackBy: trackByFn; let i = index">
+
+      <!-- FIELD -->
+      <mat-form-field>
+        <mat-label>{{labelLabel}}</mat-label>
+        <input matInput formControlName="label" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{valueLabel}}</mat-label>
+        <input matInput formControlName="value" />
+      </mat-form-field>
+
+      <!-- BUTTONS -->
+      <button mat-icon-button [disabled]="!item.get('tree')" (click)="toggleShowChildren()" ><mat-icon>{{showChildren ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon></button>
+      <mat-button-toggle [disabled]="level >= limit" [checked]="item.get('tree')" (change)="toggleTree(item)" value="center" aria-label="Text align center">
+        <mat-icon>view_list</mat-icon>
+      </mat-button-toggle>
+      <button mat-icon-button (click)="addField()"><mat-icon>add</mat-icon></button>
+      <button mat-icon-button (click)="removeField(i)" [disabled]="formArray.length <= 1"><mat-icon>delete</mat-icon></button>
+
+      <div class="children" *ngIf="showChildren && item.get('tree')">
+        <app-decision-tree-field [level]="level + 1" [formArray]="item.get('tree')"></app-decision-tree-field>
+      </div>
+    </div>
+  </form>
+
+
+</div>

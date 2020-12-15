@@ -1,0 +1,24 @@
+<app-breadcrumb breadcrumbs="Talentoo,Admin{{ 'genericMessages.curriculum' | translate }}"></app-breadcrumb>
+<div class="row">
+  <div class="col-12">
+    <mat-card class="card-dark-header" *ngIf="loading">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>speaker_notes</mat-icon>
+        </mat-card-title>
+        <p>Bloque</p>
+      </mat-card-header>
+      <div class="clearfix"></div>
+      <mat-card-content>
+        <p>Cargando, por favor espere...</p>
+        <div class="loading-table">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="clearfix"></div>
+      </mat-card-content>
+    </mat-card>
+    <app-block *ngIf="block && !loading" [name]="block.name" [fields]="block.fields" (cancel)="goBack($event)"
+      (save)="saveBlock($event)" (isModified)="isModified($event)">
+    </app-block>
+  </div>
+</div>

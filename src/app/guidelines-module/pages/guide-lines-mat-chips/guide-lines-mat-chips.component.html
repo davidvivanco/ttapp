@@ -1,0 +1,77 @@
+<app-breadcrumb breadcrumbs="Talentoo,Guía de estilo,Mat Chips"></app-breadcrumb>
+
+<div class="row">
+  <div class="col-12 f-bold"> ·Básicas</div>
+  <div class="col-12">
+    <mat-chip-list>
+      <mat-chip [selectable]="true" [removable]="true">Básica</mat-chip>
+      <mat-chip [selectable]="true" [removable]="true" class="success">Success</mat-chip>
+      <mat-chip [selectable]="true" [removable]="true" class="warning">Warning</mat-chip>
+      <mat-chip [selectable]="true" [removable]="true" class="alert">Alert</mat-chip>
+    </mat-chip-list>
+  </div>
+  <div class="col-12 f-bold">· Básicas small</div>
+  <div class="col-12">
+    <mat-chip-list>
+      <mat-chip [selectable]="true" [removable]="true" class="mat-chip-sm">Básica</mat-chip>
+      <mat-chip [selectable]="true" [removable]="true" class="success mat-chip-sm">Success</mat-chip>
+      <mat-chip [selectable]="true" [removable]="true" class="warning mat-chip-sm">Warning</mat-chip>
+      <mat-chip [selectable]="true" [removable]="true" class="alert mat-chip-sm">Alert</mat-chip>
+    </mat-chip-list>
+  </div>
+  <div class="col-12 f-bold">· Fake (cuando no pueden ir en mat-chip-list)</div>
+  <div class="col-12">
+    <div class="fake-mat-chip mr-sm">
+      <span>Básica</span>
+    </div>
+    <div class="fake-mat-chip success mr-sm">
+      <span>Success</span>
+    </div>
+    <div class="fake-mat-chip warning mr-sm">
+      <span>Warning</span>
+    </div>
+    <div class="fake-mat-chip alert mr-sm">
+      <span>Alert</span>
+    </div>
+  </div>
+  <div class="col-12 f-bold">· Fake small (cuando no pueden ir en mat-chip-list)</div>
+  <div class="col-12">
+    <div class="fake-mat-chip-sm mr-sm">
+      <span>Básica</span>
+    </div>
+    <div class="fake-mat-chip-sm success mr-sm">
+      <span>Success</span>
+    </div>
+    <div class="fake-mat-chip-sm warning mr-sm">
+      <span>Warning</span>
+    </div>
+    <div class="fake-mat-chip-sm alert mr-sm">
+      <span>Alert</span>
+    </div>
+  </div>
+  <div class="col-12 f-bold">· Relación estados con clases</div>
+  <div class="col-12">
+    <div class="fake-mat-chip">
+      <span>Básica</span>
+    </div>
+    Borrador, Cancelado, Información básica, Cuando no queramos destacar algo en exceso en tablas o listas, etc...
+  </div>
+  <div class="col-12">
+    <div class="fake-mat-chip success">
+      <span>Success</span>
+    </div>
+    Publicado, aceptado, admitido, éxito, información importante positiva...
+  </div>
+  <div class="col-12">
+    <div class="fake-mat-chip warning">
+      <span>Warning</span>
+    </div>
+    Pendiente, falta de datos, falta información, avisos poco preocupantes, Usar poco...
+  </div>
+  <div class="col-12">
+    <div class="fake-mat-chip alert">
+      <span>Alert</span>
+    </div>
+    Rechazado, fallo, error, avisos importantes negativos, NO usar demasiado...
+  </div>
+</div>

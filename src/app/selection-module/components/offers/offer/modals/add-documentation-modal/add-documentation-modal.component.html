@@ -1,0 +1,45 @@
+<div class="close-dialog">
+    <button mat-button (click)="close(null)"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color">{{title}}</h1>
+<mat-dialog-content>
+    <form [formGroup]="formGroup">
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field>
+                    <input matInput placeholder="Título a mostrar del archivo" formControlName="title">
+                    <mat-icon matSuffix>mode_edit</mat-icon>
+                    <mat-hint>{{'genericMessages.requiredField' | translate}}</mat-hint>
+                    <mat-error>
+                        {{'genericMessages.requiredField' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-radio-group aria-label="Seleciona una opción" formControlName="visibility">
+                    <mat-radio-button value="public">{{'genericMessages.public' | translate}}</mat-radio-button>
+                    <mat-radio-button value="private">{{'genericMessages.private' | translate}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 text-center">
+                <button mat-stroked-button class="btn-stroked-primary" (click)="openFileUploader()">
+                    <mat-icon>cloud_upload</mat-icon>{{'genericMessages.addFile' | translate}}
+                </button>
+                <input type="file" #fileInput ng2FileSelect [uploader]="uploader" [disabled]="uploader.isUploading"
+                    style="display: none" (change)="fileChangeEvent($event)" />
+            </div>
+            <div class="col-12 text-center">
+                <input type="text" formControlName="file" [value]="formGroup.value.file" style="display: none" />
+                <span>{{fileName}}</span>
+            </div>
+        </div>
+    </form>
+    <div class="clearfix"></div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <div class="mt-m" fxLayout fxLayoutAlign="end">
+        <button class="mat-button" (click)="close()">{{'genericMessages.cancel' | translate}}</button>
+        <button class="btn-primary" color="primary" [disabled]="!formGroup.valid" (click)="saveData()"
+            mat-button>{{'genericMessages.accept' | translate}}</button>
+    </div>
+</div>

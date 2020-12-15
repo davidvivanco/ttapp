@@ -1,0 +1,19 @@
+<div class="close-dialog"><button mat-button mat-dialog-close (click)="closeModal(false)"><em
+      class="material-icons">close</em></button></div>
+<h1 class="mat-dialog-title primary-color">{{data.title}}</h1>
+<div mat-dialog-content class="full-height-dialog min-width change-avatar-dialog">
+  <div class="row">
+    <div ngc class="col-12 text-left">
+      <p class="title gray">{{data.message}}</p>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button *ngIf="!data.hideCancel" type="button" mat-flat-button class="btn-sm btn-stroked-primary"
+    (click)="closeModal(false)">{{'genericMessages.return' | translate}}</button>
+  <span class="mr-sm"></span>
+  <button type="button" mat-flat-button class="btn-sm btn-primary" (click)="openLoginModal()">
+    {{'genericMessages.access' | translate}}
+  </button>
+</div>
+<div class="clearfix mt-l"></div>

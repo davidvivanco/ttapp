@@ -1,0 +1,104 @@
+<app-breadcrumb [breadcrumbs]=breadcrumbList>
+</app-breadcrumb>
+
+<div class="loading-table" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="row" *ngIf="!EmployeeForDataPersonal && !EmployeeForCV && !EmployeeForOffers">
+  <div class="col-12">
+    <mat-form-field>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [formControl]="globalFilter" [placeholder]="" />
+    </mat-form-field>
+
+    <kendo-grid [data]="gridView" [sort]="state.sort" [skip]="state.skip" [filterable]="true" [filter]="filter"
+      [sortable]="true" [columnMenu]="true" [pageable]="true" [pageSize]="pageSize" [resizable]="true"
+      (filterChange)="filterChange($event)" (pageChange)="pageChange($event)" [groupable]="true" [group]="group"
+      (groupChange)="groupChange($event)">
+
+
+      <ng-template kendoGridToolbarTemplate>
+        <button type=" button" kendoGridExcelCommand icon="file-excel">{{'kendo.export' | translate}}</button>
+      </ng-template>
+
+      <kendo-grid-messages filterContainsOperator="{{'kendo.contains' | translate}}"
+        filterEndsWithOperator="{{'kendo.finishWith' | translate}}" filterEqOperator="{{'kendo.equal' | translate}}"
+        filterNotEqOperator="{{'kendo.noEqual' | translate}}"
+        filterNotContainsOperator="{{'kendo.noContains' | translate}}" filterStartsWithOperator="Comienza con"
+        filterIsNullOperator="{{'kendo.isNull' | translate}}" filterGteOperator="{{'kendo.greaterOrEqual' | translate}}"
+        filterGtOperator="{{'kendo.greaterThan' | translate}}"
+        filterLteOperator="{{'kendo.lessThanOrEqual' | translate}}" filterLtOperator="{{'kendo.lessThan' | translate}}"
+        filterIsNotNullOperator="{{'kendo.noNull' | translate}}" filterIsEmptyOperator="{{'kendo.isEmpty' | translate}}"
+        filterIsFalse="No" filterIsTrue="Si" filterIsNotEmptyOperator="{{'kendo.noEmpty' | translate}}"
+        noRecords="{{'kendo.noElementsToShow' | translate}}" pagerItems="{{'kendo.elements' | translate}}"
+        pagerOf="{{'kendo.of' | translate}}" columns="{{'kendo.columns' | translate}}"
+        columnsApply="{{'kendo.apply' | translate}}" columnsReset="{{'kendo.reset' | translate}}"
+        pagerItemsPerPage="{{'kendo.elemetsPerPage' | translate}}" columnsFilter="{{'kendo.filter' | translate}}"
+        filterApply="{{'kendo.filter' | translate}}" filter="{{'kendo.filter' | translate}}"
+        sortAscending="{{'kendo.upward' | translate}}" sortDescending="{{'kendo.falling' | translate}}"
+        sortedDescending="{{'kendo.falling' | translate}}" groupPanelEmpty="{{'kendo.groupPanel' | translate}}">
+      </kendo-grid-messages>
+      <kendo-grid-column [columnMenu]="false" title="" width="70">
+        <ng-template kendoGridCellTemplate let-column let-columnIndex="columnIndex">
+          <button mat-icon-button [matMenuTriggerFor]="menuEdit">
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-menu #menuEdit="matMenu" xPosition="before">
+            <button mat-menu-item (click)="seePersonalData(column)">
+              <mat-icon>remove_red_eye</mat-icon>
+              <span>{{'genericMessages.personalData' | translate}}</span>
+            </button>
+            <button mat-menu-item (click)="seeCurriculum(column)">
+              <mat-icon>add_circle</mat-icon>
+              <span> {{'genericMessages.curriculum' | translate}}</span>
+            </button>
+            <button mat-menu-item (click)="seeCandidatures(column)">
+              <mat-icon>edit</mat-icon>
+              <span> {{'genericMessages.candidatures' | translate}}</span>
+            </button>
+          </mat-menu>
+        </ng-template>
+      </kendo-grid-column>
+
+
+      <kendo-grid-column field="id" title="ID" width="100">
+      </kendo-grid-column>
+      <kendo-grid-column field="userType" title="{{'genericMessages.userType' | translate}}" width="100">
+      </kendo-grid-column>
+      <kendo-grid-column field="name" title="{{'genericMessages.name' | translate}}" width="100">
+      </kendo-grid-column>
+      <kendo-grid-column field="lastName" title="{{'genericMessages.lastName' | translate}}" width="100">
+      </kendo-grid-column>
+      <kendo-grid-column hidden="true" field="gender" title="{{'genericMessages.gender' | translate}}" width="100">
+      </kendo-grid-column>
+      <kendo-grid-column hidden="true" field="age" format="numeric" title="{{'genericMessages.age' | translate}}"
+        width="100">
+      </kendo-grid-column>
+      <kendo-grid-column field="professionalCategory" title="{{'genericMessages.professionalCategory' | translate}}"
+        width="100">
+      </kendo-grid-column>
+      <kendo-grid-column field="position" title="{{'genericMessages.position' | translate}}" width="100">
+      </kendo-grid-column>
+      <kendo-grid-column hidden="true" field="cardPosition" title="{{'genericMessages.cardPosition' | translate}}"
+        width="100">
+      </kendo-grid-column>
+      <kendo-grid-column hidden="true" field="workplace" title="{{'genericMessages.workplace' | translate}}"
+        width="100">
+      </kendo-grid-column>
+
+      <kendo-grid-excel fileName="candidatos.xlsx"></kendo-grid-excel>
+    </kendo-grid>
+  </div>
+</div>
+
+<app-admin-candidates-personal-data (onCandidatures)="seeCandidatures($event)" (onCurriculum)="seeCurriculum($event)"
+  (onPersonalData)="seePersonalData($event)" (onBack)=goBack() *ngIf="EmployeeForDataPersonal" [fromAdmin]="true"
+  [employeeFromAdmin]="EmployeeForDataPersonal"></app-admin-candidates-personal-data>
+<app-admin-candidates-user-curriculum (onCandidatures)="seeCandidatures($event)" (onCurriculum)="seeCurriculum($event)"
+  (onPersonalData)="seePersonalData($event)" (onBack)="goBack()" *ngIf="EmployeeForCV" [fromAdmin]="true"
+  [employeeFromAdmin]="EmployeeForCV">
+</app-admin-candidates-user-curriculum>
+<app-admin-candidates-nominations (onCandidatures)="seeCandidatures($event)" (onCurriculum)="seeCurriculum($event)"
+  (onPersonalData)="seePersonalData($event)" (onBack)="goBack()" *ngIf="EmployeeForOffers" [fromAdmin]="true"
+  [employeeFromAdmin]="EmployeeForOffers"></app-admin-candidates-nominations>

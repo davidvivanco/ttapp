@@ -1,0 +1,31 @@
+.mat-tab-group {
+
+	&.recognitionModalTabs {
+
+		.mat-tab-label.mat-tab-label-active {
+			/*
+			opacity: 1 !important;
+			color: $white !important;
+
+			&:nth-child(1) {
+				background: $blue !important;
+			}
+
+			&:nth-child(2) {
+				background: $orange !important;
+			}
+
+			&:nth-child(3) {
+				background: $green !important;
+			}
+			*/
+
+		}
+
+		.mat-tab-list .mat-ink-bar {
+			// background:rgba(0,0,0,0) !important;
+		}
+
+	}
+
+}

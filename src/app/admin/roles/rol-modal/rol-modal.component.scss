@@ -1,0 +1,26 @@
+.closeContainer {
+    float: right;
+    top: -10px;
+    position: relative;
+}
+
+.loading-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-dialog-content {
+    max-height: 55vh;
+}
+
+mat-form-field {
+    margin-bottom: 5px;
+}
+.description-display{
+    margin-left: 22px;
+    margin-top: 2px;
+    line-height: 12px;
+    font-size: 10px;
+}
+

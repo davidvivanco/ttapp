@@ -1,0 +1,93 @@
+<div class="row">
+    <app-breadcrumb breadcrumbs="Talentoo,Admin,{{'genericMessages.Questionnaires' | translate}}"></app-breadcrumb>
+    <div class="col-12">
+        <button [routerLink]="['add']" mat-flat-button class="btn-primary btn-sm">
+            <mat-icon class="mr-sm">add</mat-icon> {{'surveysAdmin.addSurvey' | translate}}
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title id="aria">
+                    {{'genericMessages.Questionnaires' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="dataSource" class="with-table without-mat-filter">
+                <div class="loading-table" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <mat-form-field *ngIf="dataSource.data !== null">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput [formControl]="globalFilter" [placeholder]="'genericMessages.filterTable' | translate">
+                </mat-form-field>
+                <div *ngIf="dataSource.filteredData && dataSource.filteredData.length === 0 && !loading">
+                    <p class="description no-items">
+                        <mat-icon>error_outline</mat-icon>
+                        {{'genericMessages.noResults' | translate}}
+                    </p>
+                </div>
+                <table matSort mat-table [dataSource]="dataSource" aria-describedby="aria"
+                    *ngIf="dataSource.data !== null && dataSource.filteredData.length !== 0">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let element">
+                            <strong>{{element.title}}</strong><br>
+                            <small *ngIf="element.startDate"><strong>{{'surveysAdmin.startDate' | translate}}:</strong>
+                                {{element.startDate | date: 'dd/MM/yyyy'}}</small>
+                            <small *ngIf="element.finishDate"><strong> - {{'surveysAdmin.finishDate' | translate}}:</strong>
+                                {{element.finishDate | date: 'dd/MM/yyyy'}}</small>
+                            <small *ngIf="element.periodicity"><strong> - {{'surveysAdmin.periodicity' | translate}}:</strong>
+                                {{element.periodicity.value}}</small>
+                            <small *ngIf="element.periodicity.type === 'days'">
+                                {{'surveysAdmin.customForm.periodicityIntervalLiterals.days' | translate}}</small>
+                            <small *ngIf="element.periodicity.type === 'months'">
+                                {{'surveysAdmin.customForm.periodicityIntervalLiterals.months' | translate}}</small>
+                            <small *ngIf="element.periodicity.type === 'years'">
+                                {{'surveysAdmin.customForm.periodicityIntervalLiterals.years' | translate}}</small>
+                            <small *ngIf="element.periodicity.type === 'logins'">
+                                {{'surveysAdmin.customForm.periodicityIntervalLiterals.logins' | translate}}</small>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="state">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>Estado</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div *ngIf="element.state == 'published'" class="fake-mat-chip-sm success">
+                                {{'genericMessages.publishedM' | translate}}
+                            </div>
+                            <div *ngIf="element.state == 'incomplete'" class="fake-mat-chip-sm">
+                                {{'surveysAdmin.customForm.draft' | translate}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="text-right">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item [routerLink]="['edit', element._id]">
+                                    <mat-icon>mode_edit</mat-icon>
+                                    <span>{{'genericMessages.edit' | translate}}</span>
+                                </button>
+                                <button mat-menu-item (click)="cloneSurvey(element)">
+                                    <mat-icon>add_circle</mat-icon>
+                                    <span>{{'genericMessages.clone' | translate}}</span>
+                                </button>
+                                <button mat-menu-item (click)="deleteSurvey(element)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>{{'genericMessages.delete' | translate}}</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                </table>
+                <mat-paginator [pageSize]="10" showFirstLastButtons></mat-paginator>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

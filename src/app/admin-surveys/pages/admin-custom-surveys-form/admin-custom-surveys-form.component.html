@@ -1,0 +1,243 @@
+<div class="loading-table" *ngIf="loadingPage">
+    <mat-spinner></mat-spinner>
+</div>
+<app-breadcrumb *ngIf="newSurvey" breadcrumbs="Talentoo,Admin,{{'genericMessages.Questionnaires' | translate}},{{'adminMenu.surveysMenu.custom' | translate}},{{'surveysAdmin.form.createSurvey' | translate}}">
+</app-breadcrumb>
+<app-breadcrumb *ngIf="!newSurvey" breadcrumbs="Talentoo,Admin,{{'genericMessages.Questionnaires' | translate}},{{'adminMenu.surveysMenu.custom' | translate}},{{survey?.title}}">
+</app-breadcrumb>
+<div class="row hide-mobile">
+    <div class="col-12">
+        <button (click)="cancelSurvey()" mat-flat-button class="btn-primary btn-sm mr-m">
+            <mat-icon class="mr-sm">keyboard_arrow_left</mat-icon> {{'genericMessages.return' | translate}}
+        </button>
+        <button (click)="addBlock()" mat-stroked-button class="btn-stroked-primary btn-sm mr-m">
+            <mat-icon class="mr-sm">add_circle_outline</mat-icon> {{'surveysAdmin.customForm.addBlock' | translate}}
+        </button>
+        <button *ngIf="survey?.state !='published'" (click)="changeState('published')" mat-stroked-button class="btn-stroked-primary btn-sm mr-m" [disabled]="!completeSurvey">
+            <mat-icon class="mr-sm">publish</mat-icon> {{'genericMessages.publish' | translate}}
+        </button>
+        <button *ngIf="survey?.state =='published'" (click)="changeState('incomplete')" mat-stroked-button class="btn-stroked-primary btn-sm mr-m">
+            <mat-icon class="mr-sm">cancel_presentation</mat-icon> {{'genericMessages.unpublish' | translate}}
+        </button>
+        <div *ngIf="survey?.state !=='published'" class="fake-mat-chip-sm">
+            {{'genericMessages.draft' | translate}}
+        </div>
+        <div *ngIf="survey?.state === 'published'" class="fake-mat-chip-sm success">
+            {{'genericMessages.publishedM' | translate}}
+        </div>
+    </div>
+</div>
+<div class="row show-mobile">
+    <div class="col-12">
+        <button class="btn-primary btn-sm" mat-button [matMenuTriggerFor]="resp">
+            <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+        </button>
+        <mat-menu #resp="matMenu">
+            <button (click)="cancelSurvey()" mat-menu-item class="btn-stroked-primary btn-sm">
+                <mat-icon>keyboard_arrow_left</mat-icon> {{'genericMessages.return' | translate}}
+            </button>
+            <button (click)="addBlock()" mat-menu-item class="btn-stroked-primary btn-sm">
+                <mat-icon>add_circle_outline</mat-icon> {{'surveysAdmin.customForm.addBlock' | translate}}
+            </button>
+            <button *ngIf="survey?.state !='published'" (click)="changeState('published')" mat-menu-item class="btn-stroked-primary btn-sm" [disabled]="!completeSurvey">
+                <mat-icon>publish</mat-icon> {{'genericMessages.publish' | translate}}
+            </button>
+            <button *ngIf="survey?.state =='published'" (click)="changeState('incomplete')" mat-menu-item class="btn-stroked-primary btn-sm">
+                <mat-icon>cancel_presentation</mat-icon> {{'genericMessages.unpublish' | translate}}
+            </button>
+        </mat-menu>
+        <div *ngIf="survey?.state !== 'published'" class="fake-mat-chip-sm ml-sm">
+            {{'genericMessages.draft' | translate}}
+        </div>
+        <div *ngIf="survey?.state === 'published'" class="fake-mat-chip-sm success ml-sm">
+            {{'genericMessages.publishedM' | translate}}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title *ngIf="!surveyId">
+                    {{'surveysAdmin.form.createSurvey' | translate}}
+                </mat-card-title>
+                <mat-card-title *ngIf="surveyId">
+                    {{'surveysAdmin.form.editSurvey' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <form *ngIf="surveyForm" [formGroup]="surveyForm">
+                    <div class="col-12">
+                        <mat-form-field>
+                            <input matInput placeholder="{{'surveysAdmin.form.placeholders.name' | translate}}" formControlName="name">
+                            <mat-icon matSuffix>mode_edit</mat-icon>
+                            <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+                            <mat-error *ngIf="surveyForm.controls.name.invalid">
+                                {{'genericMessages.required' | translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-12">
+                        <mat-form-field>
+                            <textarea matInput placeholder="{{'surveysAdmin.customForm.placeholders.welcomeText' | translate}}" formControlName="welcomeText"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-12">
+                        <mat-form-field>
+                            <textarea matInput placeholder="{{'surveysAdmin.customForm.placeholders.feedbackText' | translate}}" formControlName="feedbackText"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="daterange">
+                        <div class="col-3">
+                            <mat-form-field>
+                                <mat-label>{{'surveysAdmin.form.placeholders.startDate' | translate}}</mat-label>
+                                <input matInput [matDatepicker]="picker2" formControlName="startDate" (dateChange)="setValue(0, $event)" [max]="maxDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field>
+                                <mat-label>{{'surveysAdmin.form.placeholders.finishDate' | translate}}</mat-label>
+                                <input matInput [matDatepicker]="picker3" formControlName="finishDate" (dateChange)="setValue(1, $event)" [min]="minDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                <mat-datepicker #picker3></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field>
+                                <mat-label>{{'surveysAdmin.form.placeholders.periodicity' | translate}}</mat-label>
+                                <input matInput type="number" min="1" placeholder="{{'surveysAdmin.customForm.placeholders.periodicityUnit' | translate}}" formControlName="periodicityUnit">
+                                <mat-icon matSuffix>mode_edit</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3">
+                            <mat-form-field>
+                                <mat-label>{{'surveysAdmin.customForm.placeholders.periodicityInterval' | translate}}
+                                </mat-label>
+                                <mat-select formControlName="periodicityInterval">
+                                    <mat-option>--</mat-option>
+                                    <mat-option *ngFor="let p of periodicityIntervalValues" [value]="p.value">
+                                        {{('surveysAdmin.customForm.periodicityIntervalLiterals.' + p.key) | translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-12">
+                        <p class="mat-header-cell">
+                            {{'surveysAdmin.customForm.placeholders.mandatoryAnswers' | translate}}</p>
+                        <mat-radio-group aria-label="{{'surveysAdmin.customForm.placeholders.mandatoryAnswers' | translate}}" formControlName="mandatoryAnswers">
+                            <mat-radio-button [value]="true">
+                                {{ 'genericMessages.yes' | translate }}
+                            </mat-radio-button>
+                            <mat-radio-button [value]="false">{{ 'genericMessages.no' | translate }}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="col-3 padding-bot" *ngIf="!surveyForm.value.mandatoryAnswers">
+                        <mat-form-field>
+                            <mat-label>{{'surveysAdmin.customForm.placeholders.mandatoryAnswersNumber' | translate}}
+                            </mat-label>
+                            <input matInput placeholder="N°" formControlName="mandatoryAnswersNumber" type="number" min="0">
+                            <mat-icon matSuffix>mode_edit</mat-icon>
+                            <mat-hint>{{'surveysAdmin.customForm.hints.mandatoryAnswersNumber' | translate}}</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="col-12 padding-bot" *ngIf="surveyForm.value.mandatoryAnswers">
+                        <p class="mat-header-cell">
+                            {{'surveysAdmin.customForm.placeholders.userCanSeeReport' | translate}}</p>
+                        <mat-radio-group aria-label="{{'surveysAdmin.customForm.placeholders.userCanSeeReport' | translate}}" formControlName="userCanSeeReport">
+                            <mat-radio-button [value]="true">{{ 'genericMessages.yes' | translate }}
+                            </mat-radio-button>
+                            <mat-radio-button [value]="false">{{ 'genericMessages.no' | translate }}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+
+        <div class="mt-l"></div>
+
+        <mat-accordion class="dark-header">
+            <mat-expansion-panel [expanded]="!newSurvey">
+                <mat-expansion-panel-header>
+                    <mat-panel-title id=aria>{{'surveysAdmin.customForm.blocks.title' | translate}}</mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="loading-table" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+
+                <div class="col-12" *ngIf="survey?.blocks?.length else elseBlocks">
+                    <mat-form-field *ngIf="dataSource.data !== null">
+                        <mat-icon matPrefix>search</mat-icon>
+                        <input matInput [formControl]="globalFilter" [placeholder]="'genericMessages.filterTable' | translate">
+                    </mat-form-field>
+                    <div *ngIf="dataSource.filteredData && dataSource.filteredData.length === 0 && !loading">
+                        <p class="description no-items">
+                            <mat-icon>error_outline</mat-icon>
+                            {{'genericMessages.noResults' | translate}}
+                        </p>
+                    </div>
+                    <table matSort mat-table [dataSource]="dataSource" aria-describedby="aria" *ngIf="dataSource.data !== null && dataSource.filteredData.length !== 0">
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell scope="col" *matHeaderCellDef>Nombre</th>
+                            <td mat-cell *matCellDef="let element">
+                                <strong>{{element.name}}</strong><br>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="editBlock(element)">
+                                        <mat-icon>mode_edit</mat-icon>
+                                        <span>{{'genericMessages.edit' | translate}}</span>
+                                    </button>
+                                    <button mat-menu-item (click)="cloneBlock(element)">
+                                        <mat-icon>add_circle</mat-icon>
+                                        <span>{{'genericMessages.clone' | translate}}</span>
+                                    </button>
+                                    <button mat-menu-item (click)="deleteBlock(element)">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>{{'genericMessages.delete' | translate}}</span>
+                                    </button>
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                    </table>
+                    <mat-paginator [pageSize]="10" showFirstLastButtons></mat-paginator>
+                </div>
+
+                <ng-template #elseBlocks>
+                    <div class="col-12 kv-m-important">
+                        <p>{{'surveysAdmin.customForm.blocks.noBlocks' | translate}}</p>
+                    </div>
+                </ng-template>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <div class="action-buttons mt-l text-right" *ngIf="surveyForm">
+            <button (click)="cancelSurvey()" mat-button>{{ (newSurvey ? 'genericMessages.cancel' : 'genericMessages.return') | translate }}</button>
+            <span class="mr-m"></span>
+            <button mat-flat-button class="btn-primary" [disabled]="(surveyForm.invalid && surveyForm.touched) || !surveyForm.get('name').value" (click)="saveSurvey() ">{{'genericMessages.save' | translate}}</button>
+        </div>
+    </div>
+</div>

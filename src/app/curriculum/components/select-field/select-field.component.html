@@ -1,0 +1,25 @@
+<div fxLayout fxLayoutAlign="space-between center">
+  <h3>{{optionsLabel}}</h3>
+  <div>
+    <button class="add-button primary" mat-icon-button (click)="addOption()" >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>
+
+<form >
+  <div fxLayout fxLayoutAlign="flex-start center" [formGroup]="option" *ngFor="let option of value['controls']; let i = index">
+    <mat-form-field class="field">
+      <mat-label>{{optionKeyLabel}}</mat-label>
+      <input matInput formControlName="label">
+    </mat-form-field>
+    <mat-form-field class="field">
+      <mat-label>{{optionValueLabel}}</mat-label>
+      <input matInput formControlName="value" >
+    </mat-form-field>
+    <button class="btn-stroked-primary btn-sm" [disabled]="value.length <= 1" mat-button (click)="removeOption(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  <mat-error *ngIf="ngControl && ngControl.invalid && ngControl.touched">{{errorMessage}}</mat-error>
+</form>

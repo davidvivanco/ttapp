@@ -1,0 +1,302 @@
+<app-breadcrumb breadcrumbs="Talentoo,Admin,{{ 'configuration.title' | translate }}"></app-breadcrumb>
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header about-me">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon style="margin-right: 2px;">insert_photo</mat-icon>
+                    {{'configuration.image.title' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="f-bold">{{'configuration.image.logo' | translate}}</label>
+                        <span class="sizeImgInfo">220x90px</span>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-6">
+                            <img alt="logo" *ngIf="conf.company.loginLogo !== ''" [src]="conf.company.loginLogo"
+                                style="max-width: 220px;" />
+                            <span
+                                *ngIf="conf.company.loginLogo === ''">{{'configuration.image.noImageUploaded' | translate}}</span>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="right">
+                                <button mat-stroked-button color="primary" class="right" (click)="uploadPhoto('loginLogo')">{{(conf.company.companyLogo === '') ? ('genericMessages.add' | translate) : ('genericMessages.edit' | translate )}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="f-bold">{{'configuration.image.iconCompany' | translate}}</label>
+                        <span class="sizeImgInfo">40x40px</span>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-6">
+                            <img alt="icon company" class="icon-company" *ngIf="conf.company.companyLogo !== ''"
+                                style="max-width: 40px;" [src]="conf.company.companyLogo" />
+                            <span
+                                *ngIf="conf.company.companyLogo === ''">{{'configuration.image.noImageUploaded' | translate}}</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="right">
+                                <button mat-stroked-button color="primary" class="right" (click)="uploadPhoto('companyLogo')">{{(conf.company.companyLogo === '') ? ('genericMessages.add' | translate) : ('genericMessages.edit' | translate )}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label class="f-bold">{{'configuration.image.mainColor' | translate}}</label>
+                    </div>
+                    <div class="col-6">
+                        <input ejs-colorpicker type="color" id="colorpickerMainColor" [(value)]="mainColorValue"
+                            [enableOpacity]="false" (change)="changeColor()" /> &nbsp;
+                        <label>{{mainColorValue}}</label>
+                    </div>
+                    <div class="col-6">
+                        <label class="f-bold">{{'configuration.image.secondaryColor' | translate}}</label>
+                    </div>
+                    <div class="col-6">
+                        <input ejs-colorpicker type="color" id="colorpickerSecondaryColor"
+                            [(value)]="secondaryColorValue" [enableOpacity]="false" (change)="changeColor()" /> &nbsp;
+                        <label>{{secondaryColorValue}}</label>
+                    </div>
+                </div>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header about-me">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon style="margin-right: 2px;">account_box</mat-icon>
+                    {{'genericMessages.personalData' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>{{'configuration.personalData.subTitle' | translate}}</h3>
+                        <p>{{'configuration.personalData.defaultFunctionPersonalData' | translate}}</p>
+                        <ul class="unordered-list" *ngIf="this.conf.company.appConfig">
+                            <li>
+                                <mat-checkbox class="example-margin"
+                                    [checked]="this.conf.company.appConfig.userPersonalData" [disabled]="false"
+                                    (change)="valuePersonalData('userPersonalData')">
+                                    {{'configuration.personalData.firstCondition' | translate}}</mat-checkbox>
+                            </li>
+                            <li>
+                                <mat-checkbox class="example-margin"
+                                    [checked]="this.conf.company.appConfig.permPersonalData" [disabled]="false"
+                                    (change)="valuePersonalData('permPersonalData')">
+                                    {{'configuration.personalData.secondCondition' | translate}}</mat-checkbox>
+                                <p class="text-indent"><span class="f-bold">{{'configuration.personalData.secondConditionExampleText' | translate}}</span> {{'configuration.personalData.secondConditionExampleValue' | translate}}</p>
+                            </li>
+                            <li>
+                                <mat-checkbox class="example-margin"
+                                    [checked]="this.conf.company.appConfig.respPersonalData" [disabled]="false"
+                                    (change)="valuePersonalData('respPersonalData')">
+                                    {{'configuration.personalData.thirdCondition' | translate}}</mat-checkbox>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header about-me">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon style="margin-right: 2px;">account_box</mat-icon>
+                    {{'genericMessages.curriculum' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>{{'configuration.curriculum.subTitle' | translate}}</h3>
+                        <p>{{'configuration.curriculum.defaultFunctionCurriculum' | translate}}</p>
+                        <ul class="unordered-list" *ngIf="this.conf.company.appConfig">
+                            <li>
+                                <mat-checkbox class="example-margin"
+                                    [checked]="this.conf.company.appConfig.userCurriculum" [disabled]="false"
+                                    (change)="valueCurriculum('userCurriculum')">
+                                    {{'configuration.curriculum.firstCondition' | translate}}</mat-checkbox>
+                            </li>
+                            <li>
+                                <mat-checkbox class="example-margin"
+                                    [checked]="this.conf.company.appConfig.permCurriculum" [disabled]="false"
+                                    (change)="valueCurriculum('permCurriculum')">
+                                    {{'configuration.curriculum.secondCondition' | translate}}</mat-checkbox>
+                                <p class="text-indent"><span class="f-bold">{{'configuration.personalData.secondConditionExampleText' | translate}}</span> {{'configuration.curriculum.secondConditionExampleValue' | translate}}</p>
+                            </li>
+                            <li>
+                                <mat-checkbox class="example-margin"
+                                    [checked]="this.conf.company.appConfig.respCurriculum" [disabled]="false"
+                                    (change)="valueCurriculum('respCurriculum')">
+                                    {{'configuration.curriculum.thirdCondition' | translate}}</mat-checkbox>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row" *ngIf="conf.company.bots && conf.company.bots.length">
+    <div class="col-12">
+        <mat-card class="card-dark-header about-me">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon style="margin-right: 2px;">chat</mat-icon>
+                    {{'configuration.otherConfig.title' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 other-config">
+                        <h3 class="other-config">{{'configuration.otherConfig.bots' | translate}}</h3>
+                    </div>
+                </div>
+                <div class="row" *ngFor="let bot of conf.company.bots; index as i">
+                    <div class="col-10">
+                        <mat-icon class="mat-icon-sm with-text" style="margin-right: 7px;">face
+                        </mat-icon>
+                        <label>
+                            <span>{{bot.title}}</span> <br>
+                        </label>
+                    </div>
+                    <div class="col-2 text-right">
+                        <mat-slide-toggle class="mt-2" (change)="botStatus(i, $event)" [checked]="bot.active">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-12 other-config other-config-top">
+                        <h3 class="other-config">{{'configuration.otherConfig.access' | translate}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <label>
+                            <span>{{'configuration.otherConfig.linkedin' | translate}}</span> <br>
+                        </label>
+                    </div>
+                    <div class="col-2 text-right">
+                        <mat-slide-toggle class="mt-2" (change)="linkedinStatus($event)" [checked]="conf.services.linkedinAccess">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <label>
+                            <span>{{'configuration.otherConfig.facebook' | translate}}</span> <br>
+                        </label>
+                    </div>
+                    <div class="col-2 text-right">
+                        <mat-slide-toggle class="mt-2" (change)="facebookStatus($event)"
+                            [checked]="conf.services.facebookAccess">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <label>
+                            <span>{{'configuration.otherConfig.google' | translate}}</span> <br>
+                        </label>
+                    </div>
+                    <div class="col-2 text-right">
+                        <mat-slide-toggle class="mt-2" (change)="googleStatus($event)"
+                            [checked]="conf.services.googleAccess">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-12 other-config other-config-top">
+                        <h3 class="other-config">{{'configuration.otherConfig.users' | translate}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <mat-icon class="mat-icon-sm with-text" style="margin-right: 7px;">visibility
+                        </mat-icon>
+                        <label>
+                            <span>{{'configuration.otherConfig.showUsers' | translate}}</span> <br>
+                        </label>
+                    </div>
+                    <div class="col-2 text-right">
+                        <mat-slide-toggle class="mt-2" (change)="changeShowUsersDropDate()" [checked]="conf.company.showUsersDropDate">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header about-me">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon style="margin-right: 2px;">language</mat-icon>
+                    {{'configuration.languages.title' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="f-bold">{{'configuration.languages.defaultLanguage' | translate}}</label>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field>
+                            <mat-select [disabled]="this.enabledLangs.length == 1"
+                                [(value)]="this.conf.services.translations.defaultLanguage">
+                                <mat-option [value]="item" *ngFor="let item of enabledLangs; let i = index">
+                                    {{('configuration.languages.listLanguages.' + item) | translate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <label class="f-bold">{{'configuration.languages.availablesLanguage' | translate}}</label>
+                    </div>
+                    <div class="col-6">
+                        <div *ngFor="let item of availableLangs; let i = index">
+                            <mat-checkbox [checked]="this.conf.services.translations.languages[item]"
+                                [disabled]="this.conf.services.translations.defaultLanguage == item"
+                                (change)=enableLang(item)>
+                                {{('configuration.languages.listLanguages.' + item) | translate}}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="right">
+            <button mat-flat-button class="btn-primary"
+                (click)="saveConf()">{{'genericMessages.save' | translate}}</button>
+        </div>
+
+    </div>
+</div>

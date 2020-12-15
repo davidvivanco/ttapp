@@ -1,0 +1,82 @@
+<div class="row">
+  <app-breadcrumb breadcrumbs="Talentoo,Admin,{{ 'genericMessages.media' | translate }}"></app-breadcrumb>
+
+  <div class="col-12">
+    <button mat-flat-button class="btn-primary btn-sm mr-m search" (click)="openSearchModal()">
+      <mat-icon class="mr-sm">search</mat-icon>{{'genericMessages.search' | translate}}
+    </button>
+    <span class="mr-m"></span>
+    <mat-form-field>
+      <mat-select class="mr-m" (selectionChange)="changeSortedColumn($event)" [(value)]="selectedOption"
+        placeholder="{{'genericMessages.order' | translate}}">
+        <mat-select-trigger *ngIf="selectedOption">
+          <mat-icon>{{selectedOption.icon}}</mat-icon> {{selectedOption.title}}
+        </mat-select-trigger>
+        <mat-option *ngFor="let val of selectedColumn" [value]="val">
+          <span>
+            <mat-icon>{{val.icon}}</mat-icon>
+          </span>
+          {{val.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12" *ngIf="searchStr">
+    <p class="description no-items" *ngIf="files.length">
+      <mat-icon>info_outline</mat-icon>
+      Resultados para la búsqueda: {{searchStr}}
+    </p>
+    <p class="description no-items" *ngIf="!files.length">
+      <mat-icon>error_outline</mat-icon>
+      No hay resultados para: {{searchStr}}
+    </p>
+    <a (click)="backToAll()" class="fake-button btn-sm btn-stroked-primary">
+      <mat-icon>keyboard_arrow_left</mat-icon>{{'genericMessages.backToAllM' | translate}}
+    </a>
+  </div>
+
+  <div class="col-12" *ngIf="!files.length && !searchStr">
+    <p class="description no-items">
+      <mat-icon>error_outline</mat-icon>
+      No hay resultados
+    </p>
+  </div>
+
+  <div class="col-12">
+    <div class="loading-table" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-grid-list [cols]="breakpoint" gutterSize="25px" (window:resize)="onResize($event)" matSort>
+      <mat-grid-tile *ngFor="let file of files">
+        <mat-grid-tile-header>
+          <button class="menu" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Edit file">
+            <mat-icon class="menuIcon">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openViewModal(file)">
+              <mat-icon>visibility</mat-icon>
+              <span>{{'genericMessages.see' | translate}}</span>
+            </button>
+            <button mat-menu-item (click)="delete(file)">
+              <mat-icon>delete</mat-icon>
+              <span>{{'genericMessages.delete' | translate}}</span>
+            </button>
+          </mat-menu>
+        </mat-grid-tile-header>
+        <img *ngIf="checkFileType(file) === 'image'" src="{{file.fullPath}}">
+        <mat-icon
+          *ngIf="checkFileType(file) === 'video' || checkFileType(file) === 'audio' || checkFileType(file) === 'doc' || checkFileType(file) === 'pdf' "
+          class="file">description</mat-icon>
+        <mat-icon *ngIf="checkFileType(file) === 'unknown'" class="file">insert_drive_file</mat-icon>
+        <mat-grid-tile-footer *ngIf="checkFileType(file) !== 'image'">
+          <div class="fileName">{{file.title}}</div>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div class="col-12 left">
+    <mat-paginator [pageSize]="limit" showFirstLastButtons [length]="totalFiles" [pageIndex]="currentPage"
+      (page)="getData($event)"></mat-paginator>
+  </div>
+</div>

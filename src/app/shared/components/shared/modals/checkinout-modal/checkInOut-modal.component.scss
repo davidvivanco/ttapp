@@ -1,0 +1,23 @@
+.edit-position-card {
+  div[class^="col"] {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.filter-select{
+  max-height: 225px;
+ *overflow-y: auto;
+}
+
+.ver-misFichajes{
+  margin-top: 10px;
+  display: block;
+}

@@ -1,0 +1,7 @@
+<div class="pl-m">
+    <mat-slide-toggle defaultColor="primary" (change)="toogle($event)" *ngIf="toogleOptions" color="primary" [checked]="checked" [disabled]="disabled">
+        <mat-chip-list aria-label="{{toogleOptions.options[index].label}}">
+            <mat-chip color="primary" selected>{{toogleOptions.options[index].label}}</mat-chip>
+        </mat-chip-list>
+    </mat-slide-toggle>
+</div>

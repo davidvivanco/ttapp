@@ -1,0 +1,26 @@
+.conditional-tree {
+    height: 75vh;
+    width: 100%;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    padding: 0 0 20px 0;
+    ul {
+        margin-top: 0;
+        margin-bottom: 20px;
+        list-style-type: none;
+    }
+    li {
+        margin-top: 20px;
+        margin-bottom: 0;
+        list-style-type: none;
+    }
+    .conditional-tree-invisible {
+        display: none;
+    }
+    .margin-no-expanded {
+         margin-bottom: 20px;
+    }
+}

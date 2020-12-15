@@ -1,0 +1,33 @@
+<button mat-icon-button class="primary-color notifications-bell" [title]="'notifications.seeNotifications' | translate">
+    <mat-icon [matBadgeHidden]="notificationsNotRead === 0" matBadge="{{notificationsNotRead}}" matBadgeColor="warn"
+        [matMenuTriggerFor]="notificationsList">
+        notifications
+    </mat-icon>
+</button>
+
+<mat-menu #notificationsList="matMenu" class="notifications-menu-header" xPosition="before">
+    <a class="mark-all-as-read" [title]="'notifications.markAllAsRead' | translate"
+        (click)="markAllAsRead(allNotifications)"
+        *ngIf="notificationsNotRead > 0">{{'notifications.markAllAsRead' | translate}} <mat-icon>close</mat-icon></a>
+    <ul class="notifications-list">
+        <li class="notification" *ngIf="notifications.length === 0">
+            <p class="text-center">{{'notifications.noNotifications' | translate}}</p>
+        </li>
+        <li class="notification" *ngFor="let notification of notifications"
+            [ngClass]="{'notRead' : !notification.isRead}">
+            <div class="notification-body">
+                <span>{{notification.message}}</span> <a class="pointer" (click)="goToLink(notification, $event)"
+                    href="{{notification.link}}">Ver</a>.
+            </div>
+            <div class="notification-actions" *ngIf="!notification.isRead">
+                <span class="mark-as-read pointer" title="'notifications.markAsRead' | translate"
+                    (click)="markAsReaded(notification, $event)">
+                    <mat-icon>close</mat-icon>
+                </span>
+            </div>
+        </li>
+    </ul>
+    <a class="see-all-notifications" title="'notifications.seeAll' | translate"
+        [routerLink]="['/notificaciones']">{{'notifications.seeAll' | translate}} <span
+            class="gray">({{notificationsNotRead}} {{'notifications.noReaded' | translate}})</span></a>
+</mat-menu>

@@ -1,0 +1,16 @@
+<div class="row">
+  <app-breadcrumb breadcrumbs="Talentoo,Guía de estilo,Load files"></app-breadcrumb>
+
+  <div class="col-12">
+    <button mat-flat-button (click)="uploadFiles(false)" class="btn-primary btn-sm mr-m">
+      <mat-icon class="mr-sm">cloud_upload</mat-icon>
+      <div class="hide-md">Archivos</div>
+      <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+    </button>
+    <button mat-flat-button (click)="uploadFiles(true)" class="btn-primary btn-sm mr-m">
+      <mat-icon class="mr-sm">cloud_upload</mat-icon>
+      <div class="hide-md">Archivo</div>
+      <mat-icon class="hide-lg">insert_drive_file</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+.info,
+.actions {
+    margin: 0 14px 7px 0 !important;
+    width : 100%;
+}
+
+.file {
+    font-size: 100px;
+    width    : 100px;
+    height   : 120px;
+    color    : gray;
+}
+
+.pointer {
+    margin: auto;
+    width : fit-content;
+    cursor: pointer;
+}
+
+.info {
+    white-space  : nowrap;
+    overflow     : hidden;
+    text-overflow: ellipsis !important;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}

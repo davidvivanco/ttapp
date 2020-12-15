@@ -1,0 +1,17 @@
+<div class="chart" *ngIf="series && chart">
+  <mat-card style="padding: 50px;">
+
+    <app-select *ngIf="chart.select" [filter]="chart.select" (onFilterChange)="filterChange($event,chart,i,j)">
+    </app-select>
+
+
+    <app-slider [sliderOptions]="chart.slider.sliderOptions" *ngIf="chart.slider" (sliderChange)="sliderChange($event)">
+    </app-slider>
+
+    <apx-chart #chartComponent [grid]="chartOptions.grid" [noData]="chartOptions.noData" [yaxis]="chartOptions.yaxis"
+      [series]="chartOptions.series" [legend]="chartOptions.legend" [tooltip]="chartOptions.tooltip"
+      [chart]="chartOptions.chart" [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+      [title]="chartOptions.title" [colors]="chartOptions.colors"></apx-chart>
+  </mat-card>
+
+</div>

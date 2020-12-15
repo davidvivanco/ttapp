@@ -1,0 +1,116 @@
+<div class="row">
+  <app-breadcrumb breadcrumbs="Talentoo,{{ 'genericMessages.myCurriculum' | translate }}"></app-breadcrumb>
+
+  <div class="col-12">
+    <button mat-flat-button (click)="printCV()" class="btn-primary btn-sm">
+      <mat-icon class="mr-sm">
+        <mat-icon>picture_as_pdf</mat-icon>
+      </mat-icon>{{'cardPosition.toPdf' | translate}}
+    </button>
+  </div>
+</div>
+
+<!-- USER -->
+<div class="row" *ngIf="user">
+  <div class="col-12">
+    <mat-card class="card-dark-header">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>person</mat-icon>
+        </mat-card-title>
+        <p>Datos personales</p>
+      </mat-card-header>
+      <div class="clearfix"></div>
+      <mat-card-content>
+        <div class="avatar-sm">
+          <app-avatar [user]="user"></app-avatar>
+        </div>
+        <div style="width: calc(100% - 35px); display: block; float: right;">
+          <p class="f-bold kv-m mb-sm">{{user.personalData.name}} {{user.personalData.lastName}}</p>
+          <div class="clearfix"></div>
+          <span class="description gray" *ngIf="!user.externalUser && user.personalData.email.professional[0]">
+            <mat-icon class="mat-icon-xs">mail</mat-icon> {{user.personalData.email.professional[0]}}
+          </span>
+          <span class="description gray" *ngIf="user.externalUser">
+            <mat-icon class="mat-icon-xs">mail</mat-icon> {{user.personalData.email.personal[0]}}
+          </span>
+          <br><br>
+          <span class="description gray" *ngIf="!user.externalUser && user.position && user.position['name']">
+            <mat-icon class="mat-icon-xs">description</mat-icon> {{user.position['name']}}
+          </span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="right">
+        <button mat-stroked-button class="btn-stroked-primary" (click)="openEditPersonalData(user)">
+          <mat-icon>{{editPersonalData ? 'edit' : 'visibility'}}</mat-icon> {{editPersonalData ? ('genericMessages.edit' | translate) : ('genericMessages.see' | translate)}}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<!-- LOADER -->
+<div class="row" *ngIf="loading">
+  <div class="col-12">
+    <mat-card class="card-dark-header">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>speaker_notes</mat-icon>
+        </mat-card-title>
+        <p>Curriculum</p>
+      </mat-card-header>
+      <div class="clearfix"></div>
+      <mat-card-content>
+        <p>Cargando, por favor espere...</p>
+        <div class="loading-table">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="clearfix"></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<!-- NO HAY SCHEMA DE CV PUBLICADO -->
+<div class="row" *ngIf="noPublishedCV">
+  <div class="col-12">
+    <mat-card class="card-dark-header">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>speaker_notes</mat-icon>
+        </mat-card-title>
+        <p>No disponible</p>
+      </mat-card-header>
+      <div class="clearfix"></div>
+      <mat-card-content>
+        <p>El administrador de la aplicación aún no ha publicado ningún curriculum para editar.</p>
+        <div class="clearfix"></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<!-- SI HAY SCHEMA DE CV PUBLICADO -->
+<div class="row" *ngIf="!noPublishedCV && blocks">
+  <div class="col-12" *ngFor="let block of blocks; let i = index;">
+    <mat-accordion class="dark-header">
+      <mat-expansion-panel [expanded]="i === 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <p class="f-bold">{{block.name}}</p>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="clearfix"></div>
+        <div *ngIf="aux[block._id]">
+          <app-blocks-table [block]="aux[block._id]" [index]="i" [blockSchema]="block" [isMe]="isMe"
+            [employeeId]="employeeId" (getCurriculum)="getCurriculum($event);"></app-blocks-table>
+        </div>
+        <div *ngIf="!aux[block._id]">
+          <app-blocks-table [block]="null" [index]="i" [blockSchema]="block" [isMe]="isMe" [employeeId]="employeeId"
+            (getCurriculum)="getCurriculum($event);"></app-blocks-table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>

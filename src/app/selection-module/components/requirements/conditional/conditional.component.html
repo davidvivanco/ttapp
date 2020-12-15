@@ -1,0 +1,173 @@
+<div class="component">
+  <div class="component-forms">
+    <form [formGroup]="formGroup">
+      <!-- case input text -->
+      <section *ngIf="node.type === 'text'">
+        <h4>{{node.label}}</h4>
+        <mat-form-field>
+          <input type="text" matInput [placeholder]="node.optionSelected" formControlName="textFormControl"
+            (change)="setTextInput($event)">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+          <mat-error *ngIf="formGroup?.touched && formGroup.get('textFormControl').errors?.required">
+            {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+          <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+        </mat-form-field>
+      </section>
+
+      <!-- case input number -->
+      <section *ngIf="node.type === 'number'">
+        <h4>{{node.label}}</h4>
+        <mat-form-field>
+          <input type="number" matInput [placeholder]="node.optionSelected" formControlName="numberFormControl"
+            (change)="setNumberInput($event)">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+          <mat-error *ngIf="formGroup?.touched && formGroup.get('numberFormControl').errors?.required">
+            {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+          <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+        </mat-form-field>
+      </section>
+
+      <!-- case select -->
+      <section *ngIf="node.type === 'select' || node.type === 'radio'">
+        <h4>{{node.label}}</h4>
+        <mat-form-field>
+          <mat-select formControlName="selectFormControl" [placeholder]="node.optionSelected"
+            (selectionChange)="changeOptionSelected($event)">
+            <mat-option *ngFor="let option of node.options" [value]="option.value">
+              {{option.label}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup?.touched && formGroup.get('selectFormControl').errors?.required">
+            {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+          <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+        </mat-form-field>
+      </section>
+
+      <!-- case date -->
+      <section *ngIf="node.type === 'date'">
+        <h4>{{node.label}}</h4>
+        <mat-form-field>
+          <div *ngIf="checkType(node.optionSelected) === 'string'; else elseBlock">
+            <mat-label>{{node.optionSelected}}</mat-label>
+          </div>
+          <ng-template #elseBlock>
+            <mat-label>{{node.optionSelected | date:'dd/MM/yyyy'}}</mat-label>
+          </ng-template>
+          <input matInput [matDatepicker]="picker" formControlName="dateFormControl"
+            (dateChange)="setDateValue($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="formGroup?.touched && formGroup.get('dateFormControl').errors?.required">
+            {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+          <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+        </mat-form-field>
+      </section>
+
+      <!-- case checkbox -->
+      <section class="checkbox-field" *ngIf="node.type === 'checkbox'">
+        <h4>{{node.label}}</h4>
+        <mat-form-field>
+          <mat-label>{{node.optionSelected}}</mat-label>
+          <mat-select formControlName="checkboxFormControl" (selectionChange)="changeMultipleOptionSelected($event)"
+            multiple>
+            <mat-option *ngFor="let option of node.options" [value]="option.value">
+              {{option.label}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup?.touched && formGroup.get('checkboxFormControl').errors?.required">
+            {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+          <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+        </mat-form-field>
+      </section>
+
+      <!-- case decision tree -->
+      <section class="decision-tree-field" *ngIf="node.type === 'decisionTree'">
+        <h3>{{node.label}}</h3>
+        <button mat-raised-button [matMenuTriggerFor]="menu.childMenu" class="decisionTree">
+          <span>{{node.optionSelected}}</span>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <app-nested-menu #menu formControlName="treeFormControl" [tree]="node.tree"
+          (onBranchSelected)="branchSelected($event)"></app-nested-menu>
+        <mat-error *ngIf="formGroup?.touched && formGroup.get('treeFormControl').errors?.required">
+          {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+        <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+      </section>
+
+      <!-- case dateRange -->
+      <section class="date-range" *ngIf="node.type === 'dateRange'">
+        <h4>{{node.label}}</h4>
+        <div class="date-range-components">
+          <mat-form-field>
+            <div *ngIf="checkType(node.optionSelected[0]) === 'string'; else elseBlockStart">
+              <mat-label>{{node.optionSelected[0]}}</mat-label>
+            </div>
+            <ng-template #elseBlockStart>
+              <mat-label>{{node.optionSelected[0] | date:'dd/MM/yyyy'}}</mat-label>
+            </ng-template>
+            <input matInput [matDatepicker]="pickerStart" (dateChange)="setRangeDataValue(0, $event)"
+              formControlName="startDateRange">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+            <mat-error *ngIf="formGroup?.touched && formGroup.get('startDateRange').errors?.required">
+              {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+            <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+          </mat-form-field>
+          <span class="mr-m"></span>
+          <mat-form-field *ngIf=!currently>
+            <div *ngIf="checkType(node.optionSelected[1]) === 'string'; else elseBlockEnd">
+              <mat-label>{{node.optionSelected[1]}}</mat-label>
+            </div>
+            <ng-template #elseBlockEnd>
+              <mat-label>{{node.optionSelected[1] | date:'dd/MM/yyyy'}}</mat-label>
+            </ng-template>
+            <input matInput [matDatepicker]="pickerEnd" (dateChange)="setRangeDataValue(1, $event)"
+              formControlName="endDateRange">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+            <mat-error *ngIf="formGroup?.touched && formGroup.get('endDateRange').errors?.required">
+              {{'surveysAdmin.form.requiredFields' | translate}}</mat-error>
+            <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+          </mat-form-field>
+          <mat-checkbox class="actually-field" (change)="currentlySwitch()" [checked]="currently">
+            {{'genericMessages.actually' | translate}}
+          </mat-checkbox>
+        </div>
+      </section>
+    </form>
+  </div>
+  <div class="menu-block">
+    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon class="mat-icon-xs">more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="addCondition()" [disabled]="node.result !== null">
+        <mat-icon>add</mat-icon>
+        <span>{{'selectionAdmin.valuations.conditional.condition' | translate}}</span>
+      </button>
+      <button mat-menu-item (click)="addResult()" [disabled]="node.children.length !== 0">
+        <mat-icon>equalizer</mat-icon>
+        <span>{{'selectionAdmin.valuations.conditional.result' | translate}}</span>
+      </button>
+      <button id="deleteButton" *ngIf="!node.required" mat-menu-item (click)="deleteCondition()">
+        <mat-icon>delete</mat-icon>
+        <span>{{'genericMessages.delete' | translate}}</span>
+      </button>
+    </mat-menu>
+  </div>
+  <div class="result-block col-2" *ngIf="show && node.result !== null">
+    <div class="result-icon">
+      <mat-icon>drag_handle</mat-icon>
+    </div>
+    <form class="result-input" [formGroup]="resultFormGroup">
+      <mat-form-field>
+        <input type="number" matInput [placeholder]="node.result" [formControlName]="node.id"
+          (change)="setResult($event)">
+        <mat-hint>{{'surveysAdmin.form.requiredFields' | translate}}</mat-hint>
+      </mat-form-field>
+    </form>
+    <button class="clear-button" (click)="deleteResult()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

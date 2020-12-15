@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-12">
+        <h3>{{'personalData.titleNewUser' | translate}}</h3>
+        <p>{{'personalData.descriptionNewUser.1' | translate}} {{nameOrg}}{{'personalData.descriptionNewUser.2' | translate}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>speaker_notes</mat-icon>
+                </mat-card-title>
+                <p>{{'genericMessages.personalData' | translate}}</p>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content *ngIf="formGroup">
+                <div class="loading-table" *ngIf="loading">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <form [formGroup]="formGroup" >
+                    <div  class="col-12"  [ngSwitch]="field.type" *ngFor="let field of newFields; let i=index" >
+                        <mat-form-field *ngIf="field.type !== 'date'">
+                            <input [type]="field.type" matInput [placeholder]="field.label" class="name" [formControlName]="field.label">
+                            <mat-error *ngIf="formGroup.controls[field.label].invalid">*{{'genericMessages.forms.requiredField' | translate}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="field.type === 'date'">
+                            <mat-label>{{field.label}}</mat-label>
+                            <input matInput [matDatepicker]="picker" [formControlName]="field.label">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-error *ngIf="formGroup.controls[field.label].invalid">*{{'genericMessages.forms.requiredField' | translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </mat-card-content>
+            <div class="clearfix"></div>
+            <mat-card-actions class="right" *ngIf="formGroup">
+                <button mat-flat-button class="btn-primary" (click)="submit()" cdkFocusInitial [disabled]="formGroup.invalid">{{'genericMessages.save' | translate}}</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

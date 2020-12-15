@@ -1,0 +1,99 @@
+:host ::ng-deep ng-organization-chart-list {
+  padding-top: 20px;
+  position: relative;
+  transition: all 2s;
+  -webkit-transition: all 2s;
+  -moz-transition: all 2s;
+  display: flex;
+}
+
+/*Time to add downward connectors from parents*/
+:host ::ng-deep  ng-organization-chart-list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 1px solid #ccc;
+  width: 0;
+  height: 20px;
+}
+
+
+.container-node {
+  border: 1px solid #ccc;
+  text-decoration: none;
+  color: #666;
+  font-family: arial, verdana, tahoma, serif;
+  font-size: 11px;
+  display: inline-block;
+  background-color: beige;
+  padding: 10px 7px;
+  // min-width: 170px;
+  max-width: 160px;
+
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+
+  .node-title {
+    font-size: 14px;
+    text-decoration: underline;
+  }
+
+  .node-details {
+    // animación para la apertura de los detalles
+    // height: 0;
+    // overflow: hidden;
+    // transition: height 0.2s linear;
+
+
+    ul {
+      //display: none;
+      max-height: 0;
+      visibility: hidden;
+      opacity: 0;
+      transition: max-height 0.1s linear, visibility 0s, opacity 0s;
+      width: 100%;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      max-width: 160px;
+
+     li {
+       display: none;
+       text-align: left;
+     }
+
+    }
+
+    &.open {
+      ul {
+        //display: block;
+        max-height: 10000000px;
+        visibility: visible;
+        opacity: 1;
+
+        transition: max-height 0.5s linear, visibility 0s, opacity 0.2s linear;
+
+        li {
+          display: flex;
+        }
+      }
+
+      //height: 130px;
+      //transition: height 0.2s linear;
+    }
+  }
+}
+
+ul {
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.highlight{
+  background-color: #00a7f726;
+}

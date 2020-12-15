@@ -1,0 +1,16 @@
+<div class="close-dialog">
+    <button class="mat-button primary" (click)="close()">
+        <span style="text-transform: uppercase;margin-left: -45px;position: relative;top: -7px" class="primary">{{'genericMessages.close' | translate}}</span><em class="material-icons">close</em>
+    </button>
+</div>
+
+<div class="clearfix mt-l" style="height: 10px;"></div>
+<div class="media-wrapper">
+  <div class="text-center">
+    <div class="video-responsive" *ngIf="media.type === 'video'">
+      <iframe id="videoDisplay" title="videoDisplay" [src]="media.url" height="auto" width="auto" allowfullscreen alt="video"></iframe>
+    </div>
+    <img *ngIf="media.type === 'image'" id="imageDisplay" alt="image" title="imageDisplay" [src]="media.url">
+  </div>
+</div>
+<div class="clearfix mt-l"></div>

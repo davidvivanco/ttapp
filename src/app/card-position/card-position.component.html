@@ -1,0 +1,311 @@
+<div class="row">
+    <app-breadcrumb breadcrumbs="Talentoo,{{ 'genericMessages.cardPosition' | translate }}"></app-breadcrumb>
+    <div class="col-12" *ngIf="cardPosition">
+        <button mat-flat-button (click)="printPositionCard()" class="btn-primary btn-sm">
+            <mat-icon class="mr-sm">
+                <mat-icon>picture_as_pdf</mat-icon>
+            </mat-icon>{{'cardPosition.toPdf' | translate}}
+        </button>
+    </div>
+</div>
+
+<div *ngIf="!cardPosition && !loading" class="row pl-l">
+    <p class="description no-items">
+        <mat-icon>error_outline</mat-icon>{{'cardPosition.errorMessage' | translate}}
+</div>
+<mat-spinner [diameter]="180" *ngIf="loading" class="center mt-xl"></mat-spinner>
+<div *ngIf="!loading && (cardPosition$ | async) as cardPosition">
+    <div class="row">
+        <div class="col-12">
+            <!-- Ficha de puesto data-->
+            <mat-card class="card-dark-header">
+                <mat-card-header>
+                    <mat-card-title>{{'genericMessages.cardPosition' | translate}}: <strong>{{ cardPosition.name }}</strong>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form class="personal-data">
+                        <div class="row mt-l mb-m">
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input matInput disabled="true" [placeholder]="'cardPosition.placeholders.area' | translate" [value]="cardPosition.area">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input matInput disabled="true" [placeholder]="'cardPosition.placeholders.department' | translate" [value]="cardPosition.department">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input matInput disabled="true" [placeholder]="'cardPosition.placeholders.workingDayType' | translate" [value]="cardPosition.workdayType">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input matInput disabled="true" [placeholder]="'cardPosition.placeholders.category' | translate" [value]="cardPosition.category">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-3">
+                                <mat-form-field>
+                                    <input matInput disabled="true" [placeholder]="'cardPosition.placeholders.dependents.description' | translate" [value]="cardPosition.hasEmployees? 'Si' : 'No'">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-9">
+                                <mat-form-field *ngIf="cardPosition.report">
+                                    <input matInput disabled="true" [placeholder]="'cardPosition.placeholders.reportTo' | translate " [value]="cardPosition.report.name">
+                                </mat-form-field>
+                                <mat-form-field *ngIf="!cardPosition.report">
+                                    <input matInput disabled="true" [placeholder]="'cardPosition.placeholders.reportTo' | translate " [value]="">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field>
+                                    <textarea matInput disabled="true" [placeholder]="'cardPosition.placeholders.mission' | translate" [rows]="linesGoals" [value]="cardPosition.goals"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- TAREAS -->
+            <mat-card class="card-dark-header mt-l">
+                <mat-card-header>
+                    <mat-card-title>{{'cardPosition.tasks' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="ordered-list">
+                                <li class="item-listed no-border f-n" *ngFor="let task of cardPosition.tasks; let i = index">
+                                    {{ task }}
+                                </li>
+                            </ul>
+                            <p *ngIf="!cardPosition.tasks.length">{{'cardPosition.taskMessage' | translate}}</p>
+                            <div class="clearfix mt-l"></div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Formacion especifica -->
+            <mat-card class="card-dark-header mt-l">
+                <mat-card-header>
+                    <mat-card-title>{{'cardPosition.requiredTraining' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Estudios -->
+                            <ng-container *ngIf="(cardPosition.educations.studies).length > 0">
+                                <h4 class="mt-sm">{{'cardPosition.basicTraining' | translate}}</h4>
+                                <ul class="unordered-list">
+                                    <li class="item-listed no-border f-n" *ngFor="let study of cardPosition.educations.studies">
+                                        {{ study }}
+                                    </li>
+                                </ul>
+                                <div class="clearfix mt-l"></div>
+                            </ng-container>
+                            <ng-container *ngIf="(cardPosition.educations.studies).length <= 0">
+                                {{'cardPosition.basicTrainingMessage' | translate}}
+                            </ng-container>
+                            <!-- Ofimática -->
+                            <ng-container *ngIf="(cardPosition.educations.computerKnowledges | keyvalue).length > 0">
+                                <h4 class="mt-sm"> {{'cardPosition.officeTechnology' | translate}}</h4>
+                                <ul class="unordered-list mt-sm">
+                                    <li class="item-listed f-n" *ngFor="let key of cardPosition.educations.computerKnowledges | keyvalue">
+                                        <strong style="text-transform: capitalize;">{{key.key}}</strong>&nbsp;<small>{{ key.value }}</small>
+                                    </li>
+                                </ul>
+                                <div class="clearfix mt-l"></div>
+                            </ng-container>
+                            <ng-container *ngIf="(cardPosition.educations.computerKnowledges| keyvalue).length <= 0">
+                                {{'cardPosition.officeTechnologyMessage' | translate}}
+                            </ng-container>
+                            <!-- Idiomas -->
+                            <ng-container *ngIf="(cardPosition.languages | keyvalue).length > 0">
+                                <h4 class="mt-sm"> {{'cardPosition.languages' | translate}}</h4>
+                                <ul class="unordered-list mt-sm">
+                                    <li class="item-listed f-n" *ngFor="let key of cardPosition.languages | keyvalue">
+                                        {{ key.value }}
+                                    </li>
+                                </ul>
+                                <div class="clearfix mt-l"></div>
+                            </ng-container>
+                            <ng-container *ngIf="(cardPosition.languages| keyvalue).length <= 0">
+                                {{'cardPosition.languagesMessage' | translate}}
+                            </ng-container>
+                            <!-- Otros -->
+                            <div *ngIf="cardPosition.educations.other">
+                                <h4 class="mt-sm">Otros:</h4>
+                                <ul class="unordered-list mt-sm">
+                                    <li class="item-listed no-border f-n" *ngFor="let key of cardPosition.educations.other | keyvalue">
+                                        {{ key.value }}
+                                    </li>
+                                </ul>
+                                <div class="clearfix mt-l"></div>
+                            </div>
+                            <!-- Experiencia en el sector -->
+                            <div *ngIf="cardPosition?.other?.sectorExperience !== ''">
+                                <h4 class="mt-sm mb-sm">{{'cardPosition.experience' | translate}}</h4>
+                                <mat-form-field>
+                                    <input matInput disabled="true" value="{{(cardPosition?.other?.sectorExperience !== null) ? cardPosition?.other?.sectorExperience : 'No requerida'}}">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- CARNET CONDUCIR -->
+            <mat-card class="card-dark-header mt-l">
+                <mat-card-header>
+                    <mat-card-title>{{'cardPosition.otherTrainingsRequired' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form class="personal-data">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="mt-sm">{{'cardPosition.drivingLicense' | translate}}</h4>
+                            </div>
+                            <ng-container *ngFor="let driverLicense of driverLicenses$ | async">
+                                <div class="col-3" *ngIf="cardPosition.driverLicenses[driverLicense.value] !== null">
+                                    <mat-form-field>
+                                        <input matInput disabled="true" placeholder="{{driverLicense.text}}" value="{{cardPosition.driverLicenses[driverLicense.value] ? 'Sí' : 'No'}}">
+                                    </mat-form-field>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </form>
+                    <div class="clearfix mt-sm" *ngIf="cardPosition?.other?.other !== null"></div>
+                    <div class="row" *ngIf="cardPosition?.other?.other !== null">
+                        <div class="col-12">
+                            <ng-container *ngIf="(cardPosition.other.other).length > 0">
+                                <h4 class="mt-sm">{{'cardPosition.others' | translate}}</h4>
+                                <ul class="unordered-list">
+                                    <li class="item-listed no-border f-n" *ngFor="let other of cardPosition.other.other">
+                                        {{ other }}
+                                    </li>
+                                </ul>
+                                <div class="clearfix mt-l"></div>
+                            </ng-container>
+                            <ng-container *ngIf="(cardPosition.other.other).length <= 0">
+                                {{'cardPosition.othersMessage' | translate}}
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="clearfix mt-l"></div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- COMPETENCIAS -->
+            <mat-card class="card-dark-header mt-l">
+                <mat-card-header>
+                    <mat-card-title> {{'genericMessages.competences' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <ng-container *ngIf="cardPosition.competences.length > 0">
+                                <div *ngFor="let key of competencesFiltered | keyvalue;">
+                                    <h4 class="mt-sm">{{ key.key }}:</h4>
+                                    <ul class="ordered-list">
+                                        <li class="item-listed no-border f-n" *ngFor="let compentence of key.value; let i = index">
+                                            {{compentence.name}}
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix mt-sm"></div>
+                                </div>
+                                <div class="clearfix mt-l"></div>
+                            </ng-container>
+                            <ng-container *ngIf="cardPosition.competences.length <= 0">
+                                {{'cardPosition.competencesMessage' | translate}}
+                            </ng-container>
+                            <div class="clearfix" *ngIf="cardPosition.competences.length <= 0"></div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <!-- KPis -->
+            <mat-card class="card-dark-header mt-l">
+                <mat-card-header>
+                    <mat-card-title> {{'cardPosition.kpis' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <ng-container *ngIf="cardPosition.kpis && cardPosition.kpis.length > 0">
+                                <ul class="ordered-list">
+                                    <li class="item-listed no-border f-n" *ngFor="let kpi of cardPosition.kpis; let i = index">
+                                        {{ kpi }}
+                                    </li>
+                                </ul>
+                                <div class="clearfix mt-l"></div>
+                            </ng-container>
+                            <ng-container *ngIf="cardPosition.kpis && cardPosition.kpis.length <= 0">
+                                {{'cardPosition.kpiMessage' | translate}}
+                            </ng-container>
+                        </div>
+                        <div class="clearfix" *ngIf="cardPosition.kpis && cardPosition.kpis.length <= 0"></div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- POSICIONES -->
+            <mat-card class="card-dark-header mt-l mb-l">
+                <mat-card-header>
+                    <mat-card-title> {{'genericMessages.positions' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="ordered-list" *ngIf="cardPosition.positions && cardPosition.positions.length > 0">
+                                <li class="item-listed no-border f-n" *ngFor="let position of cardPosition.positions; let i = index">
+                                    {{ position.name }}
+                                </li>
+                            </ul>
+                            <p class="description" *ngIf="!cardPosition.positions.length">
+                                {{'cardPosition.positionsMessage' | translate}}
+                            </p>
+                            <div class="clearfix mt-m"></div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- EMPLEADOS -->
+            <mat-accordion class="dark-header">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>{{'cardPosition.employees' | translate}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row" *ngIf="employeesByCardPosition$">
+                        <div class="col-12">
+                            <div class="clearfix"></div>
+                            <ul class="unordered-list" *ngIf="employeesByCardPosition$.length">
+                                <li class="item-listed no-border f-n" [ngClass]="{'dropDate' : employee.dropDate}" *ngFor="let employee of employeesByCardPosition$; let i = index">
+                                    <a class="pointer" (click)="openPersonalEmployeeDataDetail(employee)" [matTooltip]="'genericMessages.seePersonalData' | translate" matTooltipPosition="right">
+                                        {{ employee.name }} {{ employee.lastName }}<small *ngIf="employee.dropDate"><strong>,
+                                                Fecha de baja</strong> {{ employee.dropDate | date:'dd/MM/yy'}}</small>
+                                    </a>
+                                </li>
+                            </ul>
+                            <p *ngIf="!employeesByCardPosition$.length">{{'cardPosition.employeesMessage' | translate}}
+                            </p>
+                            <div class="clearfix mt-m"></div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </div>
+    </div>
+
+</div>

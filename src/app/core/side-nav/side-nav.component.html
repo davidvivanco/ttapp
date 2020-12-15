@@ -1,0 +1,298 @@
+<mat-nav-list *ngIf="title">
+    <div class="right show-mobile" style="width: 100%;padding: 3px;box-sizing: border-box;"
+        (click)="closeMenuMobile();">
+        <mat-icon style="padding: 0 !important;">close</mat-icon>
+    </div>
+    <!-- CUSTOM MENUS -->
+    <div *ngIf="title !== 'admin' && title !== 'guidelines' && structure !== 'default'" class="links-wrapper">
+        <div class="menu-title">
+            <h2>{{title}}</h2>
+        </div>
+        <div *ngFor="let subMenu of structure">
+            <mat-expansion-panel class="side-nav-collapsible" *ngIf="subMenu.children && subMenu.children.length > 0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon>{{subMenu.icon}}</mat-icon> <span>{{subMenu.title}}</span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngFor="let children of subMenu.children">
+                    <app-links [subMenu]="children" (launchModal)="modalType($event)" (childHideMenu)="hideMenu()">
+                    </app-links>
+                </div>
+            </mat-expansion-panel>
+            <app-links *ngIf="!subMenu.children.length" [subMenu]="subMenu" (launchModal)="modalType($event)"
+                (childHideMenu)="hideMenu()"></app-links>
+        </div>
+    </div>
+    <!-- END CUSTOM MENUS -->
+
+    <div *ngIf="title === 'admin' && structure === 'default'" class="links-wrapper">
+        <div class="menu-title">
+            <h2>{{'adminMenu.title' | translate}}</h2>
+        </div>
+        <!-- USUARIOS Y ROLES -->
+        <mat-expansion-panel class="side-nav-collapsible"
+            *ngIf="permissions.actualizar_employees || permissions.actualizar_rol">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>supervisor_account</mat-icon> <span>{{'adminMenu.users' | translate}}</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item *ngIf="permissions.actualizar_employees" [routerLink]="['/admin/usuarios']"
+                (click)="hideMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <mat-icon>supervisor_account</mat-icon> {{'adminMenu.users' | translate}}
+            </a>
+            <a mat-list-item *ngIf="permissions.actualizar_rol" [routerLink]="['/admin/roles']" (click)="hideMenu()"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <mat-icon>security</mat-icon> {{'genericMessages.roles' | translate}}
+            </a>
+            <!-- ADMIN CURRICULUM -->
+            <a mat-list-item *ngIf="config.services.curriculum" [routerLink]="['/curriculum/admin/blocks']"
+                matTooltip="Curriculum" matTooltipPosition="right" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>portrait</mat-icon> Curriculum
+            </a>
+            <!-- ADMIN DATOS PERSONALES -->
+            <a mat-list-item *ngIf="config.services.personalData" [routerLink]="['/admin/datos-personales']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>person</mat-icon> {{'genericMessages.personalData' | translate}}
+            </a>
+            <!-- ADMIN FICHAJES -->
+            <a mat-list-item *ngIf="config.services.checkinout" [routerLink]="['/fichajes/admin/fichajes-empresa']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>access_time</mat-icon> {{'checkInOutMenu.companyCheckInOuts' | translate}}
+            </a>
+        </mat-expansion-panel>
+        <!-- ORGANIZACIÓN -->
+        <mat-expansion-panel class="side-nav-collapsible" *ngIf="permissions.buscar_todos_card_position">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>assignment_ind</mat-icon> <span>{{'adminMenu.company' | translate}}</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item *ngIf="permissions.buscar_todos_card_position" [routerLink]="['/admin/fichas-de-puesto']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>assignment_ind</mat-icon>{{'adminMenu.cardPosition' | translate}}
+            </a>
+            <a mat-list-item *ngIf="permissions.buscar_todos_position" [routerLink]="['/admin/posiciones']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>description</mat-icon> {{'genericMessages.positions' | translate}}
+            </a>
+            <a mat-list-item *ngIf="permissions.buscar_todos_competences" [routerLink]="['/admin/competencias']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>assessment</mat-icon> {{'genericMessages.competences' | translate}}
+            </a>
+            <a mat-list-item *ngIf="permissions.buscar_todos_unity" [routerLink]="['/admin/unities']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>bubble_chart</mat-icon> {{'adminMenu.unities' | translate}}
+            </a>
+        </mat-expansion-panel>
+        <!-- SELECTION -->
+        <mat-expansion-panel class="side-nav-collapsible" *ngIf="config.services.selection">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>card_travel</mat-icon> <span>{{'adminMenu.selectionMenu.title' | translate}}</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item [routerLink]="['/seleccion/admin/convocatorias']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>assignment</mat-icon> {{'genericMessages.announcements' | translate}}
+            </a>
+            <a mat-list-item [routerLink]="['/seleccion/admin/ofertas']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>create</mat-icon> {{'genericMessages.offers' | translate}}
+            </a>
+
+            <a mat-list-item [routerLink]="['/seleccion/admin/candidaturas']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>account_box</mat-icon> {{ "genericMessages.candidatures" | translate }}
+            </a>
+            <a mat-list-item [routerLink]="['/seleccion/admin/baremaciones']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>playlist_add_check</mat-icon>
+                {{ "genericMessages.scales" | translate }}
+            </a>
+        </mat-expansion-panel>
+        <!-- ADMIN SURVEYS -->
+        <mat-expansion-panel class="side-nav-collapsible" *ngIf="config.services.surveys">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>speaker_notes</mat-icon> <span>{{'genericMessages.Questionnaires' | translate}}</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item [routerLink]="['/admin/cuestionarios/personalizados']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>assignment</mat-icon> {{'adminMenu.surveysMenu.custom' | translate}}
+            </a>
+            <a mat-list-item [routerLink]="['/admin/cuestionarios/typeform']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>description</mat-icon> {{'adminMenu.surveysMenu.typeform' | translate}}
+            </a>
+        </mat-expansion-panel>
+        <!-- ADMIN PASSWORD MANAGER -->
+        <a mat-list-item *ngIf="config.services.passwordManager" [routerLink]="['/passwordmanager/admin']"
+            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+            <mat-icon>lock</mat-icon>{{'mainPage.matTooltip.passwordManager' | translate}}
+        </a>
+
+        <!-- ADMIN MEDIA -->
+        <a mat-list-item *ngIf="config.services.passwordManager" [routerLink]="['/admin/media-manager']"
+            [matTooltip]="'mainPage.matTooltip.mediaManager' | translate" matTooltipPosition="right"
+            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+            <mat-icon>perm_media</mat-icon>{{'mainPage.matTooltip.mediaManager' | translate}}
+        </a>
+        <!-- MENU SUPER ADMIN -->
+        <mat-expansion-panel class="side-nav-collapsible"
+            *ngIf="permissions.editar_config_superadmin && config.services.superAdmin">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>settings</mat-icon> <span>SuperAdmin</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item *ngIf="permissions.editar_config_superadmin" [routerLink]="['/admin/informacion']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>info</mat-icon> {{'superAdminMenu.details' | translate}}
+            </a>
+            <a mat-list-item *ngIf="permissions.editar_config_superadmin" [routerLink]="['/admin/config']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>palette</mat-icon> {{'superAdminMenu.config' | translate}}
+            </a>
+            <a mat-list-item *ngIf="permissions.editar_config_superadmin" [routerLink]="['/admin/edit-home']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>web</mat-icon> {{'superAdminMenu.editHome' | translate}}
+            </a>
+            <a mat-list-item *ngIf="permissions.editar_config_superadmin" [routerLink]="['/admin/audits']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>web</mat-icon> {{'superAdminMenu.audits' | translate}}
+            </a>
+            <a mat-list-item [routerLink]="['/admin/crear-menu']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>queue</mat-icon>Menú
+            </a>
+            <a mat-list-item *ngIf="permissions.editar_config_superadmin" [routerLink]="['/admin/documentacion-api']"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                <mat-icon>device_hub</mat-icon> {{'superAdminMenu.documentation' | translate}}
+            </a>
+        </mat-expansion-panel>
+    </div>
+
+    <div *ngIf="title === 'guidelines' && structure === 'default'" class="links-wrapper">
+        <div class="menu-title">
+            <h2>Guía Estilo</h2>
+        </div>
+        <a mat-list-item [routerLink]="['/guidelines/ux']" matTooltip="Acciones UX" matTooltipPosition="right"
+            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+            · UX Genérica
+        </a>
+        <a mat-list-item [routerLink]="['/guidelines/basicComponent-UX']" matTooltip="UX Componente básico"
+            (click)="hideMenu()" matTooltipPosition="right" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            · UX Componente básico
+        </a>
+        <a mat-list-item [routerLink]="['/guidelines/modals']" matTooltip="Modales" matTooltipPosition="right"
+            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+            · Modales
+        </a>
+        <a mat-list-item [routerLink]="['/guidelines/forms']" matTooltip="Formularios" matTooltipPosition="right"
+            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+            · Formularios
+        </a>
+        <a mat-list-item [routerLink]="['/guidelines/comunicacion-padres-hijos']"
+            matTooltip="Comunicación padres e hijos" matTooltipPosition="right" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+            · Comunicación padres e hijos
+        </a>
+        <mat-expansion-panel class="side-nav-collapsible">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>brush</mat-icon> <span>Diseño</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item [routerLink]="['/guidelines/columns']" matTooltip="Botones" matTooltipPosition="right"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                · Grid
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/colors']" matTooltip="Colores" matTooltipPosition="right"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                · Colores
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/buttons']" matTooltip="Botones" matTooltipPosition="right"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                · Botones
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/mat-chips']" matTooltip="MatChips" matTooltipPosition="right"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                · Mat-Chips
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/icons']" matTooltip="Icons" matTooltipPosition="right"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                · Icons
+            </a>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="side-nav-collapsible">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>add</mat-icon> <span>Otros componentes</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item [routerLink]="['/guidelines/cards']" matTooltip="Cards y Acordeones"
+                matTooltipPosition="right" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                (click)="hideMenu()">
+                · Cards / Acordeones
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/lists']" matTooltip="Listas" matTooltipPosition="right"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                · Listas
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/usersLists']" matTooltip="Lista de usuarios"
+                (click)="hideMenu()" matTooltipPosition="right" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                · Lista de usuarios
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/itemsTables']" matTooltip="Tabla de usuarios / items"
+                (click)="hideMenu()" matTooltipPosition="right" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                · Tabla de items
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/loadfiles']" matTooltip="Load Files" matTooltipPosition="right"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="hideMenu()">
+                · Load Files
+            </a>
+        </mat-expansion-panel>
+        <mat-expansion-panel class="side-nav-collapsible">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>line_style</mat-icon> <span>Documentación</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <a mat-list-item [routerLink]="['/guidelines/selection']" matTooltip="Seleccion"
+                matTooltipPosition="right" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                (click)="hideMenu()">
+                · Selección
+            </a>
+            <a mat-list-item [routerLink]="['/guidelines/schemas']" matTooltip="Schemas"
+                matTooltipPosition="right" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                (click)="hideMenu()">
+                · Schemas
+            </a>
+        </mat-expansion-panel>
+    </div>
+</mat-nav-list>

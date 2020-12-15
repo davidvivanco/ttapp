@@ -1,0 +1,19 @@
+:host ::ng-deep ng-organization-chart-list {
+   //display: flex !important; /* alex */
+   //justify-content: start;
+   	// margin-top: 10px;
+	position: relative;
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	/*display: block;*/
+}
+
+/*Time to add downward connectors from parents*/
+:host ::ng-deep ng-organization-chart-list::before{
+	content: '';
+	position: absolute; top: 0; left: 50%;
+	border-left: 1px solid #ccc;
+	width: 0;
+}
+

@@ -1,0 +1,151 @@
+<mat-card class="card-dark-header">
+    <mat-card-header>
+        <mat-card-title>
+            <mat-icon>speaker_notes</mat-icon>
+        </mat-card-title>
+        <p id="aria">{{'genericMessages.offers' | translate}}</p>
+    </mat-card-header>
+    <div class="clearfix"></div>
+    <mat-card-content>
+        <div *ngIf="searchResultsView" class="mb-m">
+            <div class="clearfix mt-sm"></div>
+            <a [routerLink]="['/roles']" class="fake-button btn-sm btn-stroked-primary">
+                <mat-icon>keyboard_arrow_left</mat-icon>{{'genericMessages.return' | translate}}
+            </a>
+        </div>
+        <div class="loading-table" *ngIf="dataSource?.loading$ | async">
+            <mat-spinner></mat-spinner>
+        </div>
+        <mat-form-field>
+            <mat-icon matPrefix>search</mat-icon>
+            <input [formControl]="globalFilter" matInput placeholder="Filtrar elementos">
+        </mat-form-field>
+        <div *ngIf="dataSource?.total === 0">
+            <p class="description no-items">
+                <mat-icon>error_outline</mat-icon>
+                {{'genericMessages.noElements' | translate}}
+            </p>
+        </div>
+        <table matSort mat-table aria-describedby="aria" [dataSource]="dataSource"
+            [ngClass]="{'d-none': dataSource?.total === 0}">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell scope="col" *matHeaderCellDef>{{'genericMessages.offers' | translate}}</th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="mt-m mb-m">
+                        <strong>{{element.title}}</strong><br>
+                        <small><strong>{{'genericMessages.type' | translate}}: </strong>
+                            <span class="visibility-type" [ngSwitch]="element.visibility">
+                                <span *ngSwitchCase="'public'">{{public}} -&nbsp;</span>
+                                <span *ngSwitchCase="'private'">{{private}}-&nbsp;</span>
+                                <span *ngSwitchCase="'mobility'">{{mobility}} -&nbsp;</span>
+                                <span *ngSwitchCase="'job'">{{job}} -&nbsp;</span>
+                                <span *ngSwitchDefault>{{noData}} -&nbsp;</span>
+                            </span>
+                        </small>
+                        <small><strong>{{'genericMessages.position' | translate}}: </strong>
+                            {{element.position ? element.position.name : noData}} - </small>
+                        <small><strong>{{'genericMessages.publication' | translate}} : </strong>
+                            {{element.startsAt ? (element.startsAt | date:'dd/MM/yy') : noData}} - </small>
+                        <small><strong>{{'genericMessages.expiration' | translate}}: </strong>
+                            {{element.finishAt ? (element.finishAt | date:'dd/MM/yy') : noData}} - </small>
+                        <small><strong>{{'genericMessages.vacancies' | translate}} </strong>
+                            {{element.vacancies ? element.vacancies : noData}} - </small>
+                        <br>
+                        <small><strong>{{'genericMessages.announcement' | translate}}: </strong>
+                            {{element.announcement ? element.announcement.title : noData}}</small>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell scope="col" *matHeaderCellDef>{{'genericMessages.state' | translate}}</th>
+                <td mat-cell *matCellDef="let element">
+                    <div *ngIf="offerExpired(element)" class="fake-mat-chip-sm">
+                        {{'genericMessages.expired' | translate}}
+                    </div>
+                    <div *ngIf="!offerExpired(element)">
+                        <div [ngSwitch]="element.state">
+                            <div *ngSwitchCase="'incomplete'">
+                                <div class="fake-mat-chip-sm warning" *ngIf="!element.isValid">
+                                    {{'genericMessages.uncompleted' | translate}}
+                                </div>
+                                <div class="fake-mat-chip-sm" *ngIf="element.isValid">
+                                    {{'genericMessages.canBePublished' | translate}}
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'closed'" class="fake-mat-chip-sm">
+                                {{'genericMessages.canBePublished' | translate}}
+                            </div>
+                            <div *ngSwitchCase="'cancelled'" class="fake-mat-chip-sm">
+                                {{'genericMessages.closed' | translate}}
+                            </div>
+                            <div *ngSwitchCase="'extended'" class="fake-mat-chip-sm">
+                                {{'genericMessages.extended' | translate}}
+                            </div>
+                            <div *ngSwitchCase="'published'" class="fake-mat-chip-sm success">
+                                {{'genericMessages.valid' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" class="text-right">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="editElement(element, true)">
+                            <mat-icon>visibility</mat-icon>
+                            <span>{{'genericMessages.seeDetails' | translate}}</span>
+                        </button>
+                        <button mat-menu-item (click)="editElement(element, false)">
+                            <mat-icon>edit</mat-icon>
+                            <span>{{'genericMessages.edit' | translate}}</span>
+                        </button>
+                        <button mat-menu-item (click)="openVacanciesModal(element)"
+                            *ngIf="(!element.vacancies || element.vacancies === 0) && (element.visibility === 'mobility' || element.visibility === 'job') ">
+                            <mat-icon>people</mat-icon>
+                            <span>{{'selectionAdmin.offers.list.menu.addVacancies' | translate}}</span>
+                        </button>
+
+                        <button mat-menu-item (click)="communicateCandidates(element)"
+                            *ngIf="element.vacancies > 0 && (element.visibility === 'mobility' || element.visibility === 'job') ">
+                            <mat-icon>people</mat-icon>
+                            <span>{{'selectionAdmin.offers.list.menu.communicateCandidates' | translate}}</span>
+                        </button>
+                        <button mat-menu-item (click)="goToCandidatures(element)">
+                            <mat-icon>people</mat-icon>
+                            <span>{{'genericMessages.candidatures' | translate}}</span>
+                        </button>
+                        <button mat-menu-item (click)="publicOffer(element)"
+                            [disabled]="!element.isValid || element.state === 'published' ">
+                            <mat-icon [ngClass]="{'disabled': !element.isValid || element.state === 'published'}">
+                                publish</mat-icon>
+                            <span *ngIf="element.state !== 'published'">{{'genericMessages.publish' | translate}}</span>
+                            <span
+                                *ngIf="element.state === 'published'">{{'genericMessages.publishedF' | translate}}</span>
+                        </button>
+                        <button [disabled]="!element.requirement" mat-menu-item (click)="openRequirementModal(element)"
+                            *ngIf="permissions.assess_all">
+                            <mat-icon>playlist_add_check</mat-icon>
+                            <span>{{'genericMessages.requirement' | translate}}</span>
+                        </button>
+                        <button [disabled]="element.state !== 'published'" mat-menu-item (click)="cancelOffer(element)">
+                            <mat-icon [ngClass]="{'disabled': element.state === 'cancelled'}">delete</mat-icon>
+                            <span *ngIf="element.state !== 'cancelled' ">{{'genericMessages.revoke' | translate}}</span>
+                            <span
+                                *ngIf="element.state === 'cancelled' ">{{'genericMessages.revoked' | translate}}</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+        </table>
+        <mat-paginator [ngClass]="{'d-none': dataSource?.total === 0}" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+            [length]="dataSource?.total" showFirstLastButtons>
+        </mat-paginator>
+    </mat-card-content>
+    <div class="clearfix"></div>
+</mat-card>

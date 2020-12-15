@@ -1,0 +1,4 @@
+<app-checkbox-table *ngIf="requirements" (onCancel)="cancel($event)" (onClose)="close($event)"
+  (onSubmit)="submit($event)" [displayedColumns]="displayedColumns" [modal]="'addRequirement'" [title]="'Añadir baremo'"
+  [elements]="requirements">
+</app-checkbox-table>

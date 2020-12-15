@@ -1,0 +1,66 @@
+<div class="close-dialog"><button mat-button (click)="close()"><em class="material-icons">close</em></button></div>
+<h1 mat-dialog-title>
+    {{'company.modalUpgradePlan.title' | translate}}
+</h1>
+<div>
+    <h3>{{'company.modalUpgradePlan.subtitle' | translate}}</h3>
+
+    <div class="row panel-selector-plan">
+        <mat-radio-group>
+            <div class="col-6">
+                <span style="width:8px;display:inline-block;"></span>
+                <mat-radio-button value="basic" [checked]="suscription.type === 'basic'"></mat-radio-button>
+                <h4>BASIC</h4>
+                <ul>
+                    <li *ngFor="let mod of modulesAvailables"><span
+                            [ngClass]="{'moduleDesactivated' : !mod.basic}">{{('modules.' + mod.name + '.basic.name') | translate}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <span style="width:8px;display:inline-block;"></span>
+                <mat-radio-button value="standard" [checked]="suscription.type === 'standard'"></mat-radio-button>
+                <h4>STANDARD</h4>
+                <ul>
+                    <li *ngFor="let mod of modulesAvailables">
+                        <span>{{('modules.' + mod.name + '.standard.name') | translate}}</span></li>
+                </ul>
+            </div>
+
+        </mat-radio-group>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h4>{{'company.modalUpgradePlan.extraModules' | translate}}</h4>
+            <ul>
+                <li *ngFor="let ext of extras">
+                    <mat-slide-toggle>{{('modules.' + ext.name + '.standard.name') | translate}}</mat-slide-toggle>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 totalUsersContainer">
+            <label class="f-bold">{{'company.plan.numUsers' | translate}}:
+            </label><span>{{suscription.totalUsers}}</span>
+
+        </div>
+        <div class="col-12">
+            <label class="f-bold">{{'company.plan.billing' | translate}}: </label>
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="yearly" [checked]="suscription.billing === 'yearly'">
+                    {{'company.plan.yearly' |translate}}</mat-radio-button>
+                <mat-radio-button value="monthly" [checked]="suscription.billing === 'monthly'">
+                    {{'company.plan.monthly' |translate}}</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 right">
+            99€/{{'company.modalUpgradePlan.payPerUser' |translate}}
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+
+    <button mat-button class="btn-primary">ACTUALIZAR</button>
+</div>

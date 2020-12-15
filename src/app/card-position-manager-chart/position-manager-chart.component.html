@@ -1,0 +1,50 @@
+<div class="org-chart-container">
+    <div class="row">
+        <app-breadcrumb *ngIf="itsMe" breadcrumbs="Talentoo,{{ 'genericMessages.orgchart' | translate }}">
+        </app-breadcrumb>
+        <app-breadcrumb *ngIf="!itsMe" breadcrumbs="Talentoo,{{ 'genericMessages.account' | translate }},
+        {{'genericMessages.orgchart' | translate}},
+        {{employee.personalData.name}} {{employee.personalData.lastName}}">
+        </app-breadcrumb>
+
+        <div [ngClass]="(config.orgchart.types.cardPositions)? 'col-9' : 'col-12'">
+            <button (click)="resetChart()" mat-flat-button class="btn-primary btn-sm">
+                <mat-icon class="mr-sm">cached</mat-icon> {{'helpers.back_to_start' | translate}}
+            </button>
+        </div>
+        <div class="col-3 right" *ngIf="config.orgchart.types.cardPositions">
+            <a class="fake-button btn-stroked-primary btn-sm" [routerLink]="['/organigrama']">
+                Ver por fichas de puesto
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-card class="card-dark-header">
+                <mat-card-header>
+                    <mat-card-title>{{'genericMessages.orgchat' | translate}}</mat-card-title>
+                    <button mat-flat-button title="Realizar búsqueda" matTooltip="Realizar búsqueda"
+                        matTooltipPosition="below" (click)="searchOrgChart()"
+                        class="pull-right btn-primary with-icon no-bg">
+                        <mat-icon aria-label="Search button">search</mat-icon>
+                        {{'genericMessages.search' | translate}}
+                    </button>
+                </mat-card-header>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row" *ngIf="!showError">
+        <div class="d-flex justify-content-center align-items-center mt-5 org-container">
+            <app-ng-organization-manager-chart class="chart-container" [data]="data" (ClickNode)="clickNode($event)"
+                (showCardPositionDetail)="openCardPositionModal($event)"
+                (showPersonalEmployeeDataDetail)="openPersonalEmployeeDataDetail($event)">
+            </app-ng-organization-manager-chart>
+        </div>
+    </div>
+    <div class="row" *ngIf="showError">
+        <div class="d-flex justify-content-center align-items-center mt-5 org-container">
+            {{'cardPositionManagerChart.message' | translate}}
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>

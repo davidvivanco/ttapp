@@ -1,0 +1,79 @@
+<app-breadcrumb breadcrumbs="Talentoo,Admin,{{ 'genericMessages.curriculum' | translate }}"></app-breadcrumb>
+
+<div class="row hide-mobile">
+    <div class="col-12">
+        <button [disabled]="creatingBlock" mat-flat-button class="btn-primary btn-sm" mat-button (click)="addBlock()">
+      <mat-icon class="mr-sm">add</mat-icon>{{'surveysAdmin.customForm.addBlock' | translate}}
+    </button>
+        <span class="mr-m"></span>
+        <button mat-stroked-button class="btn-stroked-primary btn-sm" [disabled]="schema && schema.status === 'active'" (click)="publish()">
+      <mat-icon class="mr-sm">publish</mat-icon> {{'genericMessages.publish' | translate}}
+    </button>
+        <span class="mr-m"></span>
+        <div class="fake-mat-chip-sm" *ngIf="schema && schema.status === 'draft'">
+            {{'genericMessages.draft' | translate}}
+        </div>
+    </div>
+</div>
+<div class="row show-mobile">
+    <div class="col-12">
+        <button class="btn-primary btn-sm" mat-button [matMenuTriggerFor]="resp">
+      <mat-icon>list</mat-icon>{{'genericMessages.actions' | translate}}
+    </button>
+        <mat-menu #resp="matMenu">
+            <button [disabled]="creatingBlock" mat-menu-item class="btn-stroked-primary btn-sm" (click)="addBlock()">
+        <mat-icon class="mr-sm">add</mat-icon>{{'surveysAdmin.customForm.addBlock' | translate}}
+      </button>
+            <button mat-menu-item class="btn-stroked-primary btn-sm" [disabled]="schema && schema.status === 'active'" (click)="publish()">
+        <mat-icon class="mr-sm">publish</mat-icon> {{'genericMessages.publish' | translate}}
+      </button>
+        </mat-menu>
+        <div class="fake-mat-chip-sm ml-sm" *ngIf="schema && schema.status === 'draft'">
+            {{'genericMessages.draft' | translate}}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>speaker_notes</mat-icon>
+                </mat-card-title>
+                <p>{{'genericMessages.curriculum' | translate}}</p>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="blocks.length else elseBlock">
+                    <div cdkDrag class="block" fxLayout fxLayoutAlign="start center" *ngFor="let block of blocks; let i = index">
+                        <mat-icon class="handle" cdkDragHandle>drag_handle</mat-icon>
+                        <span>{{block.name}}</span>
+
+                        <div class="flexGrow"></div>
+
+                        <div>
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+                            <mat-menu #menu="matMenu">
+                                <button (click)="editBlock(block, i)" mat-menu-item>
+                  <mat-icon>edit</mat-icon> {{'genericMessages.edit' | translate}}
+                </button>
+                                <button (click)="deleteBlock(block, i)" mat-menu-item>
+                  <mat-icon>delete</mat-icon> {{'genericMessages.delete' | translate}}
+                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #elseBlock>
+                    <p>{{(loading) ? ('genericMessages.pleaseWait' | translate) : ('genericMessages.noBlocksAvailable' | translate)}}</p>
+                    <div class="loading-table" *ngIf="loading">
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </ng-template>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+</div>

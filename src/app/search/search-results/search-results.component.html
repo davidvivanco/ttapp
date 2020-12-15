@@ -1,0 +1,79 @@
+<app-breadcrumb breadcrumbs="Talentoo,{{ 'searchResults.title' | translate }}"></app-breadcrumb>
+
+<div class="row">
+    <div class="col-12 search-results-table">
+        <mat-card>
+            <mat-form-field *ngIf="dataSource.data && dataSource.data.length">
+                <input matInput (keyup)="applyFilter($event.target.value)" [placeholder]="'searchResults.placeholders.filter' | translate">
+            </mat-form-field>
+            <div class="col-12 mt-m" *ngIf="loading">
+                <mat-spinner class="center"></mat-spinner>
+            </div>
+            <div *ngIf="noResults && !loading">
+                <p class="description no-items">
+                    <mat-icon>error_outline</mat-icon> {{'genericMessages.noResults' | translate}}
+                </p>
+            </div>
+            <mat-card-content class="with-table search-results-table">
+                <p hidden id="aria">{{ 'searchResults.title' | translate }}</p>
+                <table mat-table aria-describedby="aria" [dataSource]="dataSource" class="users-table" *ngIf="dataSource.data !== null;">
+                    <ng-container matColumnDef="photo">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>
+                            <!--Foto-->
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="td-avatar">
+                            <div class="avatar-sm">
+                                <app-avatar [user]="element"></app-avatar>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="userInfo">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>
+                            <!--Nombre-->
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="td-user-info">
+                            <p class="title">
+                                {{element.personalData.name}} {{element.personalData.lastName}}
+                                <small *ngIf="element.dropDate" class="drop-date">{{'searchResults.dropDate' | translate}} {{element.dropDate |date:'mediumDate':'+0200':lang}}</small>
+                            </p>
+                            <p class="description text-sm mb-sm">
+                                <mat-icon>person_pin</mat-icon>
+                                <strong>{{(element.cardPosition.name)? element.cardPosition.name : 'searchResults.noCardPosition' | translate}}</strong>
+                            </p>
+                            <a title="Ver datos personales" (click)="openPersonalEmployeeDataDetail(element)" class="pointer" *ngIf="permissions.buscar_todos_personal_data || this.conf.company.appConfig.userPersonalData && checkItsMe(element) || this.conf.company.appConfig.respPersonalData && checkUserInMyTeam(element)">
+                                <mat-icon>person</mat-icon>
+                                <span>{{'genericMessages.seePersonalData' | translate}} </span>
+                            </a>
+                            <span class="ml-sm hide-md" *ngIf="element.cardPosition.name"></span>
+                            <a *ngIf="element.cardPosition.name" [routerLink]="['/organigrama', element.cardPosition.id]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" title="Ver organigrama">
+                                <mat-icon>bubble_chart</mat-icon>
+                                <span>{{'searchResults.seeOrgChart' | translate}} </span>
+                            </a>
+                            <span class="ml-sm hide-md" *ngIf="element.cardPosition.name"></span>
+                            <a title="Ver ficha de puesto" (click)="openCardPositionModal(element.cardPosition)" class="pointer" *ngIf="element.cardPosition.name">
+                                <mat-icon>assignment_ind</mat-icon>
+                                <span>{{'genericMessages.seeCardPosition' | translate}}</span>
+                            </a>
+                            <span class="ml-sm hide-md" *ngIf="element.cardPosition.name"></span>
+                            <a title="Ver CV" (click)="goToCVUser(element)" class="pointer" *ngIf="this.conf.company.appConfig.respCurriculum && checkUserInMyTeam(element) || this.conf.company.appConfig.userCurriculum && checkItsMe(element) || this.conf.company.appConfig.permCurriculum && checkRolCurriculums() || checkImAdmin()">
+                                <mat-icon>account_box</mat-icon>
+                                <span>{{'searchResults.seeCV' | translate}}</span>
+                            </a>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell scope="col" *matHeaderCellDef>
+                            <!-- ACTIONS -->
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="td-actions">
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator (page)="pageEvents($event)" [pageSizeOptions]="[5, 10]" [length]="paginatorSize" showFirstLastButtons [ngClass]="{'hide' : noResults}">
+                </mat-paginator>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

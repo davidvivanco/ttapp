@@ -1,0 +1,50 @@
+<form *ngIf="formGroup" [formGroup]="formGroup">
+    <mat-form-field class="pl-sm pr-sm">
+        <textarea type="text" matInput [readonly]="true" formControlName="description" name="" id="" rows="6"></textarea>
+        <mat-hint>Descripción</mat-hint>
+    </mat-form-field>
+    <div class="flex-row" *ngIf="innerWidth < 767">
+        <div class="flex-row mt-l">
+            <div class="flex-row">
+                <mat-icon style="color: #58E4C3;">lens</mat-icon>
+                <p>{{legend[0].label}}</p>
+            </div>
+            <div class="flex-row">
+                <mat-icon class="ml-m" style="color: #f8e73b;">lens</mat-icon>
+                <p>{{legend[1].label}}</p>
+            </div>
+        </div>
+        <div class="flex-row mt-l">
+            <div class="flex-row">
+                <mat-icon class="ml-m" style="color: #9326bf;">lens</mat-icon>
+                <p>{{legend[2].label}}</p>
+            </div>
+            <div class="flex-row">
+                <mat-icon class="ml-m" style="color: #d93f72;">lens</mat-icon>
+                <p>{{legend[3].label}}</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="innerWidth > 767">
+        <div class="flex-row mt-l">
+            <div class="flex-row">
+                <mat-icon style="color: #58E4C3;">lens</mat-icon>
+                <p>{{legend[0].label}}</p>
+            </div>
+            <div class="flex-row">
+                <mat-icon class="ml-m" style="color: #f8e73b;">lens</mat-icon>
+                <p>{{legend[1].label}}</p>
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="flex-row">
+                <mat-icon style="color: #9326bf;">lens</mat-icon>
+                <p>{{legend[2].label}}</p>
+            </div>
+            <div class="flex-row">
+                <mat-icon class="ml-m" style="color: #d93f72;">lens</mat-icon>
+                <p>{{legend[3].label}}</p>
+            </div>
+        </div>
+    </div>
+</form>

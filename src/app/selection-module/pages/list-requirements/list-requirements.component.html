@@ -1,0 +1,14 @@
+<div class="row" *ngIf="schema">
+    <app-breadcrumb breadcrumbs="Talentoo,{{ 'selectionAdmin.assessments.title' | translate }}"></app-breadcrumb>
+
+    <div class="col-12">
+        <button [disabled]="!curriculumAdminIsPublished" mat-flat-button class="btn-primary btn-sm mr-m" (click)="add()">
+      <mat-icon class="mr-sm">add_circle_outline</mat-icon>{{ 'selectionAdmin.requirements.add' | translate }}
+    </button>
+        <span *ngIf="!curriculumAdminIsPublished" class="fake-mat-chip-sm warning">
+      {{'genericMessages.noPublishCurriculum' | translate}}
+    </span>
+    </div>
+
+</div>
+<app-requirement-list></app-requirement-list>

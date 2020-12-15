@@ -1,0 +1,43 @@
+.field {
+  margin-bottom: 15px;
+}
+
+.decisionTree{
+  margin-right: 10px !important; 
+  mat-hint{
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 75%;
+    display: block;
+    margin-top: 0.5%;
+    box-sizing: border-box;
+    width: 100%;
+    
+  }
+  
+}
+
+.loading-table {
+  // background: none;
+}
+
+
+.hide{
+  display: none;
+}
+
+.fileField  *{
+  vertical-align: middle;
+}
+
+.fileField{
+  margin: 15px 0;
+  display: block;
+}
+
+table tr td{
+  padding-top: 15px;
+}
+
+
+
+

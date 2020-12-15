@@ -1,0 +1,30 @@
+<div class="row">
+<app-breadcrumb breadcrumbs="Talentoo,SuperAdmin,{{ 'customHome.title' | translate }}"></app-breadcrumb>
+
+
+  <div class="col-12">
+    <button mat-flat-button class="btn-primary btn-sm" (click)="backClicked()">
+      <mat-icon class="mr-sm">chevron_left</mat-icon> Volver
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <mat-card class="card-dark-header">
+      <mat-card-header>
+        <mat-card-title>
+          <span>{{conf.company.customHome.draft.title}}</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <span>{{conf.company.customHome.draft.intro}}</span>
+          <br><br>
+          <span [innerHTML]="conf.company.customHome.draft.description | keepHtml"></span>
+      </mat-card-content>
+      <div class="mb-m"></div>
+      <mat-card-actions class="right" *ngIf="conf.company.customHome.draft.buttonUrl && conf.company.customHome.draft.buttonUrl !== ''"> 
+      <a mat-flat-button class="btn-primary" [href]="conf.company.customHome.draft.buttonUrl">Ir<mat-icon>chevron_right</mat-icon></a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

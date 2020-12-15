@@ -1,0 +1,70 @@
+<mat-card class="card-dark-header">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>speaker_notes</mat-icon>
+    </mat-card-title>
+    <p>Bloque</p>
+  </mat-card-header>
+  <div class="clearfix"></div>
+  <mat-card-content>
+    <form [formGroup]="form">
+      <mat-form-field class="block-name">
+        <input matInput formControlName="name" placeholder="Título del bloque" (change)="isModified.emit(true)">
+        <mat-icon matSuffix>edit</mat-icon>
+        <mat-error>Este campo es requerido</mat-error>
+      </mat-form-field>
+    </form>
+    <div fxLayout fxLayoutAlign="space-between center">
+      <h3>Elementos del bloque</h3>
+      <div>
+        <button mat-stroked-button class="btn-stroked-primary btn-sm" (click)="addBlock()">
+          <mat-icon>add</mat-icon> Añadir Elemento
+        </button>
+            </div>
+        </div>
+
+        <div>
+            <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="fields.length else elseBlock">
+
+                <div cdkDrag class="field" fxLayout fxLayoutAlign="start center" *ngFor="let field of fields; let i = index">
+                    <mat-icon class="handle" cdkDragHandle>drag_handle</mat-icon>
+                    <span>{{field.label}}</span>
+                    <mat-chip-list>
+                        <mat-chip disableRipple>{{getTypesLabel(field.type)}}</mat-chip>
+                    </mat-chip-list>
+
+                    <div class="flexGrow"></div>
+
+                    <div>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+                        <mat-menu #menu="matMenu">
+                            <button (click)="editField(field, i)" mat-menu-item>
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+                            <button (click)="deleteField(field, i)" mat-menu-item>
+                <mat-icon>delete</mat-icon> Borrar
+              </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #elseBlock>
+                <p>No hay elementos añadidos</p>
+            </ng-template>
+        </div>
+    </mat-card-content>
+    <div class="clearfix"></div>
+    <mat-card-actions class="right">
+
+    </mat-card-actions>
+    <div class="clearfix"></div>
+</mat-card>
+
+<div fxLayout fxLayoutAlign="end" class="action-buttons">
+    <button (click)="onCancel()" mat-button>{{ (newField) ? ('genericMessages.CANCEL' | translate) : ('genericMessages.return'| translate)}}</button>
+    <span class="mr-m"></span>
+    <button [disabled]="form.invalid && form.touched" (click)="onSave()" class="btn-primary" mat-button>{{'genericMessages.save' | translate}}</button>
+</div>

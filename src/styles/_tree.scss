@@ -1,0 +1,74 @@
+.angular-tree-component {
+	max-height: 65vh;
+	overflow-y: auto;
+}
+
+.node-content-wrapper {
+
+	padding: 10px 5px 10px !important;
+	width: 100% !important;
+	box-sizing: border-box;
+	border-bottom: 1px solid $l-gray;
+
+	&:hover {
+
+		box-shadow: none !important;
+		background: #ebf2fb;
+
+	}
+
+}
+
+.node-wrapper {
+
+	.toggle-children-wrapper {
+		top: 5px;
+		position: relative;
+	}
+
+	.user-avatar {
+		margin-right: 5px;
+		display: inline-block;
+		position: relative;
+		top: -14px;
+	}
+
+	.user-info {
+
+		display: inline-block;
+		margin-right: 5px;
+
+		.user-name {
+			margin:0;
+			font-weight: bold;
+		}
+
+		.user-links {
+
+			a {
+				color: #838383;
+				&:hover {
+					color: $blue;
+				}
+			}
+
+			.mat-icon {
+				font-size: 18px;
+				position: relative;
+				top: 3px;
+				width: 18px;
+				height: 18px;
+				
+			}
+
+		}
+
+	}
+
+	.user-process {
+
+		display: inline-block;
+
+	}
+
+}

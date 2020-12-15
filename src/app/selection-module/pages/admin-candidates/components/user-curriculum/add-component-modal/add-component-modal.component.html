@@ -1,0 +1,103 @@
+<div class="loading-table" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="close-dialog">
+    <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color"></h1>
+<mat-dialog-content>
+    <mat-card-title>Añadir {{data.block.name}}</mat-card-title>
+    <form [formGroup]="form">
+
+        <div class="field" [ngSwitch]="field.type" *ngFor="let field of block.fields">
+
+            <!-- HEADER -->
+            <h2 *ngSwitchCase="'header'">{{field.label}}</h2>
+
+            <!-- TEXT -->
+            <mat-form-field *ngSwitchCase="'text'">
+                <input matInput [formControlName]="field._id" [placeholder]="field.label">
+                <mat-hint *ngIf="field.validation && field.validation.required">Campo obligatorio</mat-hint>
+                <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+            <!-- TEXT -->
+            <mat-form-field *ngSwitchCase="'number'">
+                <input matInput [formControlName]="field._id" [placeholder]="field.label" type="number" step="0.01" min="0" onkeydown="return event.keyCode !== 69 && event.keyCode !== 109 && event.keyCode !== 189">
+                <mat-hint *ngIf="field.validation && field.validation.required">Campo obligatorio</mat-hint>
+                <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+            <!-- SELECT -->
+            <mat-form-field *ngSwitchCase="'select'" class="mt-sm">
+                <mat-label>{{field.label}}</mat-label>
+                <mat-select [formControlName]="field._id">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let option of field.options" [value]="option.value">
+                        {{option.label}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="field.validation && field.validation.required">Campo obligatorio</mat-hint>
+                <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+            <!-- RADIO -->
+            <app-options-field *ngSwitchCase="'radio'" [single]="true" [label]="field.label" [formControlName]="field._id" [options]="field.options" [required]="field.validation.required"></app-options-field>
+
+
+            <!-- Checkbox -->
+            <app-options-field *ngSwitchCase="'checkbox'" [label]="field.label" [formControlName]="field._id" [options]="field.options" [required]="field.validation.required"></app-options-field>
+
+            <!-- DATE -->
+            <mat-form-field *ngSwitchCase="'date'" class="mt-sm">
+                <input [formControlName]="field._id" matInput [matDatepicker]="picker" [placeholder]="field.label">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-hint *ngIf="field.validation && field.validation.required">Campo obligatorio</mat-hint>
+                <mat-error>Este campo es requerido</mat-error>
+            </mat-form-field>
+
+            <!-- DATE RANGE -->
+            <app-date-range *ngSwitchCase="'dateRange'" [label]="field.label" [formControlName]="field._id" [required]="field.validation.required"></app-date-range>
+
+            <!-- DECISION TREE -->
+            <div *ngSwitchCase="'decisionTree'" class="decisionTree mt-sm mb-m">
+                <h3>{{field.label}}</h3>
+                <button mat-raised-button [matMenuTriggerFor]="menu.childMenu" class="decisionTree">
+              <span>
+                Elige una opcion
+              </span> 
+              <mat-icon>
+                arrow_drop_down
+              </mat-icon>
+            </button>
+                <app-nested-menu #menu [formControlName]="field._id" [tree]="field.tree"></app-nested-menu>
+                <span *ngIf="form.get(field._id) && form.get(field._id).value">
+              {{form.get(field._id).value}}
+            </span>
+                <mat-hint class="mat-hint-custom" *ngIf="field.validation && field.validation.required">Campo obligatorio</mat-hint>
+                <mat-error *ngIf="!form.get(field._id).value && form.get(field._id).invalid && form.get(field._id).touched">Este campo es requerido</mat-error>
+            </div>
+
+            <div *ngSwitchCase="'file'">
+                <div class="drop-section">
+                    <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader" (click)="fileInput.click()" class="my-drop-zone">
+                        <small class="p-m">Arrastra aquí el archivo o haz clic aquí para seleccionarlo</small>
+                    </div>
+                </div>
+                <input type="file" [formControlName]="field._id" #fileInput ng2FileSelect [uploader]="uploader" [disabled]="uploader.isUploading" style="display: none" />
+
+                <div class="mt-m" *ngIf="uploader?.queue?.length">
+                    <small>{{uploader?.queue[0]?.file.name}}</small>
+                    <mat-progress-bar *ngIf="uploader.isUploading" [mode]="progressBarMode" [value]="uploader?.queue[0]?.progress"></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="mt-m" fxLayout fxLayoutAlign="end">
+    <button [disabled]="form.invalid && form.touched" class="btn-primary" color="primary" (click)="onSubmit()" mat-button>{{'genericMessages.save' | translate}}</button>
+</mat-dialog-actions>

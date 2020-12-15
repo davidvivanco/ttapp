@@ -1,0 +1,43 @@
+.phase, .requirement, .documentation {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: gray solid 1px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-color:rgba(0, 0, 0, 0.12) !important;
+
+    span, mat-chip {
+      margin-left: 10px;
+    }
+
+    .flexGrow {
+      flex-grow: 1;
+    }
+  }
+  
+  .container-requirements-doc,
+  .container-phase-doc{
+    padding: 15px;
+    padding-left: 0px;
+  }
+
+  .container-phase-doc span,
+  .container-requirements-doc span{
+    font-size: 20px;
+    vertical-align: middle;
+    margin-left: 0 !important;
+  }
+
+  .titleSection{
+    text-align: left;
+    line-height: 35px;
+    display: inline-block;
+  }
+  
+  .section{
+    margin-bottom: 0 !important;
+  }

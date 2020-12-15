@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-12">
+    <mat-card class="card-dark-header about-me">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>persona</mat-icon>
+          {{'userInfo.title' | translate}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content *ngIf="userInfoForm">
+        <form [formGroup]="userInfoForm" class="personal-data">
+          <div class="row">
+            <ng-container>
+              <div class="col-6">
+                <mat-form-field>
+                  <input matInput placeholder="{{'genericMessages.id' | translate}}" formControlName="id">
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field>
+                  <mat-label>{{'genericMessages.position' | translate}}</mat-label>
+                  <mat-select formControlName="positionId">
+                    <mat-option *ngFor="let position of avaliablePositions" [value]="position._id">
+                      {{position.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field>
+                  <input matInput placeholder="{{'genericMessages.professionalCategory' | translate}}"
+                    formControlName="professionalCategory">
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field>
+                  <mat-label>{{'userInfo.placeholders.unity' | translate}}</mat-label>
+                  <mat-select formControlName="unityId">
+                    <mat-option *ngFor="let unity of availableUnities" [value]="unity._id">
+                      {{unity.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint>{{'userInfo.hints.notRequired' | translate}}</mat-hint>
+                </mat-form-field>
+              </div>
+              <div formGroupName="other">
+                <div class="col-6" *ngFor="let item of userOtherInfoAux">
+                  <mat-form-field>
+                    <input matInput [placeholder]="item.auxKey" [formControlName]="item.key">
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- MANAGERS -->
+              <div class="col-12">
+                <p class="mt-m mb-sm f-bold mr-sm" style="display: inline-block;">
+                  <mat-icon class="mat-icon-sm">people</mat-icon> {{'userInfo.managers.title' | translate}}
+                </p>
+                <button mat-stroked-button class="btn-sm btn-stroked-primary right" (click)="openManagersModal()">
+                  <mat-icon>add</mat-icon> {{'userInfo.managers.addManager' | translate}}
+                </button>
+                <button mat-icon-button matTooltip="{{'userInfo.managers.toolTip' | translate}}"
+                  aria-label="Info sobre asignación de managers" class="mat-button">
+                  <mat-icon>info</mat-icon>
+                </button>
+              </div>
+              <div class="col-12">
+                <mat-chip-list #chipList aria-label="managers" class="tags-list">
+                  <mat-chip *ngFor="let manager of userManagers" [selectable]="true" [removable]="true"
+                    (removed)="deleteManager(manager)">
+                    {{userManagersNames[manager]}} <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+                <p class="description" *ngIf="!userManagers.length">{{'userInfo.managers.noManagers' | translate}}</p>
+              </div>
+              <!-- PASSWORD -->
+              <div class="col-12">
+                <p class="mt-l mb-sm f-bold">
+                  <mat-icon class="mat-icon-sm">vpn_key</mat-icon> {{'userInfo.passwords.title' | translate}}
+                </p>
+              </div>
+              <div class="col-6">
+                <mat-form-field>
+                  <input matInput placeholder="{{'userInfo.passwords.placeholders.newPassword' | translate}}" autocomplete="new-password" 
+                    [type]="hide ? 'password' : 'text'" formControlName="password" (input)="onPasswordInput()">
+                  <button tabindex="-1" mat-icon-button matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="password.hasError('required')">{{'genericMessages.requiredField' | translate}}
+                  </mat-error>
+                  <mat-error *ngIf="password.hasError('minlength')">{{'userInfo.passwords.minlength' | translate}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field>
+                  <input matInput placeholder="{{'userInfo.passwords.placeholders.repeatPassword' | translate}}" autocomplete="new-password" 
+                    [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" (input)="onPasswordInput()">
+                  <button tabindex="-1" mat-icon-button matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="confirmPassword.hasError('required')">{{'userInfo.passwords.confirm' | translate}}
+                  </mat-error>
+                  <mat-error *ngIf="confirmPassword.invalid && !confirmPassword.hasError('required')">
+                    {{'userInfo.passwords.notMatch' | translate}}</mat-error>
+                </mat-form-field>
+              </div>
+            </ng-container>
+          </div>
+        </form>
+      </mat-card-content>
+      <div class="clearfix"></div>
+      <mat-card-actions class="right">
+        <button mat-button class="mr-sm" (click)="cancelEdit()">Cancelar</button>
+        <span class="mr-sm"></span>
+        <button mat-flat-button class="btn-primary"
+          [disabled]="(userInfoForm.controls['password'].dirty || userInfoForm.controls['confirmPassword'].dirty) && userInfoForm.getError('passwordMismatch')"
+          (click)="editUserInfo()">{{'genericMessages.saveChanges' | translate}}</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="close-dialog"><button mat-flat-button (click)="closeModal()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color">{{data.title}}</h1>
+<div mat-dialog-content class="full-height-dialog min-width">
+    <div class="search-input full-width">
+        <mat-form-field>
+            <input matInput id="searchInput" placeholder="Introduzca aquí su búsqueda" type="text"
+                [(ngModel)]="inputSearchGlobal" (keyup.enter)="onEnterKeyPress(inputSearchGlobal)">
+            <span matPrefix class="with-icon">
+                <mat-icon>search</mat-icon>
+            </span>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button type="button" class="btn-primary btn-search-modal" mat-flat-button (click)="searchGlobal()"
+        [disabled]="!inputSearchGlobal">{{'genericMessages.search' | translate}}</button>
+</div>

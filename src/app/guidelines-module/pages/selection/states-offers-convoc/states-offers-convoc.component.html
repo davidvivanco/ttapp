@@ -1,0 +1,152 @@
+
+<div class="row">
+  <div class="col-12">
+    <h3>
+      <mat-icon>card_travel</mat-icon> ESTADOS OFERTAS Y CONVOCATORIAS<br>
+      <small>*Aunque en el texto se haga referencia solo a ofertas todo lo descrito aplica por igual a Convocatorias.</small>
+    </h3>
+    <mat-accordion class="dark-header">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span>ADMIN</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="clearfix"></div>
+    
+          <p class="f-bold">1 - Creo una oferta pero NO la publico</p>
+          <ul>
+            <li>
+              <p>1.1 -> <strong>INCOMPLETA</strong></p>
+              <ul>
+                <li>NO es publicable</li>
+                <li>NO tengo que comprobar nada de fecha</li>
+              </ul>
+            </li>
+            <li>
+              <p>1.2 -> <strong>PUBLICABLE</strong></p>
+              <ul>
+                <li>Una oferta en borrador que aún NO se ha publicado</li>
+                <li>NO tengo que comprobar fecha ni nada por que NO se ha publicado</li>
+              </ul>
+            </li>
+          </ul>
+    
+          <p class="f-bold">2 - Publico una oferta -> su estado pasa a PUBLICADA</p>
+          <ul>
+            <li>
+              <p>2.1 -> <strong>VIGENTE</strong></p>
+              <ul>
+                <li>Su fecha de vencimiento es mayor que la fecha de hoy</li>
+                <li>SI que compruebo la fecha para ver si vence -> Porque si que la están viendo los usuarios</li>
+              </ul>
+            </li>
+            <li>
+              <p>2.2 -> <strong>REVOCADA</strong></p>
+              <ul>
+                <li>Es como "dar de baja" la oferta</li>
+                <li>Solo puedo revocar una oferta Vigente</li>
+                <li>NO compruebo la fecha porque ya está revocada
+                    <ul>
+                      <li>La gente NO se puede presentar</li>
+                      <li>Si la quiero volver a publicar tendré que cambiar las fechas (si estas dejan de ser válidas).</li>
+                    </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p>2.3 -> <strong>VENCIDA</strong></p>
+              <ul>
+                <li>Una oferta Vencida solo puede serlo si se ha publicado antes</li>
+                <li>Una oferta incompleta, publicable o revocada NO puede vencer. Solo las Vigentes pueden vencer.</li>
+              </ul>
+            </li>
+          </ul>
+        <div class="clearfix"></div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div class="clearfix"></div>
+      <mat-accordion class="dark-header">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span>USUARIOS</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="clearfix"></div>
+          <small class="f-bold">*Los usuarios solo podrán ver y presentarse a ofertas según el tipo de usuario que sean</small><br><br>
+          <p class="f-bold">1 - Usuario interno</p>
+          <p class="f-s">Miembro de la organización -> EMPLEADO o cualquier otro Rol excepto USUARIO EXTERNO</p>
+          <p>Puede ver ofertas:</p>
+          <ul>
+            <li>
+              Por tipo:<br><br>
+              <ol>
+                <li>Públicas</li>
+                <li>Privadas</li>
+                <li>Movilidad</li>
+              </ol>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              Por Estado de oferta:<br><br>
+              <ol>
+                <li>Vigentes<br>-> Las publicadas</li>
+                <li>Vencidas<br>-> Las publicadas cuya fecha de vencimiento es menor que hoy</li>
+                <li>Revocadas (por admin)<br>-> NO debe poder verlas</li>
+                <li><i>El estado de la oferta para los usuarios SIEMPRE se pinta en la segunda línea de la 1ª columna debajo del título de la oferta</i></li>
+              </ol>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              Por Estado de candidatura:<br>
+              <small>*Candidatura = oferta a la que me he presentado</small><br><br>
+              <ol>
+                <li>Presentado<br>-> Me he presentado a la oferta Pública o Privada</li>
+                <li>Suscrito<br>-> Me he suscrito a una oferta de Movilidad. Hasta que no haya plazas y me decida a formar parte del proceso no pasará a Presentado</li>
+                <li>Revocada<br>-> He decidido retirar mi candidatura</li>
+                <li>Vencida<br>-> Una oferta a la que me he Presentado o Suscrito ha Vencido</li>
+                <li>En el futuro habrá más estados dependiendo de Fases, Examenes, etc...</li>
+                <li><i>El estado de mi candidatura (de mi respecto a la oferta) siempre se pinta en la 2ª columna donde pone "Estado" con mat-chips</i></li>
+              </ol>
+            </li>
+          </ul>
+          <p class="f-bold">2 - Usuario exteno</p>
+          <p class="f-s">NO es miembro de la organización pero ha creado una cuenta via Linkedin, FB, Google o email</p>
+          <p>Puede ver ofertas:</p>
+          <ul>
+            <li>
+              Por tipo:<br><br>
+              <ol>
+                <li>Públicas</li>
+                <li>Bolsa de trabajo</li>
+              </ol>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              Por Estado de oferta:<br>
+              <p class="f-bold">*Los estados funcionan igual que para un usuario interno o miembro de la organización </p>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              Por Estado de candidatura:<br>
+              <small>*Candidatura = oferta a la que me he presentado</small><br><br>
+              <ol>
+                <li>Presentado<br>-> Me he presentado a la oferta Pública</li>
+                <li>Suscrito<br>-> Me he suscrito a una oferta de Bolsa de trabajo. Hasta que no haya plazas y me decida a formar parte del proceso no pasará a Presentado</li>
+                <li>Revocada<br>-> He decidido retirar mi candidatura</li>
+                <li>Vencida<br>-> Una oferta a la que me he Presentado o Suscrito ha Vencido</li>
+                <li>En el futuro habrá más estados dependiendo de Fases, Examenes, etc...</li>
+                <li><i>El estado de mi candidatura (de mi respecto a la oferta) siempre se pinta en la 2ª columna donde pone "Estado" con mat-chips</i></li>
+              </ol>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </mat-expansion-panel>
+      </mat-accordion>
+  </div>
+</div>

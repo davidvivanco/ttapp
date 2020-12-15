@@ -1,0 +1,23 @@
+<div class="container-node {{ classHighlight }}">
+    <div *ngIf="cardPosition" (click)="clickNode()" class="pointer f-bold node-title">{{ cardPosition.name }}</div>
+    <!-- Puedo ver fichas de puesto??
+    - Si es la mia
+    - Si es de mi equipo
+    - Si soy admin
+  -->
+    <div *ngIf="cardPosition && (permissions.buscar_todos_card_position || cardPosition.id === user.cardPosition.id || employeesList.length !== 0)"
+     [ngClass]="{'open' : showDetail}">
+        <div (click)="openCardPositionModal(cardPosition)" class="pointer fake-link with-icon">
+            <em class="material-icons">assignment_ind</em><span>{{'genericMessages.seeCardPosition' | translate}}</span>
+        </div>
+    </div>
+    <!-- Lista usuarios -->
+    <div *ngIf="cardPosition && cardPosition.people.length > 0" >
+        <div class="mt-m pointer fake-link with-icon" (click)="infoModal()">
+            <mat-icon>info</mat-icon>{{'ngOrganizationChartNode.seeUsers' | translate}}
+        </div>
+    </div>
+</div>
+
+<ng-organization-chart-list [ngClass]="'ng-organization-chart-list'" [nodeList]="node.children" (ClickNode)="onClickDeepNode($event)" *ngIf="isChildrenVisible && node.children && node.children.length > 0" [class]="childrenStyleClass" (showCardPositionDetail)="openCardPositionModal($event)"
+    (showPersonalEmployeeDataDetail)="openPersonalEmployeeDataDetail($event)"></ng-organization-chart-list>

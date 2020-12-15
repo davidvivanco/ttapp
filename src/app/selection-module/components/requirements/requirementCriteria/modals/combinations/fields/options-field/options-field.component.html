@@ -1,0 +1,24 @@
+<div>
+  <p class="mat-header-cell">
+    {{label}}
+  </p>
+  <mat-radio-group class="mt-l" [value]="value" (change)="setValue($event)" *ngIf="single; else elseBlock">
+    <mat-radio-button [checked]="option.selected" class="option ml-sm mb-m"
+      [value]="{'label':option.label,'requirement':option._id,'value':option.value}" *ngFor=" let option of options">
+      {{option.label}}
+    </mat-radio-button>
+  </mat-radio-group>
+  <mat-error *ngIf="ngControl && ngControl.invalid && ngControl.touched" class="mt-1">Este campo es requerido
+  </mat-error>
+
+  <ng-template #elseBlock>
+    <div>
+      <mat-checkbox class="option" (change)="setValue($event, option)" [value]="option.value"
+        [checked]="isValue(option)" [value]="option" *ngFor="let option of options">
+        {{option.label}}
+      </mat-checkbox>
+
+    </div>
+
+  </ng-template>
+</div>

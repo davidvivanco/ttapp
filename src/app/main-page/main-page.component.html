@@ -1,0 +1,201 @@
+<div *ngIf="user" class="sidenav main-menu">
+
+  <a mat-list-item [routerLink]="['/home']" matTooltip="Talentoo" matTooltipPosition="right" routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }" class="hide-mobile">
+    <div class="avatar-s">
+      <img [src]="environment.company.companyLogo" [alt]="environment.company.companyName + 'logo'" />
+    </div>
+  </a>
+
+  <button mat-icon-button color="primary" [matTooltip]="'mainPage.matTooltip.searchUsers' | translate"
+    *ngIf="permissions.show_search_employee" matTooltipPosition="right" (click)="openSearchDialog()" class="hide-mobile">
+    <mat-icon>search</mat-icon>
+  </button>
+
+  <!-- CONECTAR MENU PERSONALIZADO -->
+  <div *ngIf="menuList" class="mobile-flex-menu">
+
+    <div *ngFor="let menuItem of menuList" class="mobile-flex-menu-item">
+
+      <button mat-icon-button color="primary" *ngIf="!menuItem.hasOwnProperty('linkType')"
+        [ngClass]="{'selected' : selected[menuItem.title]}" (click)="toggleMenu({title: menuItem.title, menu: menuItem})">
+        <div class="main-menu-button">
+          <mat-icon>{{menuItem.icon}}</mat-icon>
+        </div>
+      </button>
+
+      <!-- URL directo interno con path -->
+      <a *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.innerLink !== '' && menuItem.linkType"
+        [routerLink]="[menuItem.innerLink]" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        target="{{(menuItem.blank) ? '_blank' : '_self'}}"
+        mat-list-item color="primary"
+        [ngClass]="{'selected' : selected[menuItem.title]}"
+        (click)="toggleMenu({title: menuItem.title, menu: menuItem}, true)">
+        <div class="main-menu-button">
+          <mat-icon>{{menuItem.icon}}</mat-icon>
+        </div>
+      </a> 
+
+      <!-- url directo interno sin path y con modal -->
+      <a *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.innerLink === '' && menuItem.linkType"
+        class="pointer" mat-list-item
+        (click)="modalType(menuItem);toggleMenu({title: menuItem.title, menu: menuItem}, true);"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        target="{{(menuItem.blank) ? '_blank' : '_self'}}">
+        <div class="main-menu-button">
+          <mat-icon>{{menuItem.icon}}</mat-icon>
+        </div>
+      </a> 
+
+      <!-- url directo externo -->
+      <a *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.iframe === false && !menuItem.linkType"
+        mat-list-item 
+        (click)="toggleMenu({title: menuItem.title, menu: menuItem}, true)"
+        [href]="menuItem.webLink"
+        target="{{(menuItem.blank) ? '_blank' : '_self'}}">
+        <div class="main-menu-button">
+          <mat-icon>{{menuItem.icon}}</mat-icon>
+        </div>
+      </a> 
+
+      <!-- url directo con iframe -->
+      <a *ngIf="menuItem.hasOwnProperty('linkType') && menuItem.iframe === true && !menuItem.linkType"
+        [routerLink]="['/iframe', menuItem.webLink]"
+        mat-list-item 
+        (click)="toggleMenu({title: menuItem.title, menu: menuItem}, true)">
+        <div class="main-menu-button">
+          <mat-icon>{{menuItem.icon}}</mat-icon>
+        </div>
+      </a> 
+
+    </div>
+
+    <button mat-icon-button color="primary" 
+      [ngClass]="{'selected' : selected['admin']}" (click)="showBottomMenu()"
+      *ngIf="menuLengthMax" class="mobile-flex-menu-item">
+      <div class="main-menu-button">
+        <mat-icon>playlist_add</mat-icon>
+      </div>
+    </button>
+
+    <button mat-icon-button color="primary" #botTrigger="matMenuTrigger" [matMenuTriggerFor]="triggerBotMenu"
+      [ngClass]="{'selected' : selected['bots']}"
+      *ngIf="user && botList && botList.length > 1" class="mobile-flex-menu-item show-mobile">
+      <div class="main-menu-button">
+        <mat-icon>help_outline</mat-icon>
+      </div>
+      <mat-menu #triggerBotMenu="matMenu">
+        <button *ngFor="let bot of botList; index as i" mat-menu-item (click)="toggleChatBotResponsive(bot)">
+        <mat-icon>face</mat-icon> <span>{{bot.title}}</span>
+        </button>
+      </mat-menu>
+    </button>
+    <button mat-icon-button color="primary" 
+      [ngClass]="{'selected' : selected['bots']}" (click)="toggleChatBotResponsive()"
+      *ngIf="user && botList && botList.length === 1" class="mobile-flex-menu-item show-mobile">
+      <div class="main-menu-button">
+        <mat-icon>help_outline</mat-icon>
+      </div>
+    </button>
+    <button mat-icon-button color="primary"
+      [ngClass]="{'selected' : selected['admin']}" (click)="toggleMenu({title: 'admin', menu: 'default'})"
+      *ngIf="showAdminMenu || permissions.editar_config_superadmin" class="mobile-flex-menu-item">
+      <div class="main-menu-button">
+        <mat-icon>settings</mat-icon>
+      </div>
+    </button>
+
+    <button mat-icon-button color="primary" *ngIf="!appEnv.production || (environment.company.companyName === 'dev')"
+      matTooltip="Guía estilo" matTooltipPosition="right" [ngClass]="{'selected' : selected['guidelines']}"
+      (click)="toggleMenu({title: 'guidelines', menu: 'default'})" class="mobile-flex-menu-item hide-mobile">
+      <mat-icon>format_paint</mat-icon>
+    </button>
+  </div>
+  <!-- fin conectar pruebas -->
+
+  <a routerLink="/versiones" style="
+    position: absolute; bottom: 5px; left: 0; color: white; text-align: center;
+    width: 100%;padding: 10px; box-sizing: border-box;height:auto;" class="hide-mobile">
+    <span class="f-sm white">
+      v.{{version}}
+    </span>
+  </a>
+
+</div>
+
+<mat-drawer-container class="drawer-container" hasBackdrop="false" autosize="false">
+
+  <!-- SIDE NAV -->
+  <mat-drawer #drawer mode="over" position="start" [opened]="!forceDrawerClose && !mobileQuery"
+    (openedStart)="openingDrawer()" (closedStart)="closingDrawer()" autoFocus="false">
+    <app-side-nav *ngIf="user" [employee]="user" [menu]="menu" [sideNavBlocks]="sideNavBlocks" [hasPermissions]="hasPermissions" [hasServices]="hasServices"
+    (clickedMenu)="clickedMenu($event);"></app-side-nav>
+  </mat-drawer>
+
+  <mat-drawer-content [ngClass]="{'open' : openMenu}">
+
+    <!-- HEADER TOOLBAR -->
+    <mat-toolbar class="layout-toolbar">
+      <!-- HEADER TOOLBAR CONTENT -->
+      <app-header *ngIf="user" [user]="user"></app-header>
+    </mat-toolbar>
+
+    <!-- PAGE CONTENT -->
+    <div class="pages">
+      <div class="container fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<!-- #region Bot-Assistant-->
+<div *ngIf="user && environment.company.bots">
+  <div *ngFor="let bot of environment.company.bots; index as i">
+    <div *ngIf="bot.active" [class]="'bot-assistant right-' + (i+1)">
+      <div class="row chat-bot-assistant" [hidden]="chatBotHidden[i]">
+        <div class="col-12">
+          <mat-card class="card-dark-header">
+            <mat-card-header style="display: flex;align-items:center;justify-content:space-between;">
+              <mat-card-title>
+                <mat-icon>speaker_notes</mat-icon>
+              </mat-card-title>
+              <p style="align-self: flex-start;">{{bot.title}}</p>
+
+              <button class="btn-primary" mat-flat-button (click)=toggleChatBot()>
+                <em class="material-icons">close</em>
+              </button>
+            </mat-card-header>
+            <mat-card-content>
+              <iframe height="430" title="bot.title" allow="microphone;" [src]="bot.urlSafe">
+              </iframe>
+            </mat-card-content>
+            <div class="clearfix"></div>
+          </mat-card>
+        </div>
+      </div>
+      <!-- BOTON BOT DESKTOP -->
+      <br>
+      <button *ngIf="botList.length === 1" mat-fab class="btn-secondary button-bot-assistant hide-mobile" (click)=toggleChatBot(i) [title]="bot.title"
+        [matTooltip]="bot.title" matTooltipPosition="below">
+        <span>?</span>
+      </button>
+      <!-- END BOTON BOT DESKTOP -->
+    </div>
+  </div>
+  <app-speed-dial-fab mat-fab *ngIf="botList.length > 1" class="bot-assistant hide-mobile" 
+  (fabClick)="toggleChatBot($event)" [buttons]="botList"></app-speed-dial-fab>
+</div>
+<!-- #endregion Bot-Assitant -->
+
+<app-media-content [mediaInfo]="mediaToShow" class="mediaModal" [ngClass]="{'show' : showMediaModal}"
+  (closeMediaModal)="closeMediaModal($event);">
+
+</app-media-content>
+
+<app-modal-embed (sendModalEmbedData)="controlModalEmbedComponent($event)"
+  [ngClass]="modalActiveEmbed ? 'd-block' : 'd-none'">
+
+</app-modal-embed>

@@ -1,0 +1,80 @@
+.drawer-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin-left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #efefef;
+    .drawer-content {
+        height: 100%;
+        .layout-toolbar {
+            position: fixed;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            width: 100% !important;
+
+            .icon-company {
+                max-height: 50px;
+            }
+
+            .button-row {
+                a {
+                    padding: 0 10px 0 10px !important;
+                    outline: none !important;
+                    color: white !important;
+                    height: 64px !important;
+                    font-size: 16px !important;
+                    align-items: center !important;
+                    display: inline-flex !important;
+                    transition: 0.8s;
+                    &:hover {
+                        background-color: var(--secondary-color) !important;
+                        color: #fff !important;
+                        opacity: 0.8;
+                    }
+                    mat-icon {
+                        margin-right: 10px !important;
+                    }
+                    span {
+                        font-weight: normal !important;
+                    }
+                }
+                .active {
+                    background: var(--secondary-color) !important;
+                    color: #fff !important;
+                    opacity: 1;
+                }
+            }
+        }
+        .mobile-display {
+            height: 60px;
+            .icon-company {
+                border-radius: 50%;
+                margin-top: 14px;
+                width: 30px;
+                height: 30px;
+                float: left;
+            }
+            button {
+                float: right;
+                top: 6px;
+                
+                div {
+                    mat-icon {
+                        font-size: 24px;
+                        top: 8px;
+                    }
+                }
+            }
+        }
+        .container {
+            margin-top:64px;
+        }
+    }
+}

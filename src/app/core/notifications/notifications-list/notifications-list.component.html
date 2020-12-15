@@ -1,0 +1,86 @@
+<app-breadcrumb breadcrumbs="Talentoo,{{ 'notifications.notificationsList.title' | translate }}"></app-breadcrumb>
+
+<div class="row">
+    <div class="col-12" *ngIf="userHasNotifications">
+        <button type="button" mat-flat-button class="btn-primary btn-sm"
+            [title]="'notifications.notificationsList.markAllAsRead' | translate"
+            (click)="markAllAsRead(allNotifications)">
+            <mat-icon>close</mat-icon> {{'notifications.notificationsList.markAllAsRead' | translate}}
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title id="aria">
+                    <mat-icon>notifications</mat-icon>
+                    {{messageTotalNotifications}}<span class="previous" *ngIf="notReadTotal > 0">, {{notReadTotal}} no
+                        leídas</span>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="dataSource">
+
+                <div *ngIf="!userHasNotifications">
+                    <div class="clearfix mb-sm"></div>
+                    <p class="description no-items">
+                        <mat-icon>error_outline</mat-icon>
+                        {{'notifications.notificationsList.no-notifications' | translate}}
+                    </p>
+                    <div class="clearfix mt-l"></div>
+                </div>
+
+                <table mat-table aria-describedby="aria" [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="message">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="text-left"
+                            style="width: 50%;padding-left:7px !important;">
+                            {{element.message}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="link">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="text-left"><a class="pointer"
+                                (click)="goToLink(element,$event)">Ver</a>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdAt">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="text-center">
+                            {{element.createdAt | date: 'dd-MM-yyyy'}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="buttonReaded">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="text-center" style="width:64px;"> <button
+                                [title]="'notifications.notificationsList.markAsRead' | translate" type="button"
+                                mat-flat-button class="btn-secondary no-stroked btn-sm no-bg"
+                                (click)="markAsRead(element)">
+                                <mat-icon mat-list-icon>close</mat-icon>
+                            </button></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="buttonDelete">
+                        <th mat-header-cell scope="col" *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="text-center" style="width:64px;"> <button
+                                [title]="'genericMessages.delete' | translate" type="button" mat-flat-button
+                                class="btn-secondary no-stroked btn-sm no-bg" (click)="delete(element)">
+                                <mat-icon mat-list-icon>delete</mat-icon>
+                            </button></td>
+                    </ng-container>
+
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"
+                        [ngClass]="{'isNew' : !dataSource.filteredData[i].isRead}"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons
+                    [ngClass]="{'hide': !userHasNotifications}">
+                </mat-paginator>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

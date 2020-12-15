@@ -1,0 +1,27 @@
+<div class="loading-table" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="close-dialog">
+  <button mat-button (click)="close()"><em class="material-icons">close</em></button>
+</div>
+<h1 class="mat-dialog-title primary-color"></h1>
+<mat-dialog-content>
+  <mat-card-title>Baremación de {{candidature.employee.personalData.name}}
+    {{candidature.employee.personalData.lastName}}</mat-card-title>
+
+  <p><strong>{{'selection.nominations.requirementsModal.process' | translate}}:</strong> {{candidature.offer.title}}</p>
+  <p><strong>Baremo asignado: </strong>{{candidature.requirementResults.requirement.title}} </p>
+  <p><strong>{{'selection.nominations.requirementsModal.results' | translate}}</strong></p>
+
+
+  <mat-form-field *ngIf="requirementResults">
+    <input type="text" matInput readonly="true" [value]="requirementResults.finalScore" placeholder="Puntuación final">
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="mt-l right" fxLayout fxLayoutAlign="end">
+  <button class="btn-sm" (click)="close()" mat-button>{{'genericMessages.cancel' | translate}}</button>
+  <button class="btn-primary" color="primary" (click)="close()"
+    mat-button>{{'genericMessages.save' | translate}}</button>
+</mat-dialog-actions>

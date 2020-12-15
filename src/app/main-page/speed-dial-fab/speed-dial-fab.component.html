@@ -1,0 +1,17 @@
+<div class='fab-container'>
+  <button mat-fab class="btn-secondary button-bot-assistant" (click)="onToggleFab()">
+    <span style="display:inline-block;" [@fabToggler]="{value: fabTogglerState}">?</span>
+  </button>
+  <div class="button-bot-assistant bots-vertical" [@speedDialStagger]="buttons.length">
+    <div *ngFor="let btn of buttons; index as i" mat-mini-fab class="align-center">
+      <div class="label bg-white" (click)="onClickFab(btn)">
+        <span>{{btn.title}}</span>
+
+      </div>
+      <button class="bg-white button-bot-assistant btn-small btn-center" (click)=onClickFab(btn) [title]="btn.title"
+         matTooltipPosition="below">
+        <span class="secondary">?</span>
+      </button>
+    </div>
+  </div>
+</div>

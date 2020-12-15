@@ -1,0 +1,32 @@
+<div>
+  <div class="row fullWidth-wrapper">
+    <p id="aria" hidden>Chart</p>
+    <table aria-describedby="aria" *ngIf="chart">
+      <thead>
+        <th scope="col" *ngFor="let element of chart.thead">
+          {{element.th}}
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+
+          <td *ngFor="let element of chart.tbody" [class]="element.class">
+            <mat-card *ngIf="element.type === 'value'">
+              <small>{{element.data}}</small>
+            </mat-card>
+            <div *ngIf="element.type === 'chart'" id="chart-1">
+              <app-pie [showCard]="false" *ngIf="element?.chartType === 'donut'" [chart]="element"
+                [series]="element.data.series">
+              </app-pie>
+              <app-area *ngIf="element?.chartType === 'area'" [filter]="filter" [chart]="element"></app-area>
+
+            </div>
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

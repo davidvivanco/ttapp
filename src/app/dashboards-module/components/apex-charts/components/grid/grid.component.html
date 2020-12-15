@@ -1,0 +1,16 @@
+<div class="row fullWidth-wrapper">
+  <div class="col-12">
+    <mat-form-field>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [formControl]="globalFilter" [placeholder]="" />
+    </mat-form-field>
+    <div class="loading-table" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <app-grid-template [searchFilters]="searchFilters" *ngIf="chart" [dashboardId]="dashboardId"
+      [cardPositionId]="cardPositionId" [chart]="chart" [showDetails]="true" [fileName]="'empleados'"
+      [columns]="chart.columns" [data]="chart.data">
+    </app-grid-template>
+  </div>
+</div>

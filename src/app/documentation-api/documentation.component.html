@@ -1,0 +1,83 @@
+<app-breadcrumb breadcrumbs="Talentoo,Admin,{{ 'documentation.title' | translate }}"></app-breadcrumb>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="card-dark-header">
+            <mat-card-header>
+                <mat-card-title>
+                    <mat-icon>device_hub</mat-icon> {{'documentation.title' | translate}}
+                </mat-card-title>
+            </mat-card-header>
+            <div class="clearfix"></div>
+            <mat-card-content>
+                <p class="description">
+                    {{'documentation.description' | translate}}
+                </p>
+            </mat-card-content>
+            <div class="clearfix"></div>
+        </mat-card>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>
+            <mat-icon>work</mat-icon> {{'genericMessages.positions' | translate}}
+        </h3>
+        <div class="description action">
+            {{'documentation.positions.description' | translate}}
+            <span class="type-verb post">POST</span>
+
+            <div class="clearfix"></div>
+            <div class="code">
+                <p class="title f-bold mt-sm mb-sm">Endpoint</p>
+                <code><pre>{{environment.apiUrl}}api/positions/push</pre></code>
+            </div>
+
+            <div class="clearfix"></div>
+            <h4>Headers</h4>
+            <div class="code">
+                <p class="title f-bold mt-sm mb-sm">x-secret</p>
+                <code><pre>[X-SECRET]</pre></code>
+            </div>
+
+            <div class="clearfix"></div>
+            <h4>{{'documentation.positions.example' | translate}}</h4>
+            <div class="code">
+                <code><pre>{{bodyExamplesPositions}}</pre></code>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>
+            <mat-icon>people</mat-icon> {{'documentation.employees.title' | translate}}
+        </h3>
+        <div class="description action">
+            {{'documentation.employees.description' | translate}}
+            <span class="type-verb post">POST</span>
+
+            <div class="clearfix"></div>
+            <div class="code">
+                <p class="title f-bold mt-sm mb-sm">Endpoint</p>
+                <code><pre>{{environment.apiUrl}}api/employees/push</pre></code>
+            </div>
+
+            <div class="clearfix"></div>
+            <h4>Headers</h4>
+            <div class="code">
+                <p class="title f-bold mt-sm mb-sm">x-secret</p>
+                <code><pre>[X-SECRET]</pre></code>
+            </div>
+
+            <div class="clearfix"></div>
+            <h4>{{'documentation.employees.example' | translate}}</h4>
+            <div class="code">
+                <code><pre>{{bodyExamplesEmployees}}</pre></code>
+            </div>
+
+        </div>
+    </div>
+</div>
